@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>EduConnect | Assignments</title>
+
+    <!-- Main EduConnect stylesheet -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+    <!-- =====================================================
+         ASSIGNMENTS PAGE
+         ===================================================== -->
+
+    <div class="dashboard">
+
+        <!-- =================================================
+             SIDEBAR
+             ================================================= -->
+
+        <aside class="sidebar">
+
+            <!-- EduConnect Brand -->
+            <div class="sidebar-brand">
+                <div class="sidebar-brand-icon">E</div>
+                <span>EduConnect</span>
+            </div>
+
+            <!-- Navigation -->
+            <nav class="sidebar-nav">
+
+                <p>Menu</p>
+
+                <a href="student-dashboard.html" class="nav-link">
+                    <span class="nav-icon">⌂</span>
+                    <span>Dashboard</span>
+                </a>
+
+                <a href="attendance.html" class="nav-link">
+                    <span class="nav-icon">◷</span>
+                    <span>Attendance</span>
+                </a>
+
+                <a href="assignments.html" class="nav-link active">
+                    <span class="nav-icon">✓</span>
+                    <span>Assignments</span>
+                </a>
+
+                <a href="materials.html" class="nav-link">
+                    <span class="nav-icon">▣</span>
+                    <span>Study Materials</span>
+                </a>
+
+                <a href="results.html" class="nav-link">
+                    <span class="nav-icon">▤</span>
+                    <span>Results</span>
+                </a>
+
+                <a href="study-coach.html" class="nav-link">
+                    <span class="nav-icon">✦</span>
+                    <span>AI Study Coach</span>
+                </a>
+
+            </nav>
+
+            <!-- Student Profile -->
+            <div class="sidebar-profile">
+
+                <div class="profile-avatar">
+                    K
+                </div>
+
+                <div class="profile-info">
+
+                    <span class="profile-name">
+                        Keshvi
+                    </span>
+
+                    <span class="profile-role">
+                        Student
+                    </span>
+
+                </div>
+
+            </div>
+
+        </aside>
+
+
+        <!-- =================================================
+             MAIN CONTENT
+             ================================================= -->
+
+        <main class="dashboard-main">
+
+            <!-- =================================================
+                 PAGE HEADER
+                 ================================================= -->
+
+            <header class="dashboard-header">
+
+                <div class="dashboard-heading">
+
+                    <h1>Assignments</h1>
+
+                    <p>
+                        Keep track of your academic tasks and deadlines.
+                    </p>
+
+                </div>
+
+                <div class="header-actions">
+
+                    <div
+                        class="notification"
+                        title="Notifications">
+                        🔔
+                    </div>
+
+                </div>
+
+            </header>
+
+
+            <!-- =================================================
+                 ASSIGNMENT SUMMARY
+                 ================================================= -->
+
+            <section class="stats-grid">
+
+                <!-- Total Assignments -->
+                <div class="stat-card">
+
+                    <div class="stat-top">
+
+                        <div>
+
+                            <div class="stat-label">
+                                Total Assignments
+                            </div>
+
+                            <div class="stat-value">
+                                8
+                            </div>
+
+                            <div class="stat-subtext">
+                                This semester
+                            </div>
+
+                        </div>
+
+                        <div class="stat-icon">
+                            📚
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Pending -->
+                <div class="stat-card">
+
+                    <div class="stat-top">
+
+                        <div>
+
+                            <div class="stat-label">
+                                Pending
+                            </div>
+
+                            <div class="stat-value">
+                                3
+                            </div>
+
+                            <div class="stat-subtext">
+                                Need submission
+                            </div>
+
+                        </div>
+
+                        <div class="stat-icon">
+                            📝
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Completed -->
+                <div class="stat-card">
+
+                    <div class="stat-top">
+
+                        <div>
+
+                            <div class="stat-label">
+                                Completed
+                            </div>
+
+                            <div class="stat-value">
+                                5
+                            </div>
+
+                            <div class="stat-subtext">
+                                Successfully submitted
+                            </div>
+
+                        </div>
+
+                        <div class="stat-icon">
+                            ✓
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Due Soon -->
+                <div class="stat-card">
+
+                    <div class="stat-top">
+
+                        <div>
+
+                            <div class="stat-label">
+                                Due Soon
+                            </div>
+
+                            <div class="stat-value">
+                                2
+                            </div>
+
+                            <div class="stat-subtext">
+                                Within 3 days
+                            </div>
+
+                        </div>
+
+                        <div class="stat-icon">
+                            ⏰
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- =================================================
+                 ASSIGNMENT LIST
+                 ================================================= -->
+
+            <section class="dashboard-card assignments-card">
+
+                <div class="card-header">
+
+                    <h2>My Assignments</h2>
+
+                    <!-- Assignment Filter -->
+                    <select
+                        class="assignment-filter"
+                        id="assignmentFilter">
+
+                        <option value="all">
+                            All Assignments
+                        </option>
+
+                        <option value="pending">
+                            Pending
+                        </option>
+
+                        <option value="completed">
+                            Completed
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- =================================================
+                     ASSIGNMENT 1
+                     ================================================= -->
+
+                <div
+                    class="assignment-item"
+                    data-status="pending">
+
+                    <div class="assignment-icon">
+                        ☕
+                    </div>
+
+                    <div class="assignment-details">
+
+                        <h3>
+                            JDBC Mini Project
+                        </h3>
+
+                        <p>
+                            Java Programming • Due Aug 15
+                        </p>
+
+                        <span class="assignment-description">
+                            Build a Java application using JDBC and MySQL.
+                        </span>
+
+                    </div>
+
+                    <div class="assignment-action">
+
+                        <span class="assignment-status pending">
+                            Pending
+                        </span>
+
+                        <button
+                            class="assignment-button"
+                            onclick="openAssignment('JDBC Mini Project')">
+                            Submit
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <!-- =================================================
+                     ASSIGNMENT 2
+                     ================================================= -->
+
+                <div
+                    class="assignment-item"
+                    data-status="pending">
+
+                    <div class="assignment-icon">
+                        🗄️
+                    </div>
+
+                    <div class="assignment-details">
+
+                        <h3>
+                            SQL Query Practice
+                        </h3>
+
+                        <p>
+                            Database Management Systems • Due Aug 17
+                        </p>
+
+                        <span class="assignment-description">
+                            Practice SQL queries, joins and aggregate functions.
+                        </span>
+
+                    </div>
+
+                    <div class="assignment-action">
+
+                        <span class="assignment-status pending">
+                            Pending
+                        </span>
+
+                        <button
+                            class="assignment-button"
+                            onclick="openAssignment('SQL Query Practice')">
+                            Submit
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <!-- =================================================
+                     ASSIGNMENT 3
+                     ================================================= -->
+
+                <div
+                    class="assignment-item"
+                    data-status="completed">
+
+                    <div class="assignment-icon">
+                        🤖
+                    </div>
+
+                    <div class="assignment-details">
+
+                        <h3>
+                            AI Case Study
+                        </h3>
+
+                        <p>
+                            Artificial Intelligence • Submitted Aug 12
+                        </p>
+
+                        <span class="assignment-description">
+                            Analyze a real-world application of Artificial Intelligence.
+                        </span>
+
+                    </div>
+
+                    <div class="assignment-action">
+
+                        <span class="assignment-status completed">
+                            Completed
+                        </span>
+
+                        <button
+                            class="assignment-button"
+                            onclick="viewAssignment('AI Case Study')">
+                            View
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <!-- =================================================
+                     ASSIGNMENT 4
+                     ================================================= -->
+
+                <div
+                    class="assignment-item"
+                    data-status="pending">
+
+                    <div class="assignment-icon">
+                        ☁️
+                    </div>
+
+                    <div class="assignment-details">
+
+                        <h3>
+                            Cloud Security Report
+                        </h3>
+
+                        <p>
+                            Cloud Security • Due Aug 20
+                        </p>
+
+                        <span class="assignment-description">
+                            Prepare a report on cloud security threats and protection methods.
+                        </span>
+
+                    </div>
+
+                    <div class="assignment-action">
+
+                        <span class="assignment-status pending">
+                            Pending
+                        </span>
+
+                        <button
+                            class="assignment-button"
+                            onclick="openAssignment('Cloud Security Report')">
+                            Submit
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <!-- =================================================
+                     ASSIGNMENT 5
+                     ================================================= -->
+
+                <div
+                    class="assignment-item"
+                    data-status="completed">
+
+                    <div class="assignment-icon">
+                        💻
+                    </div>
+
+                    <div class="assignment-details">
+
+                        <h3>
+                            Java Collections Practice
+                        </h3>
+
+                        <p>
+                            Java Programming • Submitted Aug 08
+                        </p>
+
+                        <span class="assignment-description">
+                            Implement programs using Java Collections Framework.
+                        </span>
+
+                    </div>
+
+                    <div class="assignment-action">
+
+                        <span class="assignment-status completed">
+                            Completed
+                        </span>
+
+                        <button
+                            class="assignment-button"
+                            onclick="viewAssignment('Java Collections Practice')">
+                            View
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- =================================================
+                 UPCOMING DEADLINE / STUDY INSIGHT
+                 ================================================= -->
+
+            <section class="study-coach-card assignment-insight">
+
+                <div class="coach-content">
+
+                    <div class="coach-icon">
+                        ⏰
+                    </div>
+
+                    <div class="coach-text">
+
+                        <h3>
+                            Upcoming Deadline
+                        </h3>
+
+                        <p>
+                            Your <strong>JDBC Mini Project</strong>
+                            is due on August 15. Consider completing
+                            it before the deadline to stay on track.
+                        </p>
+
+                    </div>
+
+                    <a
+                        href="study-coach.html"
+                        class="coach-button">
+                        Get Study Help
+                    </a>
+
+                </div>
+
+            </section>
+
+        </main>
+
+    </div>
+
+
+    <!-- =====================================================
+         SUBMIT ASSIGNMENT MODAL
+         ===================================================== -->
+
+    <div
+        class="assignment-modal"
+        id="assignmentModal">
+
+        <div class="assignment-modal-content">
+
+            <!-- Close Button -->
+            <button
+                class="modal-close"
+                onclick="closeAssignmentModal()">
+                ×
+            </button>
+
+            <h2 id="modalAssignmentName">
+                Submit Assignment
+            </h2>
+
+            <p class="modal-subtitle">
+                Upload your assignment file below.
+            </p>
+
+            <!-- File Upload Area -->
+            <div class="upload-area">
+
+                <div class="upload-icon">
+                    📎
+                </div>
+
+                <p>
+                    Choose your assignment file
+                </p>
+
+                <input
+                    type="file"
+                    id="assignmentFile"
+                    accept=".pdf,.doc,.docx,.zip">
+
+            </div>
+
+            <!-- Submit Button -->
+            <button
+                class="submit-assignment-button"
+                onclick="submitAssignment()">
+                Submit Assignment
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- Shared JavaScript -->
+    <script src="js/script.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>EduConnect | AI Study Coach</title>
+
+    <!-- Shared EduConnect CSS -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+    <!-- =====================================================
+         AI STUDY COACH PAGE
+         ===================================================== -->
+
+    <div class="dashboard">
+
+        <!-- =================================================
+             SIDEBAR
+             ================================================= -->
+
+        <aside class="sidebar">
+
+            <!-- Brand -->
+            <div class="sidebar-brand">
+
+                <div class="sidebar-brand-icon">
+                    E
+                </div>
+
+                <span>EduConnect</span>
+
+            </div>
+
+
+            <!-- Navigation -->
+            <nav class="sidebar-nav">
+
+                <p>Menu</p>
+
+                <a href="student-dashboard.html" class="nav-link">
+                    <span class="nav-icon">⌂</span>
+                    <span>Dashboard</span>
+                </a>
+
+                <a href="attendance.html" class="nav-link">
+                    <span class="nav-icon">◷</span>
+                    <span>Attendance</span>
+                </a>
+
+                <a href="assignments.html" class="nav-link">
+                    <span class="nav-icon">✓</span>
+                    <span>Assignments</span>
+                </a>
+
+                <a href="materials.html" class="nav-link">
+                    <span class="nav-icon">▣</span>
+                    <span>Study Materials</span>
+                </a>
+
+                <a href="results.html" class="nav-link">
+                    <span class="nav-icon">▤</span>
+                    <span>Results</span>
+                </a>
+
+                <a href="study-coach.html" class="nav-link active">
+                    <span class="nav-icon">✦</span>
+                    <span>AI Study Coach</span>
+                </a>
+
+            </nav>
+
+
+            <!-- Student Profile -->
+            <div class="sidebar-profile">
+
+                <div class="profile-avatar">
+                    K
+                </div>
+
+                <div class="profile-info">
+
+                    <span class="profile-name">
+                        Keshvi
+                    </span>
+
+                    <span class="profile-role">
+                        Student
+                    </span>
+
+                </div>
+
+            </div>
+
+        </aside>
+
+
+        <!-- =================================================
+             MAIN CONTENT
+             ================================================= -->
+
+        <main class="dashboard-main">
+
+
+            <!-- =================================================
+                 PAGE HEADER
+                 ================================================= -->
+
+            <header class="dashboard-header">
+
+                <div class="dashboard-heading">
+
+                    <h1>
+                        AI Study Coach 🤖
+                    </h1>
+
+                    <p>
+                        Personalized guidance based on your academic performance.
+                    </p>
+
+                </div>
+
+
+                <div class="header-actions">
+
+                    <div class="notification">
+                        🔔
+                    </div>
+
+                </div>
+
+            </header>
+
+
+            <!-- =================================================
+                 AI INTRODUCTION CARD
+                 ================================================= -->
+
+            <section class="ai-hero">
+
+                <div class="ai-hero-icon">
+                    ✦
+                </div>
+
+                <div class="ai-hero-content">
+
+                    <span class="ai-badge">
+                        AI-POWERED
+                    </span>
+
+                    <h2>
+                        Your Personal Study Assistant
+                    </h2>
+
+                    <p>
+                        EduConnect analyzes your attendance, results,
+                        assignments, and academic progress to identify
+                        areas that need your attention.
+                    </p>
+
+                </div>
+
+                <button
+                    class="ai-generate-btn"
+                    id="generatePlanBtn">
+
+                    Generate Study Plan
+
+                </button>
+
+            </section>
+
+
+            <!-- =================================================
+                 ACADEMIC ANALYSIS
+                 ================================================= -->
+
+            <section class="dashboard-card">
+
+                <div class="card-header">
+
+                    <div>
+
+                        <h2>
+                            Academic Analysis
+                        </h2>
+
+                        <p class="result-subtitle">
+                            Based on your current semester data
+                        </p>
+
+                    </div>
+
+                    <span class="analysis-status">
+                        ● Analysis Ready
+                    </span>
+
+                </div>
+
+
+                <div class="analysis-grid">
+
+
+                    <!-- Overall Score -->
+                    <div class="analysis-item">
+
+                        <div class="analysis-icon blue">
+                            📊
+                        </div>
+
+                        <div>
+
+                            <span class="analysis-label">
+                                Overall Score
+                            </span>
+
+                            <strong class="analysis-value">
+                                82%
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- Attendance -->
+                    <div class="analysis-item">
+
+                        <div class="analysis-icon green">
+                            📅
+                        </div>
+
+                        <div>
+
+                            <span class="analysis-label">
+                                Overall Attendance
+                            </span>
+
+                            <strong class="analysis-value">
+                                78%
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- Strongest -->
+                    <div class="analysis-item">
+
+                        <div class="analysis-icon purple">
+                            ⭐
+                        </div>
+
+                        <div>
+
+                            <span class="analysis-label">
+                                Strongest Subject
+                            </span>
+
+                            <strong class="analysis-value small">
+                                AI
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- Attention -->
+                    <div class="analysis-item">
+
+                        <div class="analysis-icon orange">
+                            ⚠
+                        </div>
+
+                        <div>
+
+                            <span class="analysis-label">
+                                Needs Attention
+                            </span>
+
+                            <strong class="analysis-value small">
+                                DBMS
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- =================================================
+                 AI RECOMMENDATION
+                 ================================================= -->
+
+            <section class="recommendation-card">
+
+                <div class="recommendation-icon">
+                    💡
+                </div>
+
+                <div class="recommendation-content">
+
+                    <span class="recommendation-label">
+                        AI Recommendation
+                    </span>
+
+                    <h3>
+                        Focus on Database Management Systems
+                    </h3>
+
+                    <p>
+                        Your DBMS attendance is currently
+                        <strong>68%</strong> and your academic score
+                        is <strong>72%</strong>. Regular attendance
+                        and focused practice can help improve your
+                        performance.
+                    </p>
+
+                </div>
+
+            </section>
+
+
+            <!-- =================================================
+                 RECOMMENDED TOPICS
+                 ================================================= -->
+
+            <section class="dashboard-card">
+
+                <div class="card-header">
+
+                    <div>
+
+                        <h2>
+                            Recommended Focus Areas
+                        </h2>
+
+                        <p class="result-subtitle">
+                            Topics selected based on your performance
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="focus-grid">
+
+
+                    <!-- SQL -->
+                    <div class="focus-card">
+
+                        <div class="focus-card-top">
+
+                            <div class="focus-icon">
+                                🗄️
+                            </div>
+
+                            <span class="focus-time">
+                                30 min
+                            </span>
+
+                        </div>
+
+                        <h3>
+                            SQL Queries
+                        </h3>
+
+                        <p>
+                            Practice SELECT, JOIN, GROUP BY and
+                            aggregate queries.
+                        </p>
+
+                        <a href="materials.html">
+                            View Materials →
+                        </a>
+
+                    </div>
+
+
+                    <!-- Normalization -->
+                    <div class="focus-card">
+
+                        <div class="focus-card-top">
+
+                            <div class="focus-icon">
+                                📐
+                            </div>
+
+                            <span class="focus-time">
+                                20 min
+                            </span>
+
+                        </div>
+
+                        <h3>
+                            Normalization
+                        </h3>
+
+                        <p>
+                            Revise 1NF, 2NF, 3NF and functional
+                            dependencies.
+                        </p>
+
+                        <a href="materials.html">
+                            View Materials →
+                        </a>
+
+                    </div>
+
+
+                    <!-- ER Diagrams -->
+                    <div class="focus-card">
+
+                        <div class="focus-card-top">
+
+                            <div class="focus-icon">
+                                🔗
+                            </div>
+
+                            <span class="focus-time">
+                                20 min
+                            </span>
+
+                        </div>
+
+                        <h3>
+                            ER Diagrams
+                        </h3>
+
+                        <p>
+                            Practice entities, relationships,
+                            attributes and cardinality.
+                        </p>
+
+                        <a href="materials.html">
+                            View Materials →
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- =================================================
+                 TODAY'S STUDY PLAN
+                 ================================================= -->
+
+            <section
+                class="dashboard-card study-plan-card"
+                id="studyPlan">
+
+                <div class="card-header">
+
+                    <div>
+
+                        <h2>
+                            📅 Today's Study Plan
+                        </h2>
+
+                        <p class="result-subtitle">
+                            A focused plan based on your current needs
+                        </p>
+
+                    </div>
+
+                    <span class="plan-duration">
+                        80 minutes
+                    </span>
+
+                </div>
+
+
+                <div class="study-timeline">
+
+
+                    <!-- Step 1 -->
+                    <div class="timeline-item">
+
+                        <div class="timeline-number">
+                            1
+                        </div>
+
+                        <div class="timeline-content">
+
+                            <h3>
+                                Revise SQL Basics
+                            </h3>
+
+                            <p>
+                                Review SELECT statements, filtering,
+                                sorting and aggregate functions.
+                            </p>
+
+                            <span>
+                                ⏱ 30 minutes
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- Step 2 -->
+                    <div class="timeline-item">
+
+                        <div class="timeline-number">
+                            2
+                        </div>
+
+                        <div class="timeline-content">
+
+                            <h3>
+                                Practice SQL Queries
+                            </h3>
+
+                            <p>
+                                Solve five SQL problems using
+                                different query operations.
+                            </p>
+
+                            <span>
+                                ⏱ 30 minutes
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- Step 3 -->
+                    <div class="timeline-item">
+
+                        <div class="timeline-number">
+                            3
+                        </div>
+
+                        <div class="timeline-content">
+
+                            <h3>
+                                Review Normalization
+                            </h3>
+
+                            <p>
+                                Revise normalization concepts and
+                                solve a small example.
+                            </p>
+
+                            <span>
+                                ⏱ 20 minutes
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- =================================================
+                 MOTIVATION CARD
+                 ================================================= -->
+
+            <section class="motivation-card">
+
+                <div class="motivation-icon">
+                    🚀
+                </div>
+
+                <div>
+
+                    <h3>
+                        Small progress every day!
+                    </h3>
+
+                    <p>
+                        Consistent study sessions can help you
+                        strengthen your weaker subjects and maintain
+                        your strongest ones.
+                    </p>
+
+                </div>
+
+            </section>
+
+
+        </main>
+
+    </div>
+
+
+    <!-- =====================================================
+         AI STUDY COACH JAVASCRIPT
+         ===================================================== -->
+
+    <script>
+
+        const generatePlanBtn =
+            document.getElementById("generatePlanBtn");
+
+        const studyPlan =
+            document.getElementById("studyPlan");
+
+
+        generatePlanBtn.addEventListener("click", function () {
+
+            /* Change button text while generating */
+
+            generatePlanBtn.textContent =
+                "Generating...";
+
+            generatePlanBtn.disabled = true;
+
+
+            /* Simulate AI processing */
+
+            setTimeout(function () {
+
+                generatePlanBtn.textContent =
+                    "Plan Generated ✓";
+
+                generatePlanBtn.disabled = false;
+
+
+                /* Scroll to generated plan */
+
+                studyPlan.scrollIntoView({
+                    behavior: "smooth",
+                    block: "center"
+                });
+
+
+            }, 1000);
+
+        });
+
+    </script>
+
+
+    <!-- Shared JavaScript -->
+    <script src="js/script.js"></script>
+
+</body>
+
+</html>

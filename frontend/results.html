@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>EduConnect | Results</title>
+
+    <!-- Shared EduConnect CSS -->
+    <link rel="stylesheet" href="css/style.css">
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+
+    <!-- =====================================================
+         RESULTS PAGE
+         ===================================================== -->
+
+    <div class="dashboard">
+
+        <!-- =================================================
+             SIDEBAR
+             ================================================= -->
+
+        <aside class="sidebar">
+
+            <div class="sidebar-brand">
+                <div class="sidebar-brand-icon">E</div>
+                <span>EduConnect</span>
+            </div>
+
+
+            <!-- Navigation -->
+            <nav class="sidebar-nav">
+
+                <p>Menu</p>
+
+                <a href="student-dashboard.html" class="nav-link">
+                    <span class="nav-icon">⌂</span>
+                    <span>Dashboard</span>
+                </a>
+
+                <a href="attendance.html" class="nav-link">
+                    <span class="nav-icon">◷</span>
+                    <span>Attendance</span>
+                </a>
+
+                <a href="assignments.html" class="nav-link">
+                    <span class="nav-icon">✓</span>
+                    <span>Assignments</span>
+                </a>
+
+                <a href="materials.html" class="nav-link">
+                    <span class="nav-icon">▣</span>
+                    <span>Study Materials</span>
+                </a>
+
+                <a href="results.html" class="nav-link active">
+                    <span class="nav-icon">▤</span>
+                    <span>Results</span>
+                </a>
+
+                <a href="study-coach.html" class="nav-link">
+                    <span class="nav-icon">✦</span>
+                    <span>AI Study Coach</span>
+                </a>
+
+            </nav>
+
+
+            <!-- Student Profile -->
+            <div class="sidebar-profile">
+
+                <div class="profile-avatar">
+                    K
+                </div>
+
+                <div class="profile-info">
+
+                    <span class="profile-name">
+                        Keshvi
+                    </span>
+
+                    <span class="profile-role">
+                        Student
+                    </span>
+
+                </div>
+
+            </div>
+
+        </aside>
+
+
+        <!-- =================================================
+             MAIN CONTENT
+             ================================================= -->
+
+        <main class="dashboard-main">
+
+            <!-- =================================================
+                 HEADER
+                 ================================================= -->
+
+            <header class="dashboard-header">
+
+                <div class="dashboard-heading">
+
+                    <h1>Academic Results</h1>
+
+                    <p>
+                        Track your marks and academic performance
+                        across subjects.
+                    </p>
+
+                </div>
+
+                <div class="header-actions">
+
+                    <div
+                        class="notification"
+                        title="Notifications">
+                        🔔
+                    </div>
+
+                </div>
+
+            </header>
+
+
+            <!-- =================================================
+                 RESULT SUMMARY
+                 ================================================= -->
+
+            <section class="stats-grid">
+
+                <!-- Overall Score -->
+                <div class="stat-card">
+
+                    <div class="stat-top">
+
+                        <div>
+
+                            <div class="stat-label">
+                                Overall Score
+                            </div>
+
+                            <div class="stat-value">
+                                82%
+                            </div>
+
+                            <div class="stat-subtext">
+                                Current semester
+                            </div>
+
+                        </div>
+
+                        <div class="stat-icon">
+                            📊
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Overall Grade -->
+                <div class="stat-card">
+
+                    <div class="stat-top">
+
+                        <div>
+
+                            <div class="stat-label">
+                                Overall Grade
+                            </div>
+
+                            <div class="stat-value">
+                                A
+                            </div>
+
+                            <div class="stat-subtext">
+                                Good academic standing
+                            </div>
+
+                        </div>
+
+                        <div class="stat-icon">
+                            🏆
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Subjects -->
+                <div class="stat-card">
+
+                    <div class="stat-top">
+
+                        <div>
+
+                            <div class="stat-label">
+                                Subjects
+                            </div>
+
+                            <div class="stat-value">
+                                4
+                            </div>
+
+                            <div class="stat-subtext">
+                                Current semester
+                            </div>
+
+                        </div>
+
+                        <div class="stat-icon">
+                            📚
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Best Score -->
+                <div class="stat-card">
+
+                    <div class="stat-top">
+
+                        <div>
+
+                            <div class="stat-label">
+                                Best Score
+                            </div>
+
+                            <div class="stat-value">
+                                93%
+                            </div>
+
+                            <div class="stat-subtext">
+                                Artificial Intelligence
+                            </div>
+
+                        </div>
+
+                        <div class="stat-icon">
+                            ⭐
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- =================================================
+                 RESULT TABLE
+                 ================================================= -->
+
+            <section class="dashboard-card">
+
+                <div class="card-header">
+
+                    <div>
+
+                        <h2>Semester Performance</h2>
+
+                        <p class="result-subtitle">
+                            Current semester subject-wise results
+                        </p>
+
+                    </div>
+
+                    <span class="subject-label">
+                        Semester III
+                    </span>
+
+                </div>
+
+
+                <div class="table-wrapper">
+
+                    <table class="result-table">
+
+                        <thead>
+
+                            <tr>
+                                <th>Subject</th>
+                                <th>Internal</th>
+                                <th>Assignments</th>
+                                <th>Quiz</th>
+                                <th>Total</th>
+                                <th>Grade</th>
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody>
+
+                            <!-- Java -->
+                            <tr>
+
+                                <td>
+                                    <strong>
+                                        Java Programming
+                                    </strong>
+                                </td>
+
+                                <td>26 / 30</td>
+
+                                <td>18 / 20</td>
+
+                                <td>17 / 20</td>
+
+                                <td>
+                                    <strong>81%</strong>
+                                </td>
+
+                                <td>
+                                    <span class="grade-badge grade-a">
+                                        A
+                                    </span>
+                                </td>
+
+                            </tr>
+
+
+                            <!-- DBMS -->
+                            <tr>
+
+                                <td>
+                                    <strong>
+                                        Database Management Systems
+                                    </strong>
+                                </td>
+
+                                <td>22 / 30</td>
+
+                                <td>17 / 20</td>
+
+                                <td>15 / 20</td>
+
+                                <td>
+                                    <strong>72%</strong>
+                                </td>
+
+                                <td>
+                                    <span class="grade-badge grade-b">
+                                        B+
+                                    </span>
+                                </td>
+
+                            </tr>
+
+
+                            <!-- AI -->
+                            <tr>
+
+                                <td>
+                                    <strong>
+                                        Artificial Intelligence
+                                    </strong>
+                                </td>
+
+                                <td>28 / 30</td>
+
+                                <td>19 / 20</td>
+
+                                <td>18 / 20</td>
+
+                                <td>
+                                    <strong>93%</strong>
+                                </td>
+
+                                <td>
+                                    <span class="grade-badge grade-a">
+                                        A+
+                                    </span>
+                                </td>
+
+                            </tr>
+
+
+                            <!-- Cloud -->
+                            <tr>
+
+                                <td>
+                                    <strong>
+                                        Cloud Security
+                                    </strong>
+                                </td>
+
+                                <td>25 / 30</td>
+
+                                <td>18 / 20</td>
+
+                                <td>16 / 20</td>
+
+                                <td>
+                                    <strong>82%</strong>
+                                </td>
+
+                                <td>
+                                    <span class="grade-badge grade-a">
+                                        A
+                                    </span>
+                                </td>
+
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </section>
+
+
+            <!-- =================================================
+                 PERFORMANCE CHART
+                 ================================================= -->
+
+            <section class="dashboard-card result-chart-card">
+
+                <div class="card-header">
+
+                    <div>
+
+                        <h2>Performance Overview</h2>
+
+                        <p class="result-subtitle">
+                            Subject-wise academic performance
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="result-chart-container">
+
+                    <canvas id="resultChart"></canvas>
+
+                </div>
+
+            </section>
+
+
+            <!-- =================================================
+                 PERFORMANCE INSIGHT
+                 ================================================= -->
+
+            <section class="study-coach-card material-insight">
+
+                <div class="coach-content">
+
+                    <div class="coach-icon">
+                        💡
+                    </div>
+
+                    <div class="coach-text">
+
+                        <h3>
+                            Performance Insight
+                        </h3>
+
+                        <p>
+                            Your strongest performance is in
+                            <strong>Artificial Intelligence</strong>.
+                            Consider revising DBMS topics and practicing
+                            more SQL problems to improve your overall score.
+                        </p>
+
+                    </div>
+
+                    <a
+                        href="study-coach.html"
+                        class="coach-button">
+                        Open Study Coach
+                    </a>
+
+                </div>
+
+            </section>
+
+        </main>
+
+    </div>
+
+
+    <!-- =====================================================
+         RESULTS CHART JAVASCRIPT
+         ===================================================== -->
+
+    <script>
+    const resultChart = document.getElementById("resultChart");
+
+    if (resultChart) {
+
+        new Chart(resultChart, {
+
+            type: "doughnut",
+
+            data: {
+
+                labels: [
+                    "Java Programming",
+                    "DBMS",
+                    "Artificial Intelligence",
+                    "Cloud Security"
+                ],
+
+                datasets: [{
+
+                    data: [
+                        81,
+                        72,
+                        93,
+                        82
+                    ],
+
+                    /* Different colors for each subject */
+                    backgroundColor: [
+                        "#2563EB",   /* Java - Blue */
+                        "#F59E0B",   /* DBMS - Orange */
+                        "#10B981",   /* AI - Green */
+                        "#8B5CF6"    /* Cloud Security - Purple */
+                    ],
+
+                    /* White separation between slices */
+                    borderColor: "#ffffff",
+
+                    borderWidth: 4,
+
+                    /* Slightly expand slice on hover */
+                    hoverOffset: 8
+
+                }]
+
+            },
+
+            options: {
+
+                responsive: true,
+
+                maintainAspectRatio: false,
+
+                /* Creates the donut hole */
+                cutout: "68%",
+
+                plugins: {
+
+                    legend: {
+
+                        position: "bottom",
+
+                        labels: {
+
+                            padding: 18,
+
+                            usePointStyle: true,
+
+                            pointStyle: "circle",
+
+                            font: {
+                                size: 12
+                            }
+
+                        }
+
+                    },
+
+                    tooltip: {
+
+                        callbacks: {
+
+                            label: function(context) {
+
+                                return (
+                                    " " +
+                                    context.label +
+                                    ": " +
+                                    context.raw +
+                                    "%"
+                                );
+
+                            }
+
+                        }
+
+                    }
+
+                }
+
+            }
+
+        });
+
+    }
+</script>
+
+
+    <!-- Shared JavaScript -->
+    <script src="js/script.js"></script>
+
+</body>
+
+</html>

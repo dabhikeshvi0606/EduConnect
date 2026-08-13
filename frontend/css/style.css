@@ -1,0 +1,2095 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Segoe UI", Arial, sans-serif;
+}
+
+body {
+    min-height: 100vh;
+    background: #f4f7fb;
+}
+
+.login-container {
+    min-height: 100vh;
+    display: flex;
+}
+
+/* LEFT SECTION */
+
+.login-info {
+    width: 55%;
+    background: linear-gradient(135deg, #2563eb, #4f46e5);
+    color: white;
+    padding: 55px 70px;
+    display: flex;
+    flex-direction: column;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 25px;
+    font-weight: 700;
+}
+
+.brand-icon {
+    width: 42px;
+    height: 42px;
+    background: white;
+    color: #2563eb;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+}
+
+.welcome-content {
+    margin: auto 0;
+    max-width: 600px;
+}
+
+.welcome-content h1 {
+    font-size: 58px;
+    line-height: 1.05;
+    margin-bottom: 25px;
+}
+
+.welcome-content h1 span {
+    color: #bfdbfe;
+}
+
+.welcome-content p {
+    font-size: 18px;
+    line-height: 1.7;
+    color: #e0e7ff;
+    max-width: 500px;
+}
+
+.feature-list {
+    margin-top: 35px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    font-size: 16px;
+}
+
+/* LOGIN BOX */
+
+.login-box {
+    width: 45%;
+    background: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 60px 80px;
+}
+
+.login-header {
+    margin-bottom: 35px;
+}
+
+.login-header h2 {
+    font-size: 32px;
+    color: #172033;
+    margin-bottom: 8px;
+}
+
+.login-header p {
+    color: #6b7280;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+form > label {
+    font-size: 14px;
+    font-weight: 600;
+    color: #374151;
+    margin-bottom: 8px;
+}
+
+input,
+select {
+    width: 100%;
+    padding: 14px 15px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    font-size: 15px;
+    margin-bottom: 20px;
+    outline: none;
+    transition: 0.2s;
+    background: white;
+}
+
+input:focus,
+select:focus {
+    border-color: #2563eb;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+.login-options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+    font-size: 13px;
+}
+
+.remember {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    color: #6b7280;
+}
+
+.remember input {
+    width: auto;
+    margin: 0;
+}
+
+.login-options a {
+    color: #2563eb;
+    text-decoration: none;
+}
+
+button {
+    border: none;
+    padding: 15px;
+    border-radius: 8px;
+    background: #2563eb;
+    color: white;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+button:hover {
+    background: #1d4ed8;
+    transform: translateY(-1px);
+}
+
+.login-footer {
+    text-align: center;
+    margin-top: 35px;
+    color: #9ca3af;
+    font-size: 13px;
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 900px) {
+
+    .login-container {
+        flex-direction: column;
+    }
+
+    .login-info,
+    .login-box {
+        width: 100%;
+    }
+
+    .login-info {
+        padding: 35px;
+        min-height: 45vh;
+    }
+
+    .welcome-content {
+        margin-top: 70px;
+    }
+
+    .welcome-content h1 {
+        font-size: 42px;
+    }
+
+    .login-box {
+        padding: 45px 35px;
+    }
+}
+
+/* =========================================================
+   EDUCONNECT - STUDENT DASHBOARD
+   ========================================================= */
+
+/* ---------------------------------------------------------
+   1. DASHBOARD LAYOUT
+   --------------------------------------------------------- */
+
+/* Main dashboard wrapper */
+.dashboard {
+    min-height: 100vh;
+    display: flex;
+    background: #f5f7fb;
+}
+
+/* ---------------------------------------------------------
+   2. SIDEBAR
+   --------------------------------------------------------- */
+
+.sidebar {
+    width: 250px;
+    min-height: 100vh;
+    background: #ffffff;
+    border-right: 1px solid #e5e7eb;
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
+}
+
+/* EduConnect logo inside sidebar */
+.sidebar-brand {
+    height: 80px;
+    padding: 0 25px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border-bottom: 1px solid #f0f1f3;
+}
+
+.sidebar-brand-icon {
+    width: 38px;
+    height: 38px;
+    background: #2563eb;
+    color: white;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    font-size: 18px;
+}
+
+.sidebar-brand span {
+    font-size: 20px;
+    font-weight: 700;
+    color: #172033;
+}
+
+/* Sidebar navigation */
+.sidebar-nav {
+    padding: 25px 15px;
+    flex: 1;
+}
+
+.sidebar-nav p {
+    font-size: 11px;
+    font-weight: 700;
+    color: #9ca3af;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    padding: 0 12px;
+    margin-bottom: 12px;
+}
+
+/* Individual navigation links */
+.nav-link {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    padding: 12px 14px;
+    margin-bottom: 5px;
+    border-radius: 8px;
+    text-decoration: none;
+    color: #6b7280;
+    font-size: 14px;
+    font-weight: 500;
+    transition: 0.2s ease;
+}
+
+.nav-link:hover {
+    background: #f1f5ff;
+    color: #2563eb;
+}
+
+/* Active navigation item */
+.nav-link.active {
+    background: #eff6ff;
+    color: #2563eb;
+    font-weight: 600;
+}
+
+/* Navigation icons */
+.nav-icon {
+    width: 20px;
+    text-align: center;
+    font-size: 16px;
+}
+
+/* ---------------------------------------------------------
+   3. SIDEBAR USER PROFILE
+   --------------------------------------------------------- */
+
+.sidebar-profile {
+    padding: 18px;
+    border-top: 1px solid #f0f1f3;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.profile-avatar {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: #dbeafe;
+    color: #2563eb;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+}
+
+.profile-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.profile-name {
+    font-size: 13px;
+    font-weight: 600;
+    color: #172033;
+}
+
+.profile-role {
+    font-size: 11px;
+    color: #9ca3af;
+}
+
+/* ---------------------------------------------------------
+   4. MAIN CONTENT AREA
+   --------------------------------------------------------- */
+
+.dashboard-main {
+    margin-left: 250px;
+    width: calc(100% - 250px);
+    min-height: 100vh;
+    padding: 30px 35px;
+}
+
+/* ---------------------------------------------------------
+   5. TOP HEADER
+   --------------------------------------------------------- */
+
+.dashboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.dashboard-heading h1 {
+    font-size: 26px;
+    color: #172033;
+    margin-bottom: 6px;
+}
+
+.dashboard-heading p {
+    font-size: 14px;
+    color: #6b7280;
+}
+
+/* Header actions */
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.notification {
+    width: 40px;
+    height: 40px;
+    border: 1px solid #e5e7eb;
+    border-radius: 9px;
+    background: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 17px;
+}
+
+/* ---------------------------------------------------------
+   6. STATISTICS CARDS
+   --------------------------------------------------------- */
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+    margin-bottom: 25px;
+}
+
+.stat-card {
+    background: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 20px;
+    transition: 0.2s ease;
+}
+
+.stat-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.05);
+}
+
+.stat-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.stat-icon {
+    width: 42px;
+    height: 42px;
+    border-radius: 9px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+}
+
+.stat-card:nth-child(1) .stat-icon {
+    background: #eff6ff;
+}
+
+.stat-card:nth-child(2) .stat-icon {
+    background: #fef3c7;
+}
+
+.stat-card:nth-child(3) .stat-icon {
+    background: #ecfdf5;
+}
+
+.stat-card:nth-child(4) .stat-icon {
+    background: #f5f3ff;
+}
+
+.stat-label {
+    font-size: 13px;
+    color: #6b7280;
+    margin-bottom: 5px;
+}
+
+.stat-value {
+    font-size: 25px;
+    font-weight: 700;
+    color: #172033;
+}
+
+.stat-subtext {
+    font-size: 11px;
+    color: #9ca3af;
+    margin-top: 5px;
+}
+
+/* ---------------------------------------------------------
+   7. DASHBOARD CONTENT GRID
+   --------------------------------------------------------- */
+
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: 1.6fr 1fr;
+    gap: 20px;
+}
+
+/* Reusable dashboard card */
+.dashboard-card {
+    background: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 22px;
+}
+
+/* Card header */
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.card-header h2 {
+    font-size: 17px;
+    color: #172033;
+}
+
+.card-header a {
+    font-size: 12px;
+    color: #2563eb;
+    text-decoration: none;
+}
+
+/* ---------------------------------------------------------
+   8. ATTENDANCE OVERVIEW
+   --------------------------------------------------------- */
+
+.attendance-row {
+    margin-bottom: 18px;
+}
+
+.attendance-info {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+}
+
+.subject-name {
+    font-size: 13px;
+    font-weight: 500;
+    color: #374151;
+}
+
+.attendance-percentage {
+    font-size: 12px;
+    font-weight: 600;
+    color: #172033;
+}
+
+/* Progress bar background */
+.progress-bar {
+    width: 100%;
+    height: 7px;
+    background: #eef0f4;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+/* Progress bar fill */
+.progress-fill {
+    height: 100%;
+    border-radius: 10px;
+    background: #2563eb;
+}
+
+/* ---------------------------------------------------------
+   9. ASSIGNMENT LIST
+   --------------------------------------------------------- */
+
+.assignment-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 13px 0;
+    border-bottom: 1px solid #f0f1f3;
+}
+
+.assignment-item:last-child {
+    border-bottom: none;
+}
+
+.assignment-info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.assignment-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: #374151;
+}
+
+.assignment-subject {
+    font-size: 11px;
+    color: #9ca3af;
+}
+
+.assignment-status {
+    padding: 5px 9px;
+    border-radius: 20px;
+    font-size: 10px;
+    font-weight: 600;
+}
+
+.status-pending {
+    background: #fef3c7;
+    color: #92400e;
+}
+
+.status-completed {
+    background: #dcfce7;
+    color: #166534;
+}
+
+/* ---------------------------------------------------------
+   10. AI STUDY COACH CARD
+   --------------------------------------------------------- */
+
+.study-coach-card {
+    margin-top: 20px;
+    background: linear-gradient(135deg, #eff6ff, #eef2ff);
+    border: 1px solid #dbeafe;
+    border-radius: 12px;
+    padding: 24px;
+}
+
+.coach-content {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+}
+
+.coach-icon {
+    width: 52px;
+    height: 52px;
+    border-radius: 12px;
+    background: #2563eb;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 23px;
+    flex-shrink: 0;
+}
+
+.coach-text h3 {
+    font-size: 16px;
+    color: #172033;
+    margin-bottom: 6px;
+}
+
+.coach-text p {
+    font-size: 12px;
+    color: #6b7280;
+    line-height: 1.5;
+}
+
+.coach-button {
+    margin-left: auto;
+    padding: 10px 15px;
+    border-radius: 7px;
+    background: #2563eb;
+    color: white;
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.coach-button:hover {
+    background: #1d4ed8;
+}
+
+/* ---------------------------------------------------------
+   11. RESPONSIVE DASHBOARD
+   --------------------------------------------------------- */
+
+@media (max-width: 1100px) {
+
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .dashboard-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 800px) {
+
+    .sidebar {
+        width: 70px;
+    }
+
+    .sidebar-brand span,
+    .sidebar-nav p,
+    .nav-link span,
+    .profile-info {
+        display: none;
+    }
+
+    .sidebar-brand {
+        justify-content: center;
+        padding: 0;
+    }
+
+    .nav-link {
+        justify-content: center;
+    }
+
+    .sidebar-profile {
+        justify-content: center;
+        padding: 15px 5px;
+    }
+
+    .dashboard-main {
+        margin-left: 70px;
+        width: calc(100% - 70px);
+        padding: 25px;
+    }
+}
+
+@media (max-width: 600px) {
+
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .dashboard-header {
+        align-items: flex-start;
+    }
+
+    .dashboard-heading h1 {
+        font-size: 22px;
+    }
+
+    .dashboard-main {
+        padding: 20px 15px;
+    }
+
+    .coach-content {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .coach-button {
+        margin-left: 0;
+    }
+}
+
+/* =========================================================
+   EDUCONNECT - ATTENDANCE PAGE
+   ========================================================= */
+
+/* Attendance warning message */
+.attendance-warning {
+    margin-top: 8px;
+    font-size: 11px;
+    color: #b45309;
+}
+
+/* Attendance table container */
+.attendance-table-card {
+    margin-top: 20px;
+}
+
+/* Make table horizontally scrollable on smaller screens */
+.attendance-table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+}
+
+/* Attendance table */
+.attendance-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+}
+
+/* Table header */
+.attendance-table th {
+    text-align: left;
+    padding: 13px 12px;
+    background: #f8fafc;
+    color: #6b7280;
+    font-size: 11px;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+/* Table cells */
+.attendance-table td {
+    padding: 15px 12px;
+    border-bottom: 1px solid #f0f1f3;
+    color: #374151;
+    white-space: nowrap;
+}
+
+/* Remove border from final row */
+.attendance-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+/* Attendance status badge */
+.attendance-status {
+    display: inline-block;
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 10px;
+    font-weight: 600;
+}
+
+/* Good status */
+.attendance-status.good {
+    background: #dcfce7;
+    color: #166534;
+}
+
+/* Warning status */
+.attendance-status.warning {
+    background: #fef3c7;
+    color: #92400e;
+}
+
+/* Excellent status */
+.attendance-status.excellent {
+    background: #dbeafe;
+    color: #1d4ed8;
+}
+
+/* =========================================================
+   ATTENDANCE BAR COLORS
+   ========================================================= */
+
+/* Excellent - 85% and above */
+.attendance-excellent {
+    background: #22c55e;
+}
+
+/* Good - 75% to 84% */
+.attendance-good {
+    background: #3b82f6;
+}
+
+/* Low - below 75% */
+.attendance-low {
+    background: #f59e0b;
+}
+
+/* =========================================================
+   ASSIGNMENTS PAGE
+   ========================================================= */
+
+/* Assignment page card */
+.assignments-card {
+    margin-top: 20px;
+}
+
+/* Filter dropdown */
+.assignment-filter {
+    padding: 9px 14px;
+    border: 1px solid #d9dee7;
+    border-radius: 8px;
+    background: #ffffff;
+    color: #374151;
+    font-size: 12px;
+    cursor: pointer;
+    outline: none;
+}
+
+/* Individual assignment */
+.assignment-item {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    padding: 20px 0;
+    border-bottom: 1px solid #eef0f3;
+}
+
+/* Remove border from last assignment */
+.assignment-item:last-child {
+    border-bottom: none;
+}
+
+/* Assignment icon */
+.assignment-icon {
+    width: 46px;
+    height: 46px;
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #eef4ff;
+    border-radius: 12px;
+
+    font-size: 20px;
+}
+
+/* Assignment information */
+.assignment-details {
+    flex: 1;
+}
+
+.assignment-details h3 {
+    margin: 0 0 5px;
+    font-size: 15px;
+    color: #102a4c;
+}
+
+.assignment-details p {
+    margin: 0 0 6px;
+    font-size: 12px;
+    color: #728096;
+}
+
+.assignment-description {
+    font-size: 11px;
+    color: #9aa5b5;
+}
+
+/* Right-side action section */
+.assignment-action {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+/* Assignment status */
+.assignment-status {
+    padding: 6px 11px;
+    border-radius: 20px;
+    font-size: 10px;
+    font-weight: 600;
+}
+
+/* Pending status */
+.assignment-status.pending {
+    background: #fff1c7;
+    color: #a16207;
+}
+
+/* Completed status */
+.assignment-status.completed {
+    background: #dcfce7;
+    color: #15803d;
+}
+
+/* View button */
+.assignment-button {
+    border: none;
+    background: #eef4ff;
+    color: #2563eb;
+
+    padding: 7px 13px;
+    border-radius: 7px;
+
+    font-size: 11px;
+    font-weight: 600;
+
+    cursor: pointer;
+}
+
+.assignment-button:hover {
+    background: #dce8ff;
+}
+
+/* Assignment insight section */
+.assignment-insight {
+    margin-top: 20px;
+}
+
+/* =========================================================
+   ASSIGNMENT SUBMISSION MODAL
+   ========================================================= */
+
+.assignment-modal {
+    display: none;
+
+    position: fixed;
+    inset: 0;
+
+    background: rgba(15, 23, 42, 0.45);
+
+    align-items: center;
+    justify-content: center;
+
+    z-index: 1000;
+}
+
+.assignment-modal-content {
+    width: 440px;
+    max-width: 90%;
+
+    background: #ffffff;
+
+    padding: 30px;
+    border-radius: 16px;
+
+    position: relative;
+
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
+}
+
+.modal-close {
+    position: absolute;
+
+    top: 15px;
+    right: 18px;
+
+    border: none;
+    background: none;
+
+    font-size: 24px;
+    color: #6b7280;
+
+    cursor: pointer;
+}
+
+.assignment-modal-content h2 {
+    margin: 0 0 8px;
+
+    color: #102a4c;
+    font-size: 20px;
+}
+
+.modal-subtitle {
+    margin-bottom: 22px;
+
+    color: #728096;
+    font-size: 13px;
+}
+
+.upload-area {
+    border: 2px dashed #d7deea;
+
+    border-radius: 12px;
+
+    padding: 28px 20px;
+
+    text-align: center;
+
+    background: #f8fafc;
+}
+
+.upload-icon {
+    font-size: 30px;
+    margin-bottom: 8px;
+}
+
+.upload-area p {
+    color: #475569;
+    font-size: 13px;
+}
+
+.upload-area input {
+    margin-top: 10px;
+    max-width: 100%;
+}
+
+.submit-assignment-button {
+    width: 100%;
+
+    margin-top: 20px;
+
+    padding: 12px;
+
+    border: none;
+    border-radius: 8px;
+
+    background: #2563eb;
+    color: white;
+
+    font-size: 13px;
+    font-weight: 600;
+
+    cursor: pointer;
+}
+
+.submit-assignment-button:hover {
+    background: #1d4ed8;
+}
+
+/* =========================================================
+   STUDY MATERIALS PAGE
+   ========================================================= */
+
+.materials-card {
+    margin-top: 20px;
+}
+
+/* Material filter */
+.material-filter {
+    padding: 9px 14px;
+
+    border: 1px solid #d9dee7;
+    border-radius: 8px;
+
+    background: #ffffff;
+    color: #374151;
+
+    font-size: 12px;
+    cursor: pointer;
+    outline: none;
+}
+
+/* Material item */
+.material-item {
+    display: flex;
+    align-items: center;
+
+    gap: 18px;
+
+    padding: 18px 0;
+
+    border-bottom: 1px solid #eef0f3;
+}
+
+.material-item:last-child {
+    border-bottom: none;
+}
+
+/* Material icon */
+.material-icon {
+    width: 46px;
+    height: 46px;
+
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 12px;
+
+    font-size: 11px;
+    font-weight: 700;
+}
+
+/* PDF */
+.material-icon.pdf {
+    background: #fee2e2;
+    color: #dc2626;
+}
+
+/* Video */
+.material-icon.video {
+    background: #ede9fe;
+    color: #7c3aed;
+
+    font-size: 17px;
+}
+
+/* Link */
+.material-icon.link {
+    background: #dbeafe;
+    color: #2563eb;
+
+    font-size: 18px;
+}
+
+/* Material details */
+.material-details {
+    flex: 1;
+}
+
+.material-details h3 {
+    margin: 0 0 5px;
+
+    color: #102a4c;
+    font-size: 14px;
+}
+
+.material-details p {
+    margin: 0 0 5px;
+
+    color: #728096;
+    font-size: 12px;
+}
+
+.material-details span {
+    color: #9aa5b5;
+    font-size: 10px;
+}
+
+/* Material button */
+.material-button {
+    border: none;
+
+    padding: 8px 15px;
+
+    border-radius: 7px;
+
+    background: #eef4ff;
+    color: #2563eb;
+
+    font-size: 11px;
+    font-weight: 600;
+
+    cursor: pointer;
+}
+
+.material-button:hover {
+    background: #dce8ff;
+}
+
+/* Recommendation section */
+.material-insight {
+    margin-top: 20px;
+}
+
+/* =========================================================
+   SUBJECT-WISE MATERIAL GROUPING
+   ========================================================= */
+
+.subject-material-count {
+    margin: 5px 0 0;
+    color: #8a96a8;
+    font-size: 11px;
+}
+
+.subject-label {
+    padding: 6px 12px;
+
+    border-radius: 20px;
+
+    background: #eef4ff;
+    color: #2563eb;
+
+    font-size: 11px;
+    font-weight: 600;
+}
+
+/* =========================================================
+   RESULTS PAGE
+   ========================================================= */
+
+/* Result table wrapper */
+.table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+}
+
+
+/* Result table */
+.result-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+
+/* Table headings */
+.result-table th {
+    text-align: left;
+    padding: 15px;
+    background: #f7f9fc;
+    color: #667085;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+
+/* Table cells */
+.result-table td {
+    padding: 18px 15px;
+    border-bottom: 1px solid #edf0f5;
+    color: #42526b;
+    font-size: 14px;
+}
+
+
+/* Grade badges */
+.grade-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    min-width: 42px;
+    padding: 6px 10px;
+
+    border-radius: 20px;
+
+    font-size: 12px;
+    font-weight: 600;
+}
+
+
+/* A / A+ grade */
+.grade-a {
+    background: #dcfce7;
+    color: #087443;
+}
+
+
+/* B grade */
+.grade-b {
+    background: #fff1c7;
+    color: #a15c00;
+}
+
+
+/* Performance rows */
+.performance-row {
+    margin-bottom: 24px;
+}
+
+
+.performance-row:last-child {
+    margin-bottom: 0;
+}
+
+
+/* Subject name + percentage */
+.performance-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    margin-bottom: 9px;
+
+    color: #17304f;
+    font-size: 14px;
+}
+
+
+.performance-info strong {
+    font-size: 13px;
+}
+
+
+/* Performance bar background */
+.performance-bar {
+    width: 100%;
+    height: 9px;
+
+    background: #e9edf3;
+
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+
+/* Performance bar fill */
+.performance-fill {
+    height: 100%;
+
+    background: #2563eb;
+
+    border-radius: 20px;
+
+    transition: width 0.4s ease;
+}
+
+/* =========================================================
+   RESULTS PAGE
+   ========================================================= */
+
+.result-subtitle {
+    margin: 5px 0 0;
+
+    color: #8a96a8;
+
+    font-size: 11px;
+}
+
+
+/* ---------------------------------------------------------
+   Result Table
+   --------------------------------------------------------- */
+
+.table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.result-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+.result-table th {
+    padding: 15px;
+
+    background: #f7f9fc;
+
+    color: #667085;
+
+    text-align: left;
+
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.result-table td {
+    padding: 18px 15px;
+
+    border-bottom: 1px solid #edf0f5;
+
+    color: #42526b;
+
+    font-size: 13px;
+}
+
+.result-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+
+/* ---------------------------------------------------------
+   Grade Badges
+   --------------------------------------------------------- */
+
+.grade-badge {
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    min-width: 42px;
+
+    padding: 6px 10px;
+
+    border-radius: 20px;
+
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.grade-a {
+    background: #dcfce7;
+    color: #087443;
+}
+
+.grade-b {
+    background: #fff1c7;
+    color: #a15c00;
+}
+
+
+/* ---------------------------------------------------------
+   Result Donut Chart
+   --------------------------------------------------------- */
+
+.result-chart-card {
+    margin-top: 20px;
+}
+
+.result-chart-container {
+    position: relative;
+
+    width: 100%;
+
+    height: 320px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    padding: 15px;
+}
+
+#resultChart {
+    max-width: 430px;
+    max-height: 300px;
+}
+
+
+/* ---------------------------------------------------------
+   Recommendation
+   --------------------------------------------------------- */
+
+.material-insight {
+    margin-top: 20px;
+}
+
+/* =========================================================
+   AI STUDY COACH
+   ========================================================= */
+
+
+/* ---------------------------------------------------------
+   AI Hero
+   --------------------------------------------------------- */
+
+.ai-hero {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 20px;
+
+    padding: 25px;
+
+    margin-bottom: 20px;
+
+    border-radius: 14px;
+
+    background: linear-gradient(
+        135deg,
+        #eef4ff,
+        #f5f2ff
+    );
+
+    border: 1px solid #dce6fa;
+}
+
+.ai-hero-icon {
+
+    width: 58px;
+    height: 58px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    border-radius: 14px;
+
+    background: #2563eb;
+
+    color: white;
+
+    font-size: 25px;
+}
+
+.ai-hero-content {
+
+    flex: 1;
+}
+
+.ai-badge {
+
+    display: inline-block;
+
+    margin-bottom: 6px;
+
+    padding: 4px 9px;
+
+    border-radius: 20px;
+
+    background: #dbeafe;
+
+    color: #2563eb;
+
+    font-size: 9px;
+
+    font-weight: 700;
+
+    letter-spacing: 0.6px;
+}
+
+.ai-hero-content h2 {
+
+    margin: 0 0 5px;
+
+    color: #10233f;
+
+    font-size: 20px;
+}
+
+.ai-hero-content p {
+
+    margin: 0;
+
+    max-width: 700px;
+
+    color: #667085;
+
+    font-size: 12px;
+
+    line-height: 1.6;
+}
+
+.ai-generate-btn {
+
+    border: none;
+
+    padding: 12px 18px;
+
+    border-radius: 8px;
+
+    background: #2563eb;
+
+    color: white;
+
+    font-size: 12px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+.ai-generate-btn:hover {
+
+    transform: translateY(-1px);
+
+    background: #1d4ed8;
+}
+
+.ai-generate-btn:disabled {
+
+    opacity: 0.7;
+
+    cursor: default;
+}
+
+
+/* ---------------------------------------------------------
+   Academic Analysis
+   --------------------------------------------------------- */
+
+.analysis-status {
+
+    padding: 6px 10px;
+
+    border-radius: 20px;
+
+    background: #dcfce7;
+
+    color: #087443;
+
+    font-size: 10px;
+
+    font-weight: 600;
+}
+
+.analysis-grid {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, 1fr);
+
+    gap: 15px;
+}
+
+.analysis-item {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    padding: 18px;
+
+    border: 1px solid #edf0f5;
+
+    border-radius: 10px;
+
+    background: #ffffff;
+}
+
+.analysis-icon {
+
+    width: 42px;
+    height: 42px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 10px;
+
+    font-size: 18px;
+}
+
+.analysis-icon.blue {
+    background: #eff6ff;
+}
+
+.analysis-icon.green {
+    background: #ecfdf5;
+}
+
+.analysis-icon.purple {
+    background: #f5f3ff;
+}
+
+.analysis-icon.orange {
+    background: #fff7ed;
+}
+
+.analysis-label {
+
+    display: block;
+
+    margin-bottom: 4px;
+
+    color: #8a96a8;
+
+    font-size: 10px;
+}
+
+.analysis-value {
+
+    display: block;
+
+    color: #10233f;
+
+    font-size: 18px;
+}
+
+.analysis-value.small {
+
+    font-size: 15px;
+}
+
+
+/* ---------------------------------------------------------
+   AI Recommendation
+   --------------------------------------------------------- */
+
+.recommendation-card {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 18px;
+
+    margin-top: 20px;
+
+    padding: 22px;
+
+    border-radius: 14px;
+
+    background: #eff6ff;
+
+    border: 1px solid #d7e7ff;
+}
+
+.recommendation-icon {
+
+    width: 50px;
+    height: 50px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    border-radius: 12px;
+
+    background: #2563eb;
+
+    font-size: 22px;
+}
+
+.recommendation-label {
+
+    display: block;
+
+    margin-bottom: 4px;
+
+    color: #2563eb;
+
+    font-size: 10px;
+
+    font-weight: 700;
+
+    text-transform: uppercase;
+}
+
+.recommendation-content h3 {
+
+    margin: 0 0 5px;
+
+    color: #10233f;
+
+    font-size: 17px;
+}
+
+.recommendation-content p {
+
+    margin: 0;
+
+    color: #667085;
+
+    font-size: 12px;
+
+    line-height: 1.6;
+}
+
+
+/* ---------------------------------------------------------
+   Focus Areas
+   --------------------------------------------------------- */
+
+.focus-grid {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 16px;
+}
+
+.focus-card {
+
+    padding: 18px;
+
+    border: 1px solid #edf0f5;
+
+    border-radius: 12px;
+
+    transition: 0.2s;
+
+    background: white;
+}
+
+.focus-card:hover {
+
+    transform: translateY(-2px);
+
+    border-color: #d6e4fb;
+
+    box-shadow:
+        0 5px 18px
+        rgba(30, 64, 175, 0.06);
+}
+
+.focus-card-top {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+}
+
+.focus-icon {
+
+    width: 42px;
+    height: 42px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 10px;
+
+    background: #eef4ff;
+
+    font-size: 18px;
+}
+
+.focus-time {
+
+    padding: 5px 8px;
+
+    border-radius: 15px;
+
+    background: #f5f7fa;
+
+    color: #667085;
+
+    font-size: 9px;
+
+    font-weight: 600;
+}
+
+.focus-card h3 {
+
+    margin: 15px 0 6px;
+
+    color: #10233f;
+
+    font-size: 14px;
+}
+
+.focus-card p {
+
+    min-height: 38px;
+
+    margin: 0 0 12px;
+
+    color: #8a96a8;
+
+    font-size: 11px;
+
+    line-height: 1.5;
+}
+
+.focus-card a {
+
+    color: #2563eb;
+
+    font-size: 11px;
+
+    font-weight: 600;
+
+    text-decoration: none;
+}
+
+
+/* ---------------------------------------------------------
+   Study Plan
+   --------------------------------------------------------- */
+
+.study-plan-card {
+
+    margin-top: 20px;
+}
+
+.plan-duration {
+
+    padding: 6px 10px;
+
+    border-radius: 20px;
+
+    background: #eef4ff;
+
+    color: #2563eb;
+
+    font-size: 10px;
+
+    font-weight: 600;
+}
+
+.study-timeline {
+
+    position: relative;
+
+    margin-top: 10px;
+}
+
+.timeline-item {
+
+    display: flex;
+
+    gap: 15px;
+
+    padding: 15px 0;
+
+    border-bottom: 1px solid #edf0f5;
+}
+
+.timeline-item:last-child {
+
+    border-bottom: none;
+}
+
+.timeline-number {
+
+    width: 32px;
+    height: 32px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    border-radius: 50%;
+
+    background: #2563eb;
+
+    color: white;
+
+    font-size: 12px;
+
+    font-weight: 700;
+}
+
+.timeline-content h3 {
+
+    margin: 0 0 4px;
+
+    color: #10233f;
+
+    font-size: 13px;
+}
+
+.timeline-content p {
+
+    margin: 0 0 6px;
+
+    color: #8a96a8;
+
+    font-size: 11px;
+
+    line-height: 1.5;
+}
+
+.timeline-content span {
+
+    color: #2563eb;
+
+    font-size: 10px;
+
+    font-weight: 600;
+}
+
+
+/* ---------------------------------------------------------
+   Motivation
+   --------------------------------------------------------- */
+
+.motivation-card {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 15px;
+
+    margin-top: 20px;
+
+    padding: 20px;
+
+    border-radius: 12px;
+
+    background: #f8fafc;
+
+    border: 1px solid #e8edf4;
+}
+
+.motivation-icon {
+
+    font-size: 28px;
+}
+
+.motivation-card h3 {
+
+    margin: 0 0 4px;
+
+    color: #10233f;
+
+    font-size: 14px;
+}
+
+.motivation-card p {
+
+    margin: 0;
+
+    color: #8a96a8;
+
+    font-size: 11px;
+}
+
+
+/* ---------------------------------------------------------
+   Responsive Design
+   --------------------------------------------------------- */
+
+@media (max-width: 900px) {
+
+    .analysis-grid {
+
+        grid-template-columns:
+            repeat(2, 1fr);
+    }
+
+    .focus-grid {
+
+        grid-template-columns:
+            1fr;
+    }
+
+    .ai-hero {
+
+        align-items: flex-start;
+
+        flex-wrap: wrap;
+    }
+
+    .ai-generate-btn {
+
+        margin-left: 78px;
+    }
+}
