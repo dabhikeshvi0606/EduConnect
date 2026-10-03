@@ -2093,3 +2093,378 @@ button:hover {
         margin-left: 78px;
     }
 }
+
+/* =========================================================
+   EDUCONNECT - EXTRA RESPONSIVE FIXES
+   ========================================================= */
+
+
+/* ---------------------------------------------------------
+   TABLET
+   --------------------------------------------------------- */
+
+@media (max-width: 900px) {
+
+    /* Dashboard heading */
+    .dashboard-heading {
+        min-width: 0;
+    }
+
+    .dashboard-heading h1 {
+        line-height: 1.3;
+    }
+
+    /* AI hero */
+    .ai-hero-content {
+        min-width: 0;
+    }
+
+    /* Long subject names can wrap */
+    .subject-name {
+        min-width: 0;
+        overflow-wrap: anywhere;
+    }
+
+    /* Assignment / material rows */
+    .assignment-details,
+    .material-details {
+        min-width: 0;
+    }
+
+}
+
+
+/* ---------------------------------------------------------
+   SMALL TABLET / LARGE MOBILE
+   --------------------------------------------------------- */
+
+@media (max-width: 700px) {
+
+    /* Dashboard header */
+    .dashboard-header {
+        gap: 15px;
+    }
+
+    .dashboard-heading h1 {
+        font-size: 22px;
+    }
+
+    .dashboard-heading p {
+        line-height: 1.5;
+    }
+
+    /* Cards */
+    .dashboard-card,
+    .stat-card {
+        padding: 18px;
+    }
+
+    /* Assignment rows */
+    .assignment-item {
+        align-items: flex-start;
+        flex-wrap: wrap;
+    }
+
+    .assignment-action {
+        width: 100%;
+        justify-content: flex-end;
+    }
+
+    /* Study material rows */
+    .material-item {
+        align-items: flex-start;
+        flex-wrap: wrap;
+    }
+
+    .material-button {
+        margin-left: 64px;
+    }
+
+    /* AI hero */
+    .ai-hero {
+        gap: 15px;
+    }
+
+    .ai-generate-btn {
+        margin-left: 0;
+    }
+
+    /* Analysis cards */
+    .analysis-grid {
+        grid-template-columns: 1fr;
+    }
+
+    /* Recommendation */
+    .recommendation-card {
+        align-items: flex-start;
+    }
+
+}
+
+
+/* ---------------------------------------------------------
+   MOBILE
+   --------------------------------------------------------- */
+
+@media (max-width: 600px) {
+
+    /* -----------------------------------------
+       Dashboard
+       ----------------------------------------- */
+
+    .dashboard-main {
+        padding: 18px 12px;
+    }
+
+    .dashboard-header {
+        align-items: flex-start;
+    }
+
+    .dashboard-heading {
+        flex: 1;
+    }
+
+    .dashboard-heading h1 {
+        font-size: 20px;
+    }
+
+    .dashboard-heading p {
+        font-size: 12px;
+    }
+
+    .notification {
+        width: 36px;
+        height: 36px;
+        flex-shrink: 0;
+    }
+
+
+    /* -----------------------------------------
+       Sidebar
+       ----------------------------------------- */
+
+    .sidebar {
+        width: 60px;
+    }
+
+    .dashboard-main {
+        margin-left: 60px;
+        width: calc(100% - 60px);
+    }
+
+    .sidebar-brand-icon {
+        width: 34px;
+        height: 34px;
+        font-size: 16px;
+    }
+
+    .sidebar-nav {
+        padding: 20px 8px;
+    }
+
+    .nav-link {
+        padding: 12px 8px;
+    }
+
+    .nav-icon {
+        width: 100%;
+    }
+
+    .sidebar-profile {
+        padding: 12px 5px;
+    }
+
+    .profile-avatar {
+        width: 34px;
+        height: 34px;
+    }
+
+
+    /* -----------------------------------------
+       Student information
+       ----------------------------------------- */
+
+    #student-info {
+        line-height: 1.5;
+        overflow-wrap: anywhere;
+    }
+
+
+    /* -----------------------------------------
+       Statistics
+       ----------------------------------------- */
+
+    .stats-grid {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+
+    .stat-card {
+        padding: 16px;
+    }
+
+
+    /* -----------------------------------------
+       Dashboard cards
+       ----------------------------------------- */
+
+    .dashboard-grid {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+
+    .dashboard-card {
+        padding: 16px;
+    }
+
+    .card-header {
+        gap: 10px;
+    }
+
+    .card-header h2 {
+        font-size: 15px;
+    }
+
+
+    /* -----------------------------------------
+       Attendance
+       ----------------------------------------- */
+
+    .attendance-info {
+        gap: 10px;
+    }
+
+    .subject-name {
+        max-width: 75%;
+        line-height: 1.4;
+    }
+
+
+    /* -----------------------------------------
+       Assignments
+       ----------------------------------------- */
+
+    .assignment-item {
+        gap: 12px;
+    }
+
+    .assignment-details h3 {
+        font-size: 13px;
+        line-height: 1.4;
+    }
+
+    .assignment-details p,
+    .assignment-description {
+        line-height: 1.5;
+    }
+
+    .assignment-action {
+        justify-content: flex-start;
+        flex-wrap: wrap;
+    }
+
+
+    /* -----------------------------------------
+       Study Materials
+       ----------------------------------------- */
+
+    .material-item {
+        gap: 12px;
+    }
+
+    .material-details h3 {
+        line-height: 1.4;
+    }
+
+    .material-button {
+        margin-left: 58px;
+    }
+
+
+    /* -----------------------------------------
+       AI Study Coach
+       ----------------------------------------- */
+
+    .ai-hero {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .ai-hero-icon {
+        width: 48px;
+        height: 48px;
+    }
+
+    .ai-hero-content h2 {
+        font-size: 18px;
+    }
+
+    .ai-generate-btn {
+        width: 100%;
+        margin-left: 0;
+    }
+
+    .recommendation-card {
+        flex-direction: column;
+    }
+
+    .focus-grid {
+        grid-template-columns: 1fr;
+    }
+
+
+    /* -----------------------------------------
+       Result chart
+       ----------------------------------------- */
+
+    .result-chart-container {
+        height: 250px;
+        padding: 5px;
+    }
+
+    #resultChart {
+        max-width: 100%;
+    }
+
+}
+
+
+/* ---------------------------------------------------------
+   VERY SMALL PHONES
+   --------------------------------------------------------- */
+
+@media (max-width: 400px) {
+
+    .sidebar {
+        width: 52px;
+    }
+
+    .dashboard-main {
+        margin-left: 52px;
+        width: calc(100% - 52px);
+        padding: 15px 10px;
+    }
+
+    .sidebar-nav {
+        padding-left: 5px;
+        padding-right: 5px;
+    }
+
+    .nav-link {
+        padding-left: 5px;
+        padding-right: 5px;
+    }
+
+    .dashboard-heading h1 {
+        font-size: 18px;
+    }
+
+    .stat-value {
+        font-size: 22px;
+    }
+
+    .dashboard-card {
+        padding: 14px;
+    }
+
+}

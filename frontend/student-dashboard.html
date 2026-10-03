@@ -1,4 +1,3 @@
-```html
 <!DOCTYPE html>
 <html lang="en">
 
@@ -8,7 +7,6 @@
 
     <title>EduConnect | Student Dashboard</title>
 
-    <!-- Main EduConnect stylesheet -->
     <link rel="stylesheet" href="css/style.css">
 </head>
 
@@ -20,71 +18,154 @@
 
     <div class="dashboard">
 
+
         <!-- =================================================
              SIDEBAR
              ================================================= -->
 
         <aside class="sidebar">
 
-            <!-- EduConnect Brand -->
+            <!-- Brand -->
             <div class="sidebar-brand">
-                <div class="sidebar-brand-icon">E</div>
-                <span>EduConnect</span>
+
+                <div class="sidebar-brand-icon">
+                    E
+                </div>
+
+                <span>
+                    EduConnect
+                </span>
+
             </div>
+
 
             <!-- Navigation -->
             <nav class="sidebar-nav">
 
                 <p>Menu</p>
 
-                <!-- Dashboard -->
-                <a href="student-dashboard.html" class="nav-link active">
-                    <span class="nav-icon">⌂</span>
-                    <span>Dashboard</span>
+
+                <a
+                    href="student-dashboard.html"
+                    class="nav-link active">
+
+                    <span class="nav-icon">
+                        ⌂
+                    </span>
+
+                    <span>
+                        Dashboard
+                    </span>
+
                 </a>
 
-                <!-- Attendance -->
-                <a href="attendance.html" class="nav-link">
-                    <span class="nav-icon">◷</span>
-                    <span>Attendance</span>
+
+                <a
+                    href="attendance.html"
+                    class="nav-link">
+
+                    <span class="nav-icon">
+                        ◷
+                    </span>
+
+                    <span>
+                        Attendance
+                    </span>
+
                 </a>
 
-                <!-- Assignments -->
-                <a href="assignments.html" class="nav-link">
-                    <span class="nav-icon">✓</span>
-                    <span>Assignments</span>
+
+                <a
+                    href="assignments.html"
+                    class="nav-link">
+
+                    <span class="nav-icon">
+                        ✓
+                    </span>
+
+                    <span>
+                        Assignments
+                    </span>
+
                 </a>
 
-                <!-- Study Materials -->
-                <a href="materials.html" class="nav-link">
-                    <span class="nav-icon">▣</span>
-                    <span>Study Materials</span>
+
+                <a
+                    href="materials.html"
+                    class="nav-link">
+
+                    <span class="nav-icon">
+                        ▣
+                    </span>
+
+                    <span>
+                        Study Materials
+                    </span>
+
                 </a>
 
-                <!-- Results -->
-                <a href="results.html" class="nav-link">
-                    <span class="nav-icon">▤</span>
-                    <span>Results</span>
+
+                <a
+                    href="results.html"
+                    class="nav-link">
+
+                    <span class="nav-icon">
+                        ▤
+                    </span>
+
+                    <span>
+                        Results
+                    </span>
+
                 </a>
 
-                <!-- AI Study Coach -->
-                <a href="study-coach.html" class="nav-link">
-                    <span class="nav-icon">✦</span>
-                    <span>AI Study Coach</span>
+
+                <a
+                    href="study-coach.html"
+                    class="nav-link">
+
+                    <span class="nav-icon">
+                        ✦
+                    </span>
+
+                    <span>
+                        AI Study Coach
+                    </span>
+
                 </a>
 
             </nav>
 
+
             <!-- Sidebar Profile -->
             <div class="sidebar-profile">
 
-                <div class="profile-avatar">
-                    K
+                <div
+                    class="profile-avatar"
+                    id="profile-avatar">
+
+                    S
+
                 </div>
 
+
                 <div class="profile-info">
-                    <span class="profile-name">Keshvi</span>
-                    <span class="profile-role">Student</span>
+
+                    <span
+                        class="profile-name"
+                        id="profile-name">
+
+                        Student
+
+                    </span>
+
+
+                    <span class="profile-role">
+
+                        Student
+
+                    </span>
+
                 </div>
 
             </div>
@@ -92,38 +173,53 @@
         </aside>
 
 
+
         <!-- =================================================
-             MAIN DASHBOARD CONTENT
+             MAIN CONTENT
              ================================================= -->
 
         <main class="dashboard-main">
 
+
             <!-- =================================================
-                 TOP HEADER
+                 HEADER
                  ================================================= -->
 
             <header class="dashboard-header">
 
                 <div class="dashboard-heading">
 
-                    <h1>Good Morning, Keshvi! 👋</h1>
+                    <h1 id="welcome-message">
+                        Good Morning! 👋
+                    </h1>
+
 
                     <p>
                         Here's your academic overview for today.
                     </p>
 
+
+                    <p id="student-info">
+                        Loading student information...
+                    </p>
+
                 </div>
+
 
                 <div class="header-actions">
 
-                    <!-- Notification -->
-                    <div class="notification" title="Notifications">
+                    <div
+                        class="notification"
+                        title="Notifications">
+
                         🔔
+
                     </div>
 
                 </div>
 
             </header>
+
 
 
             <!-- =================================================
@@ -132,18 +228,38 @@
 
             <section class="stats-grid">
 
+
                 <!-- Attendance -->
                 <div class="stat-card">
 
                     <div class="stat-top">
 
                         <div>
-                            <div class="stat-label">Attendance</div>
-                            <div class="stat-value">78%</div>
-                            <div class="stat-subtext">
-                                Overall attendance
+
+                            <div class="stat-label">
+                                Attendance
                             </div>
+
+
+                            <div
+                                class="stat-value"
+                                id="dashboard-attendance">
+
+                                --
+
+                            </div>
+
+
+                            <div
+                                class="stat-subtext"
+                                id="dashboard-attendance-subtext">
+
+                                Loading...
+
+                            </div>
+
                         </div>
+
 
                         <div class="stat-icon">
                             📊
@@ -154,18 +270,30 @@
                 </div>
 
 
+
                 <!-- Assignments -->
                 <div class="stat-card">
 
                     <div class="stat-top">
 
                         <div>
-                            <div class="stat-label">Assignments</div>
-                            <div class="stat-value">3</div>
+
+                            <div class="stat-label">
+                                Assignments
+                            </div>
+
+
+                            <div class="stat-value">
+                                3
+                            </div>
+
+
                             <div class="stat-subtext">
                                 Pending submissions
                             </div>
+
                         </div>
+
 
                         <div class="stat-icon">
                             📝
@@ -176,18 +304,30 @@
                 </div>
 
 
+
                 <!-- Average Score -->
                 <div class="stat-card">
 
                     <div class="stat-top">
 
                         <div>
-                            <div class="stat-label">Average Score</div>
-                            <div class="stat-value">76%</div>
+
+                            <div class="stat-label">
+                                Average Score
+                            </div>
+
+
+                            <div class="stat-value">
+                                76%
+                            </div>
+
+
                             <div class="stat-subtext">
                                 Current academic average
                             </div>
+
                         </div>
+
 
                         <div class="stat-icon">
                             🏆
@@ -198,18 +338,30 @@
                 </div>
 
 
+
                 <!-- Study Materials -->
                 <div class="stat-card">
 
                     <div class="stat-top">
 
                         <div>
-                            <div class="stat-label">Materials</div>
-                            <div class="stat-value">12</div>
+
+                            <div class="stat-label">
+                                Materials
+                            </div>
+
+
+                            <div class="stat-value">
+                                12
+                            </div>
+
+
                             <div class="stat-subtext">
                                 New resources available
                             </div>
+
                         </div>
+
 
                         <div class="stat-icon">
                             📚
@@ -222,6 +374,7 @@
             </section>
 
 
+
             <!-- =================================================
                  MAIN DASHBOARD GRID
                  ================================================= -->
@@ -230,14 +383,17 @@
 
 
                 <!-- =================================================
-                     ATTENDANCE OVERVIEW
+                     ACADEMIC SNAPSHOT
                      ================================================= -->
 
                 <div class="dashboard-card">
 
                     <div class="card-header">
 
-                        <h2>Attendance Overview</h2>
+                        <h2>
+                            Academic Snapshot
+                        </h2>
+
 
                         <a href="attendance.html">
                             View Details
@@ -246,26 +402,35 @@
                     </div>
 
 
-                    <!-- Java -->
+
+                    <!-- Overall Attendance -->
                     <div class="attendance-row">
 
                         <div class="attendance-info">
 
                             <span class="subject-name">
-                                Java Programming
+                                Overall Attendance
                             </span>
 
-                            <span class="attendance-percentage">
-                                82%
+
+                            <span
+                                class="attendance-percentage"
+                                id="dashboard-overall-attendance">
+
+                                --
+
                             </span>
 
                         </div>
+
 
                         <div class="progress-bar">
 
                             <div
                                 class="progress-fill attendance-good"
-                                style="width: 82%;">
+                                id="dashboard-attendance-progress"
+                                style="width: 0%;">
+
                             </div>
 
                         </div>
@@ -273,87 +438,109 @@
                     </div>
 
 
-                    <!-- DBMS -->
-                    <div class="attendance-row">
 
-                        <div class="attendance-info">
+                    <!-- Attendance Summary -->
+                    <div
+                        class="assignment-item"
+                        style="margin-top: 18px;">
 
-                            <span class="subject-name">
-                                Database Management Systems
+                        <div class="assignment-info">
+
+                            <span class="assignment-title">
+                                Classes Attended
                             </span>
 
-                            <span class="attendance-percentage">
-                                68%
+
+                            <span
+                                class="assignment-subject"
+                                id="dashboard-attendance-classes">
+
+                                Loading...
+
                             </span>
 
                         </div>
 
-                        <div class="progress-bar">
 
-                            <div
-                                class="progress-fill attendance-low"
-                                style="width: 68%;">
-                            </div>
+                        <span
+                            class="assignment-status status-completed">
 
-                        </div>
+                            ✓
+
+                        </span>
 
                     </div>
 
 
-                    <!-- Artificial Intelligence -->
-                    <div class="attendance-row">
 
-                        <div class="attendance-info">
+                    <!-- Attendance Status -->
+                    <div
+                        class="assignment-item">
 
-                            <span class="subject-name">
-                                Artificial Intelligence
+                        <div class="assignment-info">
+
+                            <span class="assignment-title">
+                                Attendance Status
                             </span>
 
-                            <span class="attendance-percentage">
-                                91%
+
+                            <span
+                                class="assignment-subject"
+                                id="dashboard-attendance-status">
+
+                                Calculating...
+
                             </span>
 
                         </div>
 
-                        <div class="progress-bar">
 
-                            <div
-                                class="progress-fill attendance-excellent"
-                                style="width: 91%;">
-                            </div>
+                        <span
+                            class="assignment-status status-completed"
+                            id="dashboard-attendance-status-icon">
 
-                        </div>
+                            🟢
+
+                        </span>
 
                     </div>
 
 
-                    <!-- Cloud Security -->
-                    <div class="attendance-row">
 
-                        <div class="attendance-info">
+                    <!-- Focus Area -->
+                    <div
+                        class="assignment-item">
 
-                            <span class="subject-name">
-                                Cloud Security
+                        <div class="assignment-info">
+
+                            <span class="assignment-title">
+                                Focus Area
                             </span>
 
-                            <span class="attendance-percentage">
-                                76%
+
+                            <span
+                                class="assignment-subject"
+                                id="dashboard-focus-subject">
+
+                                Loading...
+
                             </span>
 
                         </div>
 
-                        <div class="progress-bar">
 
-                            <div
-                                class="progress-fill attendance-good"
-                                style="width: 76%;">
-                            </div>
+                        <span
+                            class="assignment-status status-pending"
+                            id="dashboard-focus-percentage">
 
-                        </div>
+                            --
+
+                        </span>
 
                     </div>
 
                 </div>
+
 
 
                 <!-- =================================================
@@ -364,13 +551,17 @@
 
                     <div class="card-header">
 
-                        <h2>Upcoming Assignments</h2>
+                        <h2>
+                            Upcoming Assignments
+                        </h2>
+
 
                         <a href="assignments.html">
                             View All
                         </a>
 
                     </div>
+
 
 
                     <!-- Assignment 1 -->
@@ -382,17 +573,23 @@
                                 JDBC Mini Project
                             </span>
 
+
                             <span class="assignment-subject">
                                 Java Programming • Due Aug 15
                             </span>
 
                         </div>
 
-                        <span class="assignment-status status-pending">
+
+                        <span
+                            class="assignment-status status-pending">
+
                             Pending
+
                         </span>
 
                     </div>
+
 
 
                     <!-- Assignment 2 -->
@@ -404,17 +601,23 @@
                                 SQL Query Practice
                             </span>
 
+
                             <span class="assignment-subject">
                                 DBMS • Due Aug 17
                             </span>
 
                         </div>
 
-                        <span class="assignment-status status-pending">
+
+                        <span
+                            class="assignment-status status-pending">
+
                             Pending
+
                         </span>
 
                     </div>
+
 
 
                     <!-- Assignment 3 -->
@@ -426,17 +629,23 @@
                                 AI Case Study
                             </span>
 
+
                             <span class="assignment-subject">
                                 Artificial Intelligence • Aug 12
                             </span>
 
                         </div>
 
-                        <span class="assignment-status status-completed">
+
+                        <span
+                            class="assignment-status status-completed">
+
                             Completed
+
                         </span>
 
                     </div>
+
 
 
                     <!-- Assignment 4 -->
@@ -448,14 +657,19 @@
                                 Cloud Security Report
                             </span>
 
+
                             <span class="assignment-subject">
-                                Cloud Security • Aug 20
+                                Cloud Security • Due Aug 20
                             </span>
 
                         </div>
 
-                        <span class="assignment-status status-pending">
+
+                        <span
+                            class="assignment-status status-pending">
+
                             Pending
+
                         </span>
 
                     </div>
@@ -463,6 +677,7 @@
                 </div>
 
             </section>
+
 
 
             <!-- =================================================
@@ -473,34 +688,36 @@
 
                 <div class="coach-content">
 
-                    <!-- AI Icon -->
+
                     <div class="coach-icon">
                         ✦
                     </div>
 
 
-                    <!-- AI Message -->
                     <div class="coach-text">
 
                         <h3>
                             Your AI Study Coach
                         </h3>
 
+
                         <p>
                             Your recent academic activity shows that
-                            DBMS needs some attention. Get a personalized
-                            study plan based on your attendance,
-                            performance, and progress.
+                            your attendance is being monitored across
+                            all subjects. Get a personalized study plan
+                            based on your attendance, performance,
+                            and progress.
                         </p>
 
                     </div>
 
 
-                    <!-- Open Study Coach -->
                     <a
                         href="study-coach.html"
                         class="coach-button">
+
                         View Recommendations
+
                     </a>
 
                 </div>
@@ -512,10 +729,13 @@
     </div>
 
 
-    <!-- Main JavaScript -->
+
+    <!-- =====================================================
+         JAVASCRIPT
+         ===================================================== -->
+
     <script src="js/script.js"></script>
 
 </body>
 
 </html>
-```

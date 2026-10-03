@@ -1,4 +1,3 @@
-```html
 <!DOCTYPE html>
 <html lang="en">
 
@@ -31,6 +30,7 @@
                 <div class="sidebar-brand-icon">E</div>
                 <span>EduConnect</span>
             </div>
+
 
             <!-- Navigation -->
             <nav class="sidebar-nav">
@@ -69,17 +69,18 @@
 
             </nav>
 
+
             <!-- Sidebar Profile -->
             <div class="sidebar-profile">
 
-                <div class="profile-avatar">
-                    K
+                <div class="profile-avatar" id="profile-avatar">
+                    S
                 </div>
 
                 <div class="profile-info">
 
-                    <span class="profile-name">
-                        Keshvi
+                    <span class="profile-name" id="profile-name">
+                        Student
                     </span>
 
                     <span class="profile-role">
@@ -138,17 +139,21 @@
                     <div class="stat-top">
 
                         <div>
+
                             <div class="stat-label">
                                 Overall Attendance
                             </div>
 
-                            <div class="stat-value">
-                                78%
+                            <div
+                                class="stat-value"
+                                id="overall-attendance">
+                                --
                             </div>
 
                             <div class="stat-subtext">
                                 Current semester
                             </div>
+
                         </div>
 
                         <div class="stat-icon">
@@ -166,17 +171,23 @@
                     <div class="stat-top">
 
                         <div>
+
                             <div class="stat-label">
                                 Classes Attended
                             </div>
 
-                            <div class="stat-value">
-                                94
+                            <div
+                                class="stat-value"
+                                id="classes-attended">
+                                --
                             </div>
 
-                            <div class="stat-subtext">
-                                Out of 120 classes
+                            <div
+                                class="stat-subtext"
+                                id="classes-total">
+                                Loading...
                             </div>
+
                         </div>
 
                         <div class="stat-icon">
@@ -194,17 +205,21 @@
                     <div class="stat-top">
 
                         <div>
+
                             <div class="stat-label">
                                 Classes Missed
                             </div>
 
-                            <div class="stat-value">
-                                26
+                            <div
+                                class="stat-value"
+                                id="classes-missed">
+                                --
                             </div>
 
                             <div class="stat-subtext">
                                 This semester
                             </div>
+
                         </div>
 
                         <div class="stat-icon">
@@ -222,20 +237,28 @@
                     <div class="stat-top">
 
                         <div>
+
                             <div class="stat-label">
                                 Attendance Status
                             </div>
 
-                            <div class="stat-value">
-                                Good
+                            <div
+                                class="stat-value"
+                                id="attendance-status">
+                                --
                             </div>
 
-                            <div class="stat-subtext">
-                                Above minimum requirement
+                            <div
+                                class="stat-subtext"
+                                id="attendance-status-text">
+                                Calculating...
                             </div>
+
                         </div>
 
-                        <div class="stat-icon">
+                        <div
+                            class="stat-icon"
+                            id="attendance-status-icon">
                             🟢
                         </div>
 
@@ -263,114 +286,13 @@
                 </div>
 
 
-                <!-- Java Programming -->
-                <div class="attendance-row">
+                <!-- Dynamic attendance rows will appear here -->
 
-                    <div class="attendance-info">
+                <div id="attendance-list">
 
-                        <span class="subject-name">
-                            Java Programming
-                        </span>
-
-                        <span class="attendance-percentage">
-                            82%
-                        </span>
-
-                    </div>
-
-                    <div class="progress-bar">
-
-                        <div
-                            class="progress-fill attendance-good"
-                            style="width: 82%;">
-                        </div>
-
-                    </div>
-
-                </div>
-
-
-                <!-- DBMS -->
-                <div class="attendance-row">
-
-                    <div class="attendance-info">
-
-                        <span class="subject-name">
-                            Database Management Systems
-                        </span>
-
-                        <span class="attendance-percentage">
-                            68%
-                        </span>
-
-                    </div>
-
-                    <div class="progress-bar">
-
-                        <div
-                            class="progress-fill attendance-low"
-                            style="width: 68%;">
-                        </div>
-
-                    </div>
-
-                    <div class="attendance-warning">
-                        ⚠ Attendance below required percentage
-                    </div>
-
-                </div>
-
-
-                <!-- Artificial Intelligence -->
-                <div class="attendance-row">
-
-                    <div class="attendance-info">
-
-                        <span class="subject-name">
-                            Artificial Intelligence
-                        </span>
-
-                        <span class="attendance-percentage">
-                            91%
-                        </span>
-
-                    </div>
-
-                    <div class="progress-bar">
-
-                        <div
-                            class="progress-fill attendance-excellent"
-                            style="width: 91%;">
-                        </div>
-
-                    </div>
-
-                </div>
-
-
-                <!-- Cloud Security -->
-                <div class="attendance-row">
-
-                    <div class="attendance-info">
-
-                        <span class="subject-name">
-                            Cloud Security
-                        </span>
-
-                        <span class="attendance-percentage">
-                            76%
-                        </span>
-
-                    </div>
-
-                    <div class="progress-bar">
-
-                        <div
-                            class="progress-fill attendance-good"
-                            style="width: 76%;">
-                        </div>
-
-                    </div>
+                    <p>
+                        Loading attendance...
+                    </p>
 
                 </div>
 
@@ -389,6 +311,7 @@
 
                 </div>
 
+
                 <div class="attendance-table-wrapper">
 
                     <table class="attendance-table">
@@ -396,68 +319,32 @@
                         <thead>
 
                             <tr>
+
                                 <th>Subject</th>
+
                                 <th>Total Classes</th>
+
                                 <th>Present</th>
+
                                 <th>Absent</th>
+
                                 <th>Attendance</th>
+
                                 <th>Status</th>
+
                             </tr>
 
                         </thead>
 
-                        <tbody>
+
+                        <tbody id="attendance-table-body">
 
                             <tr>
-                                <td>Java Programming</td>
-                                <td>30</td>
-                                <td>25</td>
-                                <td>5</td>
-                                <td>82%</td>
-                                <td>
-                                    <span class="attendance-status good">
-                                        Good
-                                    </span>
-                                </td>
-                            </tr>
 
-                            <tr>
-                                <td>Database Management Systems</td>
-                                <td>28</td>
-                                <td>19</td>
-                                <td>9</td>
-                                <td>68%</td>
-                                <td>
-                                    <span class="attendance-status warning">
-                                        Low
-                                    </span>
+                                <td colspan="6">
+                                    Loading attendance...
                                 </td>
-                            </tr>
 
-                            <tr>
-                                <td>Artificial Intelligence</td>
-                                <td>32</td>
-                                <td>29</td>
-                                <td>3</td>
-                                <td>91%</td>
-                                <td>
-                                    <span class="attendance-status excellent">
-                                        Excellent
-                                    </span>
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <td>Cloud Security</td>
-                                <td>30</td>
-                                <td>23</td>
-                                <td>7</td>
-                                <td>76%</td>
-                                <td>
-                                    <span class="attendance-status good">
-                                        Good
-                                    </span>
-                                </td>
                             </tr>
 
                         </tbody>
@@ -487,11 +374,8 @@
                             Attendance Insight
                         </h3>
 
-                        <p>
-                            Your DBMS attendance is currently below
-                            the required 75%. Try to attend upcoming
-                            DBMS classes regularly to improve your
-                            attendance percentage.
+                        <p id="attendance-insight">
+                            Loading attendance insight...
                         </p>
 
                     </div>
@@ -517,4 +401,3 @@
 </body>
 
 </html>
-```
