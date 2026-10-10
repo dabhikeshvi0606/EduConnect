@@ -502,96 +502,365 @@
          ===================================================== -->
 
     <script>
-    const resultChart = document.getElementById("resultChart");
+/* =========================================================
+   RESULTS PAGE - BACKEND INTEGRATION
+   ========================================================= */
 
-    if (resultChart) {
+async function loadResults() {
 
-        new Chart(resultChart, {
+    try {
 
-            type: "doughnut",
+        const studentId = 1;
 
-            data: {
+        const response = await fetch(
+            `http://localhost:8080/api/results/student/${studentId}`
+        );
 
-                labels: [
-                    "Java Programming",
-                    "DBMS",
-                    "Artificial Intelligence",
-                    "Cloud Security"
-                ],
+        if (!response.ok) {
+            throw new Error("Failed to fetch results.");
+        }
 
-                datasets: [{
+        const results = await response.json();
 
-                    data: [
-                        81,
-                        72,
-                        93,
-                        82
-                    ],
+        console.log("Results from backend:", results);
 
-                    /* Different colors for each subject */
-                    backgroundColor: [
-                        "#2563EB",   /* Java - Blue */
-                        "#F59E0B",   /* DBMS - Orange */
-                        "#10B981",   /* AI - Green */
-                        "#8B5CF6"    /* Cloud Security - Purple */
-                    ],
 
-                    /* White separation between slices */
-                    borderColor: "#ffffff",
+        /* =====================================================
+           1. SUMMARY CALCULATIONS
+           ===================================================== */
 
-                    borderWidth: 4,
+        const subjectCount = results.length;
 
-                    /* Slightly expand slice on hover */
-                    hoverOffset: 8
+        let totalPercentage = 0;
+        let bestResult = null;
 
-                }]
+        results.forEach(function(result) {
 
-            },
+            totalPercentage += result.percentage;
 
-            options: {
+            if (
+                bestResult === null ||
+                result.percentage > bestResult.percentage
+            ) {
+                bestResult = result;
+            }
 
-                responsive: true,
+        });
 
-                maintainAspectRatio: false,
+        const overallScore =
+            subjectCount > 0
+                ? totalPercentage / subjectCount
+                : 0;
 
-                /* Creates the donut hole */
-                cutout: "68%",
 
-                plugins: {
+        /* =====================================================
+           2. DETERMINE OVERALL GRADE
+           ===================================================== */
 
-                    legend: {
+        let overallGrade = "F";
 
-                        position: "bottom",
+        if (overallScore >= 90) {
+            overallGrade = "A+";
+        }
+        else if (overallScore >= 80) {
+            overallGrade = "A";
+        }
+        else if (overallScore >= 70) {
+            overallGrade = "B+";
+        }
+        else if (overallScore >= 60) {
+            overallGrade = "B";
+        }
+        else if (overallScore >= 50) {
+            overallGrade = "C";
+        }
+        else if (overallScore >= 40) {
+            overallGrade = "D";
+        }
 
-                        labels: {
 
-                            padding: 18,
+        /* =====================================================
+           3. UPDATE SUMMARY CARDS
+           ===================================================== */
 
-                            usePointStyle: true,
+        const statCards =
+            document.querySelectorAll(".stat-card");
 
-                            pointStyle: "circle",
+        statCards.forEach(function(card) {
 
-                            font: {
-                                size: 12
+            const labelElement =
+                card.querySelector(".stat-label");
+
+            const valueElement =
+                card.querySelector(".stat-value");
+
+            if (!labelElement || !valueElement) {
+                return;
+            }
+
+            const label =
+                labelElement.textContent.trim();
+
+            if (label === "Overall Score") {
+
+                valueElement.textContent =
+                    overallScore.toFixed(1) + "%";
+
+            }
+
+            else if (label === "Overall Grade") {
+
+                valueElement.textContent =
+                    overallGrade;
+
+            }
+
+            else if (label === "Subjects") {
+
+                valueElement.textContent =
+                    subjectCount;
+
+            }
+
+            else if (label === "Best Score") {
+
+                if (bestResult) {
+
+                    valueElement.textContent =
+                        bestResult.percentage + "%";
+
+                    const subtext =
+                        card.querySelector(".stat-subtext");
+
+                    if (subtext) {
+                        subtext.textContent =
+                            bestResult.subject;
+                    }
+
+                }
+
+            }
+
+        });
+
+
+        /* =====================================================
+           4. UPDATE RESULT TABLE
+           ===================================================== */
+
+        const tableBody =
+            document.querySelector(".result-table tbody");
+
+        if (tableBody) {
+
+            tableBody.innerHTML = "";
+
+            results.forEach(function(result) {
+
+                let gradeClass = "grade-b";
+
+                if (result.grade === "A+" ||
+                    result.grade === "A") {
+
+                    gradeClass = "grade-a";
+
+                }
+
+                else if (
+                    result.grade === "B+" ||
+                    result.grade === "B"
+                ) {
+
+                    gradeClass = "grade-b";
+
+                }
+
+                const row =
+                    document.createElement("tr");
+
+                row.innerHTML = `
+
+                    <td>
+                        <strong>
+                            ${result.subject}
+                        </strong>
+                    </td>
+
+                    <td>
+                        ${result.internalMarks}
+                        /
+                        ${result.internalMax}
+                    </td>
+
+                    <td>
+                        ${result.assignmentMarks}
+                        /
+                        ${result.assignmentMax}
+                    </td>
+
+                    <td>
+                        ${result.quizMarks}
+                        /
+                        ${result.quizMax}
+                    </td>
+
+                    <td>
+                        <strong>
+                            ${result.percentage}%
+                        </strong>
+                    </td>
+
+                    <td>
+                        <span class="grade-badge ${gradeClass}">
+                            ${result.grade}
+                        </span>
+                    </td>
+
+                `;
+
+                tableBody.appendChild(row);
+
+            });
+
+        }
+
+
+        /* =====================================================
+           5. UPDATE PERFORMANCE INSIGHT
+           ===================================================== */
+
+        const insightText =
+            document.querySelector(
+                ".material-insight .coach-text p"
+            );
+
+        if (insightText && bestResult) {
+
+            let lowestResult = results[0];
+
+            results.forEach(function(result) {
+
+                if (
+                    result.percentage <
+                    lowestResult.percentage
+                ) {
+                    lowestResult = result;
+                }
+
+            });
+
+            insightText.innerHTML = `
+
+                Your strongest performance is in
+                <strong>${bestResult.subject}</strong>
+                with a score of
+                <strong>${bestResult.percentage}%</strong>.
+
+                Consider revising
+                <strong>${lowestResult.subject}</strong>
+                to improve your overall academic performance.
+
+            `;
+
+        }
+
+
+        /* =====================================================
+           6. CREATE PERFORMANCE CHART
+           ===================================================== */
+
+        const resultChart =
+            document.getElementById("resultChart");
+
+        if (resultChart) {
+
+            const labels =
+                results.map(function(result) {
+                    return result.subject;
+                });
+
+            const percentages =
+                results.map(function(result) {
+                    return result.percentage;
+                });
+
+
+            new Chart(resultChart, {
+
+                type: "doughnut",
+
+                data: {
+
+                    labels: labels,
+
+                    datasets: [{
+
+                        data: percentages,
+
+                        backgroundColor: [
+                            "#2563EB",
+                            "#F59E0B",
+                            "#10B981",
+                            "#8B5CF6",
+                            "#EC4899",
+                            "#06B6D4"
+                        ],
+
+                        borderColor: "#ffffff",
+
+                        borderWidth: 4,
+
+                        hoverOffset: 8
+
+                    }]
+
+                },
+
+                options: {
+
+                    responsive: true,
+
+                    maintainAspectRatio: false,
+
+                    cutout: "68%",
+
+                    plugins: {
+
+                        legend: {
+
+                            position: "bottom",
+
+                            labels: {
+
+                                padding: 18,
+
+                                usePointStyle: true,
+
+                                pointStyle: "circle",
+
+                                font: {
+                                    size: 12
+                                }
+
                             }
 
-                        }
+                        },
 
-                    },
+                        tooltip: {
 
-                    tooltip: {
+                            callbacks: {
 
-                        callbacks: {
+                                label: function(context) {
 
-                            label: function(context) {
+                                    return (
+                                        " " +
+                                        context.label +
+                                        ": " +
+                                        context.raw +
+                                        "%"
+                                    );
 
-                                return (
-                                    " " +
-                                    context.label +
-                                    ": " +
-                                    context.raw +
-                                    "%"
-                                );
+                                }
 
                             }
 
@@ -601,11 +870,35 @@
 
                 }
 
-            }
+            });
 
-        });
+        }
+
 
     }
+    catch (error) {
+
+        console.error(
+            "Error loading results:",
+            error
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   LOAD RESULTS WHEN PAGE OPENS
+   ========================================================= */
+
+if (
+    document.querySelector(".result-table")
+) {
+
+    loadResults();
+
+}
 </script>
 
 

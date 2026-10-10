@@ -2468,3 +2468,153 @@ button:hover {
     }
 
 }
+
+
+/* ===== STUDENT DASHBOARD ANALYSIS ===== */
+
+.analysis-charts {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 24px;
+    padding: 26px 10px;
+}
+
+.analysis-chart {
+    text-align: center;
+    min-width: 0;
+}
+
+.donut-chart {
+    width: min(220px, 100%);
+    aspect-ratio: 1;
+    border-radius: 50%;
+    margin: 0 auto 22px;
+    display: grid;
+    place-items: center;
+    background: conic-gradient(
+        var(--chart-color) var(--progress),
+        #dce4f0 0
+    );
+    position: relative;
+}
+
+.donut-center {
+    width: 72%;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: var(--card-bg, #fff);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+}
+
+.donut-center strong {
+    font-size: clamp(20px, 2.2vw, 32px);
+}
+
+.donut-center span {
+    font-size: 13px;
+    color: var(--text-secondary, #777);
+}
+
+.analysis-chart h3 {
+    margin-bottom: 6px;
+}
+
+.analysis-chart p {
+    font-size: 13px;
+    color: var(--text-secondary, #777);
+}
+
+.analysis-summary {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 12px;
+    padding: 18px 0;
+    border-top: 1px solid var(--border-color, #e5e7eb);
+}
+
+.analysis-summary div {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    text-align: center;
+}
+
+.analysis-summary span {
+    font-size: 13px;
+    color: var(--text-secondary, #777);
+}
+
+.analysis-summary strong {
+    font-size: 19px;
+}
+
+.focus-insight {
+    padding: 20px;
+    border: 1px solid var(--border-color, #e5e7eb);
+    border-radius: 14px;
+    margin-bottom: 25px;
+}
+
+.focus-insight h3 {
+    margin: 12px 0;
+    font-size: 20px;
+}
+
+.focus-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 12px 0;
+}
+
+.focus-badges span {
+    background: var(--surface-secondary, #f1f5f9);
+    border-radius: 20px;
+    padding: 6px 10px;
+    font-size: 12px;
+}
+
+.focus-insight p {
+    line-height: 1.6;
+    margin-bottom: 16px;
+}
+
+.upcoming-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    margin: 20px 0 12px;
+}
+
+.upcoming-heading h3 {
+    margin: 0;
+}
+
+#dash-upcoming-list .assignment-item {
+    padding: 14px 0;
+    border-bottom: 1px solid var(--border-color, #e5e7eb);
+}
+
+#dash-upcoming-list .assignment-item:last-child {
+    border-bottom: none;
+}
+
+@media (max-width: 650px) {
+    .analysis-charts {
+        gap: 12px;
+        padding: 20px 0;
+    }
+
+    .analysis-summary {
+        grid-template-columns: 1fr;
+    }
+
+    .donut-center strong {
+        font-size: 21px;
+    }
+}

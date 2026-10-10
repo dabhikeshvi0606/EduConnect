@@ -608,47 +608,321 @@
 
     <script>
 
-        const generatePlanBtn =
-            document.getElementById("generatePlanBtn");
+async function loadStudyCoach() {
+
+    try {
+
+        const studentId = 1;
+
+        const response = await fetch(
+            `http://localhost:8080/api/study-coach/student/${studentId}`
+        );
+
+        if (!response.ok) {
+            throw new Error("Failed to load Study Coach data.");
+        }
+
+        const data = await response.json();
+
+        console.log("Study Coach data:", data);
+
+
+        // ==========================================
+        // 1. ACADEMIC ANALYSIS
+        // ==========================================
+
+        const analysisItems =
+            document.querySelectorAll(".analysis-item");
+
+        analysisItems.forEach(function (item) {
+
+            const label =
+                item.querySelector(".analysis-label");
+
+            const value =
+                item.querySelector(".analysis-value");
+
+            if (!label || !value) {
+                return;
+            }
+
+            const labelText =
+                label.textContent.trim();
+
+
+            if (labelText === "Overall Score") {
+
+                value.textContent =
+                    Math.round(data.overallScore) + "%";
+
+            }
+
+
+            else if (
+                labelText === "Overall Attendance"
+            ) {
+
+                value.textContent =
+                    data.overallAttendance + "%";
+
+            }
+
+
+            else if (
+                labelText === "Strongest Subject"
+            ) {
+
+                value.textContent =
+                    data.strongestSubject;
+
+            }
+
+
+            else if (
+                labelText === "Needs Attention"
+            ) {
+
+                value.textContent =
+                    data.needsAttention;
+
+            }
+
+        });
+
+
+        // ==========================================
+        // 2. AI RECOMMENDATION
+        // ==========================================
+
+        const recommendationCard =
+            document.querySelector(
+                ".recommendation-card"
+            );
+
+        if (recommendationCard) {
+
+            const heading =
+                recommendationCard.querySelector("h3");
+
+            const paragraph =
+                recommendationCard.querySelector("p");
+
+
+            if (heading) {
+
+                heading.textContent =
+                    "Focus on " +
+                    data.needsAttention;
+
+            }
+
+
+            if (paragraph) {
+
+                paragraph.innerHTML =
+                    "Your current academic score is " +
+                    "<strong>" +
+                    Math.round(data.lowestScore) +
+                    "%</strong>. " +
+                    data.recommendation;
+
+            }
+
+        }
+
+
+        // ==========================================
+        // 3. TODAY'S STUDY PLAN
+        // ==========================================
 
         const studyPlan =
             document.getElementById("studyPlan");
 
 
-        generatePlanBtn.addEventListener("click", function () {
+        if (studyPlan) {
 
-            /* Change button text while generating */
+            const planItems =
+                studyPlan.querySelectorAll(
+                    ".timeline-item"
+                );
+
+
+            data.studyPlan.forEach(
+                function (plan, index) {
+
+                    if (!planItems[index]) {
+                        return;
+                    }
+
+
+                    const title =
+                        planItems[index]
+                            .querySelector(
+                                ".timeline-content h3"
+                            );
+
+
+                    const description =
+                        planItems[index]
+                            .querySelector(
+                                ".timeline-content p"
+                            );
+
+
+                    const duration =
+                        planItems[index]
+                            .querySelector(
+                                ".timeline-content span"
+                            );
+
+
+                    if (title) {
+
+                        title.textContent =
+                            plan.title;
+
+                    }
+
+
+                    if (description) {
+
+                        if (index === 0) {
+
+                            description.textContent =
+                                "Review important concepts and key points.";
+
+                        }
+
+                        else if (index === 1) {
+
+                            description.textContent =
+                                "Solve practice questions related to the topic.";
+
+                        }
+
+                        else {
+
+                            description.textContent =
+                                "Review notes and revise the important concepts.";
+
+                        }
+
+                    }
+
+
+                    if (duration) {
+
+                        duration.textContent =
+                            "⏱ " +
+                            plan.minutes +
+                            " minutes";
+
+                    }
+
+                }
+            );
+
+
+            // Calculate total study time
+
+            const totalMinutes =
+                data.studyPlan.reduce(
+                    function (total, plan) {
+                        return total + plan.minutes;
+                    },
+                    0
+                );
+
+
+            const planDuration =
+                studyPlan.querySelector(
+                    ".card-header .plan-duration"
+                );
+
+
+            if (planDuration) {
+
+                planDuration.textContent =
+                    totalMinutes +
+                    " minutes";
+
+            }
+
+        }
+
+
+        // ==========================================
+        // 4. GENERATE STUDY PLAN BUTTON
+        // ==========================================
+
+        const generatePlanBtn =
+            document.getElementById(
+                "generatePlanBtn"
+            );
+
+
+        if (generatePlanBtn) {
 
             generatePlanBtn.textContent =
-                "Generating...";
+                "Generate Study Plan";
 
-            generatePlanBtn.disabled = true;
-
-
-            /* Simulate AI processing */
-
-            setTimeout(function () {
-
-                generatePlanBtn.textContent =
-                    "Plan Generated ✓";
-
-                generatePlanBtn.disabled = false;
+            generatePlanBtn.disabled = false;
 
 
-                /* Scroll to generated plan */
+            generatePlanBtn.onclick =
+                async function () {
 
-                studyPlan.scrollIntoView({
-                    behavior: "smooth",
-                    block: "center"
-                });
+                    generatePlanBtn.textContent =
+                        "Generating...";
+
+                    generatePlanBtn.disabled = true;
 
 
-            }, 1000);
+                    await loadStudyCoach();
 
-        });
 
-    </script>
+                    generatePlanBtn.textContent =
+                        "Plan Generated ✓";
 
+                    generatePlanBtn.disabled =
+                        false;
+
+
+                    if (studyPlan) {
+
+                        studyPlan.scrollIntoView({
+                            behavior: "smooth",
+                            block: "center"
+                        });
+
+                    }
+
+                };
+
+        }
+
+
+    }
+    catch (error) {
+
+        console.error(
+            "Error loading Study Coach:",
+            error
+        );
+
+    }
+
+}
+
+
+// Load Study Coach data when page opens
+loadStudyCoach();
+
+</script>
+
+<script src="js/script.js"></script>
+
+<script src="js/script.js"></script>
 
     <!-- Shared JavaScript -->
     <script src="js/script.js"></script>

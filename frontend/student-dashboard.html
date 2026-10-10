@@ -226,515 +226,347 @@
                  QUICK STATISTICS
                  ================================================= -->
 
-            <section class="stats-grid">
-
-
-                <!-- Attendance -->
-                <div class="stat-card">
-
-                    <div class="stat-top">
-
-                        <div>
-
-                            <div class="stat-label">
-                                Attendance
-                            </div>
-
-
-                            <div
-                                class="stat-value"
-                                id="dashboard-attendance">
-
-                                --
-
-                            </div>
-
-
-                            <div
-                                class="stat-subtext"
-                                id="dashboard-attendance-subtext">
-
-                                Loading...
-
-                            </div>
-
-                        </div>
-
-
-                        <div class="stat-icon">
-                            📊
-                        </div>
-
-                    </div>
-
-                </div>
-
-
-
-                <!-- Assignments -->
-                <div class="stat-card">
-
-                    <div class="stat-top">
-
-                        <div>
-
-                            <div class="stat-label">
-                                Assignments
-                            </div>
-
-
-                            <div class="stat-value">
-                                3
-                            </div>
-
-
-                            <div class="stat-subtext">
-                                Pending submissions
-                            </div>
-
-                        </div>
-
-
-                        <div class="stat-icon">
-                            📝
-                        </div>
-
-                    </div>
-
-                </div>
-
-
-
-                <!-- Average Score -->
-                <div class="stat-card">
-
-                    <div class="stat-top">
-
-                        <div>
-
-                            <div class="stat-label">
-                                Average Score
-                            </div>
-
-
-                            <div class="stat-value">
-                                76%
-                            </div>
-
-
-                            <div class="stat-subtext">
-                                Current academic average
-                            </div>
-
-                        </div>
-
-
-                        <div class="stat-icon">
-                            🏆
-                        </div>
-
-                    </div>
-
-                </div>
-
-
-
-                <!-- Study Materials -->
-                <div class="stat-card">
-
-                    <div class="stat-top">
-
-                        <div>
-
-                            <div class="stat-label">
-                                Materials
-                            </div>
-
-
-                            <div class="stat-value">
-                                12
-                            </div>
-
-
-                            <div class="stat-subtext">
-                                New resources available
-                            </div>
-
-                        </div>
-
-
-                        <div class="stat-icon">
-                            📚
-                        </div>
-
-                    </div>
-
-                </div>
-
-            </section>
-
-
-
-            <!-- =================================================
-                 MAIN DASHBOARD GRID
-                 ================================================= -->
-
-            <section class="dashboard-grid">
-
-
-                <!-- =================================================
-                     ACADEMIC SNAPSHOT
-                     ================================================= -->
-
-                <div class="dashboard-card">
-
-                    <div class="card-header">
-
-                        <h2>
-                            Academic Snapshot
-                        </h2>
-
-
-                        <a href="attendance.html">
-                            View Details
-                        </a>
-
-                    </div>
-
-
-
-                    <!-- Overall Attendance -->
-                    <div class="attendance-row">
-
-                        <div class="attendance-info">
-
-                            <span class="subject-name">
-                                Overall Attendance
-                            </span>
-
-
-                            <span
-                                class="attendance-percentage"
-                                id="dashboard-overall-attendance">
-
-                                --
-
-                            </span>
-
-                        </div>
-
-
-                        <div class="progress-bar">
-
-                            <div
-                                class="progress-fill attendance-good"
-                                id="dashboard-attendance-progress"
-                                style="width: 0%;">
-
-                            </div>
-
-                        </div>
-
-                    </div>
-
-
-
-                    <!-- Attendance Summary -->
-                    <div
-                        class="assignment-item"
-                        style="margin-top: 18px;">
-
-                        <div class="assignment-info">
-
-                            <span class="assignment-title">
-                                Classes Attended
-                            </span>
-
-
-                            <span
-                                class="assignment-subject"
-                                id="dashboard-attendance-classes">
-
-                                Loading...
-
-                            </span>
-
-                        </div>
-
-
-                        <span
-                            class="assignment-status status-completed">
-
-                            ✓
-
-                        </span>
-
-                    </div>
-
-
-
-                    <!-- Attendance Status -->
-                    <div
-                        class="assignment-item">
-
-                        <div class="assignment-info">
-
-                            <span class="assignment-title">
-                                Attendance Status
-                            </span>
-
-
-                            <span
-                                class="assignment-subject"
-                                id="dashboard-attendance-status">
-
-                                Calculating...
-
-                            </span>
-
-                        </div>
-
-
-                        <span
-                            class="assignment-status status-completed"
-                            id="dashboard-attendance-status-icon">
-
-                            🟢
-
-                        </span>
-
-                    </div>
-
-
-
-                    <!-- Focus Area -->
-                    <div
-                        class="assignment-item">
-
-                        <div class="assignment-info">
-
-                            <span class="assignment-title">
-                                Focus Area
-                            </span>
-
-
-                            <span
-                                class="assignment-subject"
-                                id="dashboard-focus-subject">
-
-                                Loading...
-
-                            </span>
-
-                        </div>
-
-
-                        <span
-                            class="assignment-status status-pending"
-                            id="dashboard-focus-percentage">
-
-                            --
-
-                        </span>
-
-                    </div>
-
-                </div>
-
-
-
-                <!-- =================================================
-                     UPCOMING ASSIGNMENTS
-                     ================================================= -->
-
-                <div class="dashboard-card">
-
-                    <div class="card-header">
-
-                        <h2>
-                            Upcoming Assignments
-                        </h2>
-
-
-                        <a href="assignments.html">
-                            View All
-                        </a>
-
-                    </div>
-
-
-
-                    <!-- Assignment 1 -->
-                    <div class="assignment-item">
-
-                        <div class="assignment-info">
-
-                            <span class="assignment-title">
-                                JDBC Mini Project
-                            </span>
-
-
-                            <span class="assignment-subject">
-                                Java Programming • Due Aug 15
-                            </span>
-
-                        </div>
-
-
-                        <span
-                            class="assignment-status status-pending">
-
-                            Pending
-
-                        </span>
-
-                    </div>
-
-
-
-                    <!-- Assignment 2 -->
-                    <div class="assignment-item">
-
-                        <div class="assignment-info">
-
-                            <span class="assignment-title">
-                                SQL Query Practice
-                            </span>
-
-
-                            <span class="assignment-subject">
-                                DBMS • Due Aug 17
-                            </span>
-
-                        </div>
-
-
-                        <span
-                            class="assignment-status status-pending">
-
-                            Pending
-
-                        </span>
-
-                    </div>
-
-
-
-                    <!-- Assignment 3 -->
-                    <div class="assignment-item">
-
-                        <div class="assignment-info">
-
-                            <span class="assignment-title">
-                                AI Case Study
-                            </span>
-
-
-                            <span class="assignment-subject">
-                                Artificial Intelligence • Aug 12
-                            </span>
-
-                        </div>
-
-
-                        <span
-                            class="assignment-status status-completed">
-
-                            Completed
-
-                        </span>
-
-                    </div>
-
-
-
-                    <!-- Assignment 4 -->
-                    <div class="assignment-item">
-
-                        <div class="assignment-info">
-
-                            <span class="assignment-title">
-                                Cloud Security Report
-                            </span>
-
-
-                            <span class="assignment-subject">
-                                Cloud Security • Due Aug 20
-                            </span>
-
-                        </div>
-
-
-                        <span
-                            class="assignment-status status-pending">
-
-                            Pending
-
-                        </span>
-
-                    </div>
-
-                </div>
-
-            </section>
-
-
-
-            <!-- =================================================
-                 AI STUDY COACH
-                 ================================================= -->
-
-            <section class="study-coach-card">
-
-                <div class="coach-content">
-
-
-                    <div class="coach-icon">
-                        ✦
-                    </div>
-
-
-                    <div class="coach-text">
-
-                        <h3>
-                            Your AI Study Coach
-                        </h3>
-
-
-                        <p>
-                            Your recent academic activity shows that
-                            your attendance is being monitored across
-                            all subjects. Get a personalized study plan
-                            based on your attendance, performance,
-                            and progress.
-                        </p>
-
-                    </div>
-
-
-                    <a
-                        href="study-coach.html"
-                        class="coach-button">
-
-                        View Recommendations
-
-                    </a>
-
-                </div>
-
-            </section>
-
-        </main>
-
+            
+<!-- QUICK STATISTICS -->
+<section class="stats-grid">
+
+    <div class="stat-card">
+        <div class="stat-top">
+            <div>
+                <div class="stat-label">Average Score</div>
+                <div class="stat-value" id="dash-score">--</div>
+                <div class="stat-subtext" id="dash-score-sub">Academic average</div>
+            </div>
+            <div class="stat-icon">📊</div>
+        </div>
     </div>
 
+    <div class="stat-card">
+        <div class="stat-top">
+            <div>
+                <div class="stat-label">Attendance</div>
+                <div class="stat-value" id="dash-attendance">--</div>
+                <div class="stat-subtext" id="dash-attendance-sub">Classes attended</div>
+            </div>
+            <div class="stat-icon">📅</div>
+        </div>
+    </div>
+
+    <div class="stat-card">
+        <div class="stat-top">
+            <div>
+                <div class="stat-label">Assignments Submitted</div>
+                <div class="stat-value" id="dash-submitted">--</div>
+                <div class="stat-subtext" id="dash-submitted-sub">Completion rate</div>
+            </div>
+            <div class="stat-icon">✓</div>
+        </div>
+    </div>
+
+    <div class="stat-card">
+        <div class="stat-top">
+            <div>
+                <div class="stat-label">Quizzes Attempted</div>
+                <div class="stat-value" id="dash-quizzes">—</div>
+                <div class="stat-subtext" id="dash-quizzes-sub">Quiz tracking not configured</div>
+            </div>
+            <div class="stat-icon">📝</div>
+        </div>
+    </div>
+
+</section>
+
+<!-- ACADEMIC ANALYSIS -->
+<section class="dashboard-grid">
+
+    <div class="dashboard-card">
+        <div class="card-header">
+            <h2>Your Academic Snapshot</h2>
+            <a href="results.html">View Results</a>
+        </div>
+
+        <div class="analysis-charts">
+
+            <div class="analysis-chart">
+                <div class="donut-chart"
+                     id="attendance-donut"
+                     style="--progress: 0%; --chart-color: #3478f6;">
+                    <div class="donut-center">
+                        <strong id="attendance-donut-value">--</strong>
+                        <span>Attendance</span>
+                    </div>
+                </div>
+                <h3>Attendance Health</h3>
+                <p id="attendance-donut-caption">Loading attendance...</p>
+            </div>
+
+            <div class="analysis-chart">
+                <div class="donut-chart"
+                     id="assignment-donut"
+                     style="--progress: 0%; --chart-color: #16a34a;">
+                    <div class="donut-center">
+                        <strong id="assignment-donut-value">--</strong>
+                        <span>Submitted</span>
+                    </div>
+                </div>
+                <h3>Assignment Progress</h3>
+                <p id="assignment-donut-caption">Loading assignments...</p>
+            </div>
+
+        </div>
+
+        <div class="analysis-summary">
+            <div>
+                <span>Classes attended</span>
+                <strong id="dash-classes">--</strong>
+            </div>
+            <div>
+                <span>Pending assignments</span>
+                <strong id="dash-pending">--</strong>
+            </div>
+            <div>
+                <span>Recorded subjects</span>
+                <strong id="dash-subjects">--</strong>
+            </div>
+        </div>
+    </div>
+
+    <div class="dashboard-card">
+        <div class="card-header">
+            <h2>Study Coach Insight</h2>
+            <a href="study-coach.html">View Coach</a>
+        </div>
+
+        <div class="focus-insight">
+            <div class="coach-icon">🧠</div>
+            <h3 id="dash-focus-subject">Analysing performance...</h3>
+            <div class="focus-badges">
+                <span id="dash-focus-score">Score: --</span>
+                <span id="dash-focus-attendance">Attendance: --</span>
+            </div>
+            <p id="dash-focus-message">
+                Your academic recommendations will appear here.
+            </p>
+            <a href="study-coach.html" class="coach-button">
+                Open AI Study Coach
+            </a>
+        </div>
+
+        <div class="upcoming-heading">
+            <h3>Upcoming Deadlines</h3>
+            <a href="assignments.html">View All</a>
+        </div>
+
+        <div id="dash-upcoming-list">
+            <p>Loading pending assignments...</p>
+        </div>
+    </div>
+
+</section>
+
+<!-- STUDY COACH SHORTCUT -->
+<section class="study-coach-card">
+    <div class="coach-content">
+        <div class="coach-icon">✦</div>
+        <div class="coach-text">
+            <h3>Your AI Study Coach</h3>
+            <p>
+                Get a personalized study plan based on your attendance,
+                academic results and pending assignments.
+            </p>
+        </div>
+        <a href="study-coach.html" class="coach-button">
+            View Recommendations
+        </a>
+    </div>
+</section>
 
 
     <!-- =====================================================
          JAVASCRIPT
          ===================================================== -->
 
-    <script src="js/script.js"></script>
+         <script>
+
+    
+async function loadDashboard(){ 
+    const studentId = 1;
+    const api = "http://localhost:8080/api";
+
+    const get = async (url) => {
+        const response = await fetch(url);
+        if (!response.ok) {
+            throw new Error(`Request failed: ${url} (${response.status})`);
+        }
+        return response.json();
+    };
+
+    const setText = (id, value) => {
+        const element = document.getElementById(id);
+        if (element) element.textContent = value;
+    };
+
+    const setDonut = (id, valueId, percentage, label) => {
+        const donut = document.getElementById(id);
+        const value = Math.max(0, Math.min(100, percentage));
+
+        if (donut) donut.style.setProperty("--progress", `${value}%`);
+        setText(valueId, `${Math.round(percentage * 10) / 10}%`);
+    };
+
+    try {
+        const [student, attendance, assignments, materials, results] =
+            await Promise.all([
+                get(`${api}/students/${studentId}`),
+                get(`${api}/attendance/student/${studentId}`),
+                get(`${api}/assignments/student/${studentId}`),
+                get(`${api}/materials/student/${studentId}`),
+                get(`${api}/results/student/${studentId}`)
+            ]);
+
+        // Student profile
+        setText("profile-name", student.name || "Student");
+        setText("profile-avatar", (student.name || "S").charAt(0).toUpperCase());
+        setText("student-info",
+            `${student.rollNumber || ""} • ${student.department || ""} • Year ${student.year || ""}`);
+
+        const welcome = document.getElementById("welcome-message");
+        if (welcome) welcome.textContent = `Welcome back, ${student.name || "Student"}! 👋`;
+
+        // Attendance
+        const attended = attendance.reduce((sum, item) =>
+            sum + Number(item.attendedClasses || 0), 0);
+        const totalClasses = attendance.reduce((sum, item) =>
+            sum + Number(item.totalClasses || 0), 0);
+        const attendancePercent = totalClasses
+            ? attended / totalClasses * 100
+            : 0;
+
+        // Assignment totals
+        const completed = assignments.filter(item =>
+            (item.status || "").toLowerCase() === "completed");
+        const pending = assignments.filter(item =>
+            (item.status || "").toLowerCase() === "pending");
+        const completionPercent = assignments.length
+            ? completed.length / assignments.length * 100
+            : 0;
+
+        // Academic results
+        const averageScore = results.length
+            ? results.reduce((sum, item) =>
+                sum + Number(item.percentage || 0), 0) / results.length
+            : 0;
+
+        const weakest = results.length
+            ? results.reduce((lowest, item) =>
+                Number(item.percentage) < Number(lowest.percentage)
+                    ? item : lowest)
+            : null;
+
+        const weakestAttendance = weakest
+            ? attendance.find(item =>
+                item.subject.toLowerCase() === weakest.subject.toLowerCase())
+            : null;
+
+        // Summary cards
+        setText("dash-score", `${Math.round(averageScore)}%`);
+        setText("dash-score-sub", `Across ${results.length} recorded subjects`);
+        setText("dash-attendance", `${attendancePercent.toFixed(1)}%`);
+        setText("dash-attendance-sub", `${attended} of ${totalClasses} classes`);
+        setText("dash-submitted", `${completed.length} / ${assignments.length}`);
+        setText("dash-submitted-sub",
+            `${Math.round(completionPercent)}% submitted`);
+
+        // Quiz count stays unavailable until quiz-attempt API exists.
+        setText("dash-quizzes", "—");
+        setText("dash-quizzes-sub", "Quiz tracking not configured");
+
+        // Donut charts
+        setDonut("attendance-donut", "attendance-donut-value",
+            attendancePercent, "Attendance");
+        setText("attendance-donut-caption",
+            `${attended} of ${totalClasses} classes attended`);
+
+        setDonut("assignment-donut", "assignment-donut-value",
+            completionPercent, "Submitted");
+        setText("assignment-donut-caption",
+            `${completed.length} completed · ${pending.length} pending`);
+
+        // Additional academic indicators
+        setText("dash-classes", `${attended} / ${totalClasses}`);
+        setText("dash-pending", pending.length);
+        setText("dash-subjects", results.length);
+
+        // Study Coach insight
+        setText("dash-focus-subject",
+            weakest ? weakest.subject : "No results available");
+        setText("dash-focus-score",
+            weakest ? `Lowest score: ${weakest.percentage}%` : "Score: --");
+        setText("dash-focus-attendance",
+            weakestAttendance
+                ? `Attendance: ${Number(weakestAttendance.percentage).toFixed(1)}%`
+                : "Attendance: no matching record");
+
+        setText("dash-focus-message",
+            weakest
+                ? `Your lowest recorded result is in ${weakest.subject}. Review its key concepts and practice questions.`
+                : "Results will appear here when they are available.");
+
+        // Show ONLY pending assignments with the nearest due dates.
+        const upcomingList = document.getElementById("dash-upcoming-list");
+        upcomingList.replaceChildren();
+
+        const upcoming = pending
+            .filter(item => item.dueDate)
+            .sort((a, b) => a.dueDate.localeCompare(b.dueDate))
+            .slice(0, 3);
+
+        if (!upcoming.length) {
+            upcomingList.textContent = "No upcoming pending assignments.";
+        } else {
+            upcoming.forEach(item => {
+                const row = document.createElement("div");
+                row.className = "assignment-item";
+
+                const info = document.createElement("div");
+                info.className = "assignment-info";
+
+                const title = document.createElement("span");
+                title.className = "assignment-title";
+                title.textContent = item.title;
+
+                const detail = document.createElement("span");
+                detail.className = "assignment-subject";
+                const due = new Date(`${item.dueDate}T00:00:00`);
+                detail.textContent =
+                    `${item.subject} · Due ${due.toLocaleDateString("en-IN", {
+                        day: "numeric", month: "short"
+                    })}`;
+
+                const status = document.createElement("span");
+                status.className = "assignment-status status-pending";
+                status.textContent = "Pending";
+
+                info.append(title, detail);
+                row.append(info, status);
+                upcomingList.appendChild(row);
+            });
+        }
+
+        console.log("Dashboard analysis loaded successfully.");
+    } catch (error) {
+        console.error("Dashboard loading failed:", error);
+        setText("dash-focus-message",
+            "Could not load live data. Check that Spring Boot and MySQL are running.");
+        setText("dash-upcoming-list",
+            "Unable to load upcoming assignments.");
+    }
+
+}
+
+loadDashboard();
+
+    </script>
 
 </body>
 
