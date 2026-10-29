@@ -241,7 +241,7 @@ if (assignmentFilter) {
 
     assignmentFilter.addEventListener("change", function () {
 
-        const selectedStatus = this.value;
+        const selectedStatus = (this.value || "all").toLowerCase();
 
         const assignments =
             document.querySelectorAll(".assignment-item");
@@ -249,11 +249,12 @@ if (assignmentFilter) {
         assignments.forEach(function (assignment) {
 
             const status =
-                assignment.dataset.status;
+                (assignment.dataset.status || "").toLowerCase();
 
             if (
                 selectedStatus === "all" ||
-                selectedStatus === status
+                selectedStatus === status ||
+                (selectedStatus === "completed" && (status === "completed" || status === "submitted"))
             ) {
 
                 assignment.style.display = "flex";
@@ -272,19 +273,21 @@ if (assignmentFilter) {
 
 
 /* ---------------------------------------------------------
-   Selected Assignment
+   Selected Assignment State
    --------------------------------------------------------- */
 
-let selectedAssignment = "";
+let selectedAssignmentId = null;
+let selectedAssignmentTitle = "";
 
 
 /* ---------------------------------------------------------
    Open Assignment Submission Modal
    --------------------------------------------------------- */
 
-function openAssignment(assignmentName) {
+function openAssignment(assignmentId, assignmentTitle) {
 
-    selectedAssignment = assignmentName;
+    selectedAssignmentId = assignmentId;
+    selectedAssignmentTitle = assignmentTitle;
 
     const modal =
         document.getElementById("assignmentModal");
@@ -292,10 +295,34 @@ function openAssignment(assignmentName) {
     const title =
         document.getElementById("modalAssignmentName");
 
+    const fileInput =
+        document.getElementById("assignmentFile");
+
+    const feedback =
+        document.getElementById("modalFeedback");
+
+    const submitBtn =
+        document.getElementById("submitAssignmentBtn");
+
+    if (fileInput) {
+        fileInput.value = "";
+    }
+
+    if (feedback) {
+        feedback.style.display = "none";
+        feedback.textContent = "";
+        feedback.className = "modal-feedback";
+    }
+
+    if (submitBtn) {
+        submitBtn.disabled = false;
+        submitBtn.textContent = "Submit Assignment";
+    }
+
     if (modal && title) {
 
         title.textContent =
-            "Submit: " + assignmentName;
+            "Submit: " + assignmentTitle;
 
         modal.style.display = "flex";
 
@@ -313,54 +340,155 @@ function closeAssignmentModal() {
     const modal =
         document.getElementById("assignmentModal");
 
+    const fileInput =
+        document.getElementById("assignmentFile");
+
+    const feedback =
+        document.getElementById("modalFeedback");
+
+    if (fileInput) {
+        fileInput.value = "";
+    }
+
+    if (feedback) {
+        feedback.style.display = "none";
+        feedback.textContent = "";
+        feedback.className = "modal-feedback";
+    }
+
     if (modal) {
 
         modal.style.display = "none";
 
     }
 
+    selectedAssignmentId = null;
+    selectedAssignmentTitle = "";
+
 }
 
 
 /* ---------------------------------------------------------
-   Submit Assignment
+   Submit Assignment (Multipart File Upload to Backend)
    --------------------------------------------------------- */
 
-function submitAssignment() {
+async function submitAssignment() {
 
     const fileInput =
         document.getElementById("assignmentFile");
 
+    const feedback =
+        document.getElementById("modalFeedback");
+
+    const submitBtn =
+        document.getElementById("submitAssignmentBtn");
+
+    function setFeedback(message, type) {
+        if (feedback) {
+            feedback.textContent = message;
+            feedback.className = "modal-feedback " + type;
+            feedback.style.display = "block";
+        } else {
+            alert(message);
+        }
+    }
+
+    if (!selectedAssignmentId) {
+        setFeedback("No assignment selected. Please close and re-open the modal.", "error");
+        return;
+    }
+
     if (
         !fileInput ||
+        !fileInput.files ||
         fileInput.files.length === 0
     ) {
 
-        alert(
-            "Please select a file before submitting."
-        );
-
+        setFeedback("Please select a PDF file before submitting.", "error");
         return;
 
     }
 
+    const file = fileInput.files[0];
+    const fileName = (file.name || "").toLowerCase();
 
-    const fileName =
-        fileInput.files[0].name;
+    if (!fileName.endsWith(".pdf")) {
+        setFeedback("Only PDF files (.pdf) are permitted.", "error");
+        return;
+    }
 
+    if (file.size > 10 * 1024 * 1024) {
+        setFeedback("File size must be 10 MB or smaller.", "error");
+        return;
+    }
 
-    alert(
-        "Assignment submitted successfully!\n\n" +
-        "Assignment: " +
-        selectedAssignment +
-        "\nFile: " +
-        fileName
-    );
+    // Set UI loading state
+    if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.textContent = "Uploading PDF...";
+    }
+    setFeedback("Uploading your assignment to server...", "loading");
 
+    try {
+        const studentId = 1;
+        const formData = new FormData();
+        formData.append("file", file);
 
-    closeAssignmentModal();
+        const response = await fetch(
+            `http://localhost:8080/api/assignments/${selectedAssignmentId}/submit?studentId=${studentId}`,
+            {
+                method: "POST",
+                body: formData
+            }
+        );
 
-    fileInput.value = "";
+        if (!response.ok) {
+            let errorText = "Submission rejected by server (HTTP " + response.status + ").";
+            try {
+                const errJson = await response.json();
+                if (errJson && errJson.message) {
+                    errorText = errJson.message;
+                }
+            } catch (e) {
+                try {
+                    const text = await response.text();
+                    if (text) errorText = text;
+                } catch (t) {}
+            }
+
+            setFeedback("Error: " + errorText, "error");
+
+            if (submitBtn) {
+                submitBtn.disabled = false;
+                submitBtn.textContent = "Submit Assignment";
+            }
+            return;
+        }
+
+        const submission = await response.json();
+        console.log("Assignment submission successful:", submission);
+
+        setFeedback("Assignment submitted successfully! Stored on server.", "success");
+
+        // Close modal after brief success confirmation and refresh list
+        setTimeout(async function () {
+            closeAssignmentModal();
+            if (submitBtn) {
+                submitBtn.disabled = false;
+                submitBtn.textContent = "Submit Assignment";
+            }
+            await loadAssignments();
+        }, 1200);
+
+    } catch (error) {
+        console.error("Submission request failed:", error);
+        setFeedback("Network error: Could not reach backend server at http://localhost:8080.", "error");
+
+        if (submitBtn) {
+            submitBtn.disabled = false;
+            submitBtn.textContent = "Submit Assignment";
+        }
+    }
 
 }
 
@@ -369,11 +497,15 @@ function submitAssignment() {
    View Completed Assignment
    --------------------------------------------------------- */
 
-function viewAssignment(assignmentName) {
+function viewAssignment(assignmentName, status) {
+
+    const statusText = status === "submitted"
+        ? "submitted and is awaiting review"
+        : "completed";
 
     alert(
         assignmentName +
-        "\n\nThis assignment has already been submitted."
+        "\n\nThis assignment has already been " + statusText + "."
     );
 
 }
@@ -684,7 +816,7 @@ if (statValues.length >= 4) {
 
                     <button
                         class="material-button"
-                        onclick="openMaterial('${material.title}')">
+                        onclick="openMaterial('${escapeSingleQuote(material.title)}', '${material.url || ''}')">
 
                         ${buttonText}
 
@@ -789,15 +921,41 @@ if (materialFilter) {
 
 
 /* ---------------------------------------------------------
+   Verified Educational Resources for Study Materials
+   --------------------------------------------------------- */
+
+const EDU_MATERIAL_RESOURCES = {
+    "Java OOP Concepts":
+        "https://docs.oracle.com/javase/tutorial/java/concepts/index.html",
+    "Java Collections Framework":
+        "https://docs.oracle.com/javase/tutorial/collections/index.html",
+    "SQL & Database Fundamentals":
+        "https://www.w3schools.com/sql/default.asp",
+    "Introduction to Machine Learning":
+        "https://www.youtube.com/watch?v=jGwO_UgTS7I",
+    "Cloud Security Fundamentals":
+        "https://nvlpubs.nist.gov/nistpubs/Legacy/SP/nistspecialpublication800-145.pdf"
+};
+
+
+/* ---------------------------------------------------------
    Open Material
    --------------------------------------------------------- */
 
-function openMaterial(materialName) {
+function openMaterial(materialName, directUrl) {
 
-    alert(
-        materialName +
-        "\n\nThe material will open here."
-    );
+    const targetUrl =
+        (directUrl && directUrl.trim() !== "")
+            ? directUrl.trim()
+            : EDU_MATERIAL_RESOURCES[materialName];
+
+    if (targetUrl) {
+        window.open(targetUrl, "_blank", "noopener,noreferrer");
+    } else {
+        alert(
+            "Resource for \"" + materialName + "\" is not available yet."
+        );
+    }
 
 }
 
@@ -1828,170 +1986,180 @@ if (
    10. ASSIGNMENTS FROM SPRING BOOT
    ========================================================= */
 
+function escapeSingleQuote(str) {
+    return (str || "")
+        .replace(/\\/g, "\\\\")
+        .replace(/'/g, "\\'")
+        .replace(/"/g, "&quot;");
+}
+
 async function loadAssignments() {
+
+    const statTotal = document.getElementById("stat-total");
+    const statPending = document.getElementById("stat-pending");
+    const statCompleted = document.getElementById("stat-completed");
+    const statDueSoon = document.getElementById("stat-due-soon");
+
+    const container =
+        document.getElementById("assignmentListContainer") ||
+        (document.querySelector(".assignment-item")
+            ? document.querySelector(".assignment-item").parentElement
+            : null);
 
     try {
 
-        /*
-         * Temporary student ID.
-         *
-         * Later this will come from the logged-in student.
-         */
         const studentId = 1;
-
 
         const response =
             await fetch(
                 `http://localhost:8080/api/assignments/student/${studentId}`
             );
 
-
         if (!response.ok) {
-
             throw new Error(
-                "Failed to fetch assignments."
+                "Server responded with status " + response.status
             );
-
         }
-
 
         const assignments =
             await response.json();
-
 
         console.log(
             "Assignments from backend:",
             assignments
         );
 
-
         /* -------------------------------------------------
-           Find Existing Assignment Cards
-           ------------------------------------------------- */
-
-        const assignmentItems =
-            document.querySelectorAll(".assignment-item");
-
-
-        if (assignmentItems.length === 0) {
-
-            return;
-
-        }
-
-
-        /*
-         * All assignment cards are inside the same parent.
-         */
-        const assignmentContainer =
-            assignmentItems[0].parentElement;
-
-
-        /*
-         * Remove the old hardcoded assignment cards.
-         */
-        assignmentItems.forEach(function (item) {
-
-            item.remove();
-
-        });
-
-
-        /* -------------------------------------------------
-           Summary Counts
+           Calculate Summary Counts
            ------------------------------------------------- */
 
         const totalAssignments =
             assignments.length;
 
-
         const pendingAssignments =
-            assignments.filter(function (assignment) {
-
-                return assignment.status === "pending";
-
+            assignments.filter(function (a) {
+                return (a.status || "").toLowerCase() === "pending";
             }).length;
-
 
         const completedAssignments =
-            assignments.filter(function (assignment) {
-
-                return assignment.status === "completed";
-
+            assignments.filter(function (a) {
+                const s = (a.status || "").toLowerCase();
+                return s === "completed" || s === "submitted";
             }).length;
 
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        const threeDaysLater = new Date(today.getTime() + 3 * 24 * 60 * 60 * 1000);
+        threeDaysLater.setHours(23, 59, 59, 999);
+
+        const dueSoonAssignments =
+            assignments.filter(function (a) {
+                if ((a.status || "").toLowerCase() !== "pending" || !a.dueDate) {
+                    return false;
+                }
+                const due = new Date(a.dueDate + "T00:00:00");
+                return due >= today && due <= threeDaysLater;
+            }).length;
 
         /* -------------------------------------------------
            Update Summary Cards
            ------------------------------------------------- */
 
-        const summaryNumbers =
-            document.querySelectorAll(
-                ".summary-card .summary-number"
-            );
+        if (statTotal) statTotal.textContent = totalAssignments;
+        if (statPending) statPending.textContent = pendingAssignments;
+        if (statCompleted) statCompleted.textContent = completedAssignments;
+        if (statDueSoon) statDueSoon.textContent = dueSoonAssignments;
 
+        const summaryNumbers =
+            document.querySelectorAll(".summary-card .summary-number");
 
         if (summaryNumbers.length >= 3) {
-
-            summaryNumbers[0].textContent =
-                totalAssignments;
-
-            summaryNumbers[1].textContent =
-                pendingAssignments;
-
-            summaryNumbers[2].textContent =
-                completedAssignments;
-
+            summaryNumbers[0].textContent = totalAssignments;
+            summaryNumbers[1].textContent = pendingAssignments;
+            summaryNumbers[2].textContent = completedAssignments;
         }
 
-
         /* -------------------------------------------------
-           Create Assignment Cards
+           Render Dynamic Assignment Cards
            ------------------------------------------------- */
+
+        if (!container) {
+            return;
+        }
+
+        // Clear existing static or previous cards
+        container.innerHTML = "";
+
+        if (assignments.length === 0) {
+            container.innerHTML = `
+                <div style="padding: 28px; text-align: center; color: #64748b;">
+                    <p>No assignments found for this student account.</p>
+                </div>
+            `;
+            return;
+        }
 
         assignments.forEach(function (assignment) {
 
             const assignmentItem =
                 document.createElement("div");
 
+            const status =
+                (assignment.status || "pending").toLowerCase();
 
             assignmentItem.className =
                 "assignment-item";
 
-
             assignmentItem.dataset.status =
-                assignment.status;
+                status;
 
-
-            /* -------------------------------------------------
+            /* ---------------------------------------------
                Format Due Date
-               ------------------------------------------------- */
+               --------------------------------------------- */
 
-            const dueDate =
-                new Date(
-                    assignment.dueDate + "T00:00:00"
-                );
+            let formattedDate = assignment.dueDate || "No date";
 
+            if (assignment.dueDate) {
+                const dueDate =
+                    new Date(assignment.dueDate + "T00:00:00");
 
-            const formattedDate =
-                dueDate.toLocaleDateString(
-                    "en-US",
-                    {
-                        month: "short",
-                        day: "numeric"
-                    }
-                );
+                if (!isNaN(dueDate.getTime())) {
+                    formattedDate =
+                        dueDate.toLocaleDateString("en-US", {
+                            month: "short",
+                            day: "numeric"
+                        });
+                }
+            }
 
+            /* ---------------------------------------------
+               Subject Icon
+               --------------------------------------------- */
 
-            /* -------------------------------------------------
-               Assignment Status + Action
-               ------------------------------------------------- */
+            let icon = "📚";
+            const sub = (assignment.subject || "").toLowerCase();
+
+            if (sub.includes("java")) {
+                icon = "☕";
+            } else if (sub.includes("dbms") || sub.includes("database")) {
+                icon = "🗄️";
+            } else if (sub.includes("ai") || sub.includes("intelligence")) {
+                icon = "🤖";
+            } else if (sub.includes("cloud") || sub.includes("security")) {
+                icon = "☁️";
+            }
+
+            /* ---------------------------------------------
+               Status Badge & Action Button
+               --------------------------------------------- */
 
             let statusHTML = "";
             let buttonHTML = "";
 
+            const escapedTitle =
+                escapeSingleQuote(assignment.title);
 
-            if (assignment.status === "pending") {
+            if (status === "pending") {
 
                 statusHTML = `
                     <span class="assignment-status pending">
@@ -2002,8 +2170,25 @@ async function loadAssignments() {
                 buttonHTML = `
                     <button
                         class="assignment-button"
-                        onclick="openAssignment('${assignment.title}')">
+                        onclick="openAssignment(${assignment.id}, '${escapedTitle}')">
                         Submit
+                    </button>
+                `;
+
+            } else if (status === "submitted") {
+
+                statusHTML = `
+                    <span class="assignment-status submitted">
+                        Submitted
+                    </span>
+                `;
+
+                buttonHTML = `
+                    <button
+                        class="assignment-button"
+                        style="background: rgba(14, 165, 233, 0.15); color: #0284c7; border: 1px solid rgba(14, 165, 233, 0.3);"
+                        onclick="viewAssignment('${escapedTitle}', 'submitted')">
+                        View
                     </button>
                 `;
 
@@ -2018,79 +2203,56 @@ async function loadAssignments() {
                 buttonHTML = `
                     <button
                         class="assignment-button"
-                        onclick="viewAssignment('${assignment.title}')">
+                        onclick="viewAssignment('${escapedTitle}', 'completed')">
                         View
                     </button>
                 `;
 
             }
 
-
-            /* -------------------------------------------------
-               Assignment Card
-               ------------------------------------------------- */
+            const dateLabel =
+                (status === "completed" || status === "submitted")
+                    ? " • Submitted " + formattedDate
+                    : " • Due " + formattedDate;
 
             assignmentItem.innerHTML = `
-
                 <div class="assignment-icon">
-                    📚
+                    ${icon}
                 </div>
 
-
                 <div class="assignment-details">
-
                     <h3>
-                        ${assignment.title}
+                        ${assignment.title || "Untitled Assignment"}
                     </h3>
 
                     <p>
-                        ${assignment.subject}
-                        ${
-                            assignment.status === "completed"
-                                ? " • Submitted " + formattedDate
-                                : " • Due " + formattedDate
-                        }
+                        ${assignment.subject || "General"}${dateLabel}
                     </p>
 
                     <div class="assignment-description">
-                        ${assignment.description}
+                        ${assignment.description || ""}
                     </div>
-
                 </div>
-
 
                 <div class="assignment-action">
-
                     ${statusHTML}
-
                     ${buttonHTML}
-
                 </div>
-
             `;
 
-            if (assignmentContainer) {
-                assignmentContainer.appendChild(assignmentItem);
-            }
+            container.appendChild(assignmentItem);
 
         });
 
         /* -------------------------------------------------
-           Reconnect Assignment Filter
+           Apply Current Filter
            ------------------------------------------------- */
 
-        const assignmentFilter =
-            document.getElementById(
-                "assignmentFilter"
-            );
+        const filterElement =
+            document.getElementById("assignmentFilter");
 
-
-        if (assignmentFilter) {
-
-            assignmentFilter.dispatchEvent(
-                new Event("change")
-            );
-
+        if (filterElement) {
+            filterElement.dispatchEvent(new Event("change"));
         }
 
     }
@@ -2100,6 +2262,15 @@ async function loadAssignments() {
             "Error loading assignments:",
             error
         );
+
+        if (container) {
+            container.innerHTML = `
+                <div style="padding: 24px; text-align: center; color: #dc2626; background: #fff5f5; border: 1px solid #fed7d7; border-radius: 8px; margin: 15px 0;">
+                    <p style="font-weight: 600; margin-bottom: 4px;">Unable to load live assignments from server.</p>
+                    <p style="font-size: 12px; color: #718096; margin: 0;">Please check that Spring Boot is running on http://localhost:8080 and MySQL is active.</p>
+                </div>
+            `;
+        }
 
     }
 
@@ -2111,6 +2282,8 @@ async function loadAssignments() {
    --------------------------------------------------------- */
 
 if (
+    document.getElementById("assignmentFilter") ||
+    document.getElementById("stat-total") ||
     document.querySelector(".assignment-item")
 ) {
 

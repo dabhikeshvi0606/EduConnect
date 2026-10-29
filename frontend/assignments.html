@@ -144,8 +144,8 @@
                                 Total Assignments
                             </div>
 
-                            <div class="stat-value">
-                                8
+                            <div class="stat-value" id="stat-total">
+                                0
                             </div>
 
                             <div class="stat-subtext">
@@ -174,8 +174,8 @@
                                 Pending
                             </div>
 
-                            <div class="stat-value">
-                                3
+                            <div class="stat-value" id="stat-pending">
+                                0
                             </div>
 
                             <div class="stat-subtext">
@@ -204,8 +204,8 @@
                                 Completed
                             </div>
 
-                            <div class="stat-value">
-                                5
+                            <div class="stat-value" id="stat-completed">
+                                0
                             </div>
 
                             <div class="stat-subtext">
@@ -234,8 +234,8 @@
                                 Due Soon
                             </div>
 
-                            <div class="stat-value">
-                                2
+                            <div class="stat-value" id="stat-due-soon">
+                                0
                             </div>
 
                             <div class="stat-subtext">
@@ -278,6 +278,10 @@
                             Pending
                         </option>
 
+                        <option value="submitted">
+                            Submitted
+                        </option>
+
                         <option value="completed">
                             Completed
                         </option>
@@ -285,6 +289,9 @@
                     </select>
 
                 </div>
+
+
+                <div id="assignmentListContainer">
 
 
                 <!-- =================================================
@@ -511,6 +518,8 @@
 
                 </div>
 
+                </div> <!-- end assignmentListContainer -->
+
             </section>
 
 
@@ -601,8 +610,12 @@
 
             </div>
 
+            <!-- Feedback / Error / Loading notification -->
+            <div id="modalFeedback" class="modal-feedback" style="display: none;"></div>
+
             <!-- Submit Button -->
             <button
+                id="submitAssignmentBtn"
                 class="submit-assignment-button"
                 onclick="submitAssignment()">
                 Submit Assignment

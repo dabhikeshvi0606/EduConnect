@@ -415,12 +415,11 @@ async function loadDashboard(){
     };
 
     try {
-        const [student, attendance, assignments, materials, results] =
+        const [student, attendance, assignments, results] =
             await Promise.all([
                 get(`${api}/students/${studentId}`),
                 get(`${api}/attendance/student/${studentId}`),
                 get(`${api}/assignments/student/${studentId}`),
-                get(`${api}/materials/student/${studentId}`),
                 get(`${api}/results/student/${studentId}`)
             ]);
 
@@ -442,13 +441,15 @@ async function loadDashboard(){
             ? attended / totalClasses * 100
             : 0;
 
-        // Assignment totals
-        const completed = assignments.filter(item =>
-            (item.status || "").toLowerCase() === "completed");
+        // Assignment totals: count both 'submitted' and 'completed' as submitted
+        const submitted = assignments.filter(item => {
+            const status = (item.status || "").toLowerCase();
+            return status === "submitted" || status === "completed";
+        });
         const pending = assignments.filter(item =>
             (item.status || "").toLowerCase() === "pending");
         const completionPercent = assignments.length
-            ? completed.length / assignments.length * 100
+            ? submitted.length / assignments.length * 100
             : 0;
 
         // Academic results
@@ -463,9 +464,23 @@ async function loadDashboard(){
                     ? item : lowest)
             : null;
 
+        // Robust subject matching between Results and Attendance
+        const matchSubject = (sub1, sub2) => {
+            if (!sub1 || !sub2) return false;
+            const s1 = sub1.toLowerCase().trim();
+            const s2 = sub2.toLowerCase().trim();
+            if (s1 === s2) return true;
+            const clean1 = s1.replace(/[^a-z0-9]/g, "");
+            const clean2 = s2.replace(/[^a-z0-9]/g, "");
+            if (clean1.includes(clean2) || clean2.includes(clean1)) return true;
+            const stopWords = new Set(["and", "with", "its", "it's", "applications", "programming", "systems"]);
+            const tokens1 = s1.split(/\s+/).filter(w => w.length > 2 && !stopWords.has(w));
+            const tokens2 = s2.split(/\s+/).filter(w => w.length > 2 && !stopWords.has(w));
+            return tokens1.some(t => s2.includes(t)) || tokens2.some(t => s1.includes(t));
+        };
+
         const weakestAttendance = weakest
-            ? attendance.find(item =>
-                item.subject.toLowerCase() === weakest.subject.toLowerCase())
+            ? attendance.find(item => matchSubject(item.subject, weakest.subject))
             : null;
 
         // Summary cards
@@ -473,7 +488,7 @@ async function loadDashboard(){
         setText("dash-score-sub", `Across ${results.length} recorded subjects`);
         setText("dash-attendance", `${attendancePercent.toFixed(1)}%`);
         setText("dash-attendance-sub", `${attended} of ${totalClasses} classes`);
-        setText("dash-submitted", `${completed.length} / ${assignments.length}`);
+        setText("dash-submitted", `${submitted.length} / ${assignments.length}`);
         setText("dash-submitted-sub",
             `${Math.round(completionPercent)}% submitted`);
 
@@ -490,7 +505,7 @@ async function loadDashboard(){
         setDonut("assignment-donut", "assignment-donut-value",
             completionPercent, "Submitted");
         setText("assignment-donut-caption",
-            `${completed.length} completed · ${pending.length} pending`);
+            `${submitted.length} submitted · ${pending.length} pending`);
 
         // Additional academic indicators
         setText("dash-classes", `${attended} / ${totalClasses}`);

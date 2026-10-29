@@ -1,0 +1,3447 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>EduConnect | Teacher Dashboard</title>
+
+    <!-- Main EduConnect stylesheet -->
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        @media (max-width: 992px) {
+            .attendance-mgmt-grid,
+            .assignment-mgmt-grid {
+                grid-template-columns: 1fr !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- =====================================================
+         TEACHER DASHBOARD
+         ===================================================== -->
+
+    <div class="dashboard">
+
+        <!-- =================================================
+             SIDEBAR
+             ================================================= -->
+
+        <aside class="sidebar">
+
+            <!-- EduConnect Brand -->
+            <div class="sidebar-brand">
+                <div class="sidebar-brand-icon">
+                    E
+                </div>
+                <span>
+                    EduConnect
+                </span>
+            </div>
+
+            <!-- Navigation Links -->
+            <nav class="sidebar-nav">
+
+                <p>Teacher Portal</p>
+
+                <a href="#overview" class="nav-link active" data-tab="overview">
+                    <span class="nav-icon">⌂</span>
+                    <span>Overview</span>
+                </a>
+
+                <a href="#students" class="nav-link" data-tab="students">
+                    <span class="nav-icon">👥</span>
+                    <span>Students</span>
+                </a>
+
+                <a href="#attendance" class="nav-link" data-tab="attendance">
+                    <span class="nav-icon">◷</span>
+                    <span>Attendance</span>
+                </a>
+
+                <a href="#assignments" class="nav-link" data-tab="assignments">
+                    <span class="nav-icon">✓</span>
+                    <span>Assignments</span>
+                </a>
+
+                <a href="#marks" class="nav-link" data-tab="marks">
+                    <span class="nav-icon">▤</span>
+                    <span>Marks & Results</span>
+                </a>
+
+                <a href="#materials" class="nav-link" data-tab="materials">
+                    <span class="nav-icon">▣</span>
+                    <span>Study Materials</span>
+                </a>
+
+                <p style="margin-top: 24px;">Account</p>
+
+                <a href="index.html" class="nav-link">
+                    <span class="nav-icon">↪</span>
+                    <span>Logout / Switch Role</span>
+                </a>
+
+            </nav>
+
+            <!-- Sidebar Profile: Neutral Teacher Label -->
+            <div class="sidebar-profile">
+
+                <div class="profile-avatar" id="teacher-profile-avatar" style="background: #e0e7ff; color: #3730a3;">
+                    T
+                </div>
+
+                <div class="profile-info">
+                    <span class="profile-name" id="teacher-profile-name">
+                        Teacher
+                    </span>
+                    <span class="profile-role">
+                        Faculty Instructor
+                    </span>
+                </div>
+
+            </div>
+
+        </aside>
+
+
+        <!-- =================================================
+             MAIN CONTENT
+             ================================================= -->
+
+        <main class="dashboard-main">
+
+            <!-- Top Header -->
+            <header class="dashboard-header">
+
+                <div class="dashboard-heading">
+                    <h1 id="teacher-welcome-heading">
+                        Teacher Dashboard 👨‍🏫
+                    </h1>
+                    <p id="teacher-header-subtext">
+                        Class overview, student progress, and teaching modules.
+                    </p>
+                </div>
+
+                <div class="header-actions">
+                    <div class="notification" title="Teacher Notifications">
+                        🔔
+                    </div>
+                </div>
+
+            </header>
+
+            <!-- Visible Error Notification (if Spring Boot API is unreachable) -->
+            <div id="teacher-error-banner" style="display: none; padding: 14px 18px; margin-bottom: 22px; border-radius: 8px; background: #fef2f2; border: 1px solid #fecaca; color: #991b1b; font-size: 14px;">
+                <strong>Connection Error:</strong> <span id="teacher-error-message">Unable to reach Spring Boot backend at http://localhost:8080.</span>
+            </div>
+
+
+            <!-- =================================================
+                 TAB 1: OVERVIEW (Active)
+                 ================================================= -->
+
+            <div id="tab-overview" class="tab-content">
+
+                <!-- Overview Stat Cards -->
+                <section class="stats-grid">
+
+                    <!-- Total Students -->
+                    <div class="stat-card">
+                        <div class="stat-top">
+                            <div>
+                                <div class="stat-label">Total Students</div>
+                                <div class="stat-value" id="t-stat-students">--</div>
+                                <div class="stat-subtext" id="t-stat-students-sub">Loading enrollment...</div>
+                            </div>
+                            <div class="stat-icon" style="background: #eff6ff;">
+                                👥
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Average Attendance -->
+                    <div class="stat-card">
+                        <div class="stat-top">
+                            <div>
+                                <div class="stat-label">Average Attendance</div>
+                                <div class="stat-value" id="t-stat-attendance">--</div>
+                                <div class="stat-subtext" id="t-stat-attendance-sub">Loading records...</div>
+                            </div>
+                            <div class="stat-icon" style="background: #fef3c7;">
+                                📊
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Total Assignments -->
+                    <div class="stat-card">
+                        <div class="stat-top">
+                            <div>
+                                <div class="stat-label">Total Assignments</div>
+                                <div class="stat-value" id="t-stat-assignments">--</div>
+                                <div class="stat-subtext" id="t-stat-assignments-sub">Loading tasks...</div>
+                            </div>
+                            <div class="stat-icon" style="background: #ecfdf5;">
+                                ✓
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Published Study Materials -->
+                    <div class="stat-card">
+                        <div class="stat-top">
+                            <div>
+                                <div class="stat-label">Study Materials</div>
+                                <div class="stat-value" id="t-stat-materials">--</div>
+                                <div class="stat-subtext" id="t-stat-materials-sub">Loading resources...</div>
+                            </div>
+                            <div class="stat-icon" style="background: #f5f3ff;">
+                                📚
+                            </div>
+                        </div>
+                    </div>
+
+                </section>
+
+
+                <!-- Dashboard Content Grid -->
+                <div class="dashboard-grid">
+
+                    <!-- Left: Recent Assignments -->
+                    <section class="dashboard-card">
+
+                        <div class="card-header">
+                            <h2>Recent Assignments</h2>
+                            <span class="stat-subtext" id="t-assignments-badge">Live backend records</span>
+                        </div>
+
+                        <div id="t-assignments-container">
+                            <p style="color: #6b7280; font-size: 13px; padding: 12px 0;">Loading assignments...</p>
+                        </div>
+
+                    </section>
+
+
+                    <!-- Right: Student Attendance Overview -->
+                    <section class="dashboard-card">
+
+                        <div class="card-header">
+                            <h2 id="t-attendance-heading">Student Attendance Overview</h2>
+                            <span class="stat-subtext" id="t-attendance-subtext">Subject-wise records</span>
+                        </div>
+
+                        <!-- Context banner clearly identifying student records -->
+                        <div id="t-attendance-context" style="display: none;"></div>
+
+                        <div id="t-attendance-container">
+                            <p style="color: #6b7280; font-size: 13px; padding: 12px 0;">Loading attendance snapshot...</p>
+                        </div>
+
+                    </section>
+
+                </div>
+
+
+                <!-- Teaching Modules Roadmap Card -->
+                <section class="study-coach-card" style="margin-top: 24px;">
+
+                    <div class="coach-content">
+
+                        <div class="coach-icon">
+                            ✦
+                        </div>
+
+                        <div class="coach-text">
+                            <h3>
+                                Teacher Module Roadmap
+                            </h3>
+                            <p>
+                                Step 1 (Shell & Live Overview), Step 2 (Students Directory), Step 3 (Attendance Management), and Step 4 (Assignments Management) are active. The upcoming steps will add interactive management:
+                                <strong>Marks Entry</strong> (Step 5) and
+                                <strong>Materials Publishing</strong> (Step 6).
+                            </p>
+                        </div>
+
+                    </div>
+
+                </section>
+
+            </div>
+
+
+            <!-- =================================================
+                 TAB 2: STUDENTS DIRECTORY (Step 2)
+                 ================================================= -->
+
+            <div id="tab-students" class="tab-content" style="display: none;">
+
+                <!-- Active Student Selection Banner -->
+                <section id="selectedStudentBanner" class="dashboard-card" style="margin-bottom: 22px; border-left: 4px solid #2563eb; background: #f8fafc; padding: 18px 22px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;">
+                        <div style="display: flex; align-items: center; gap: 16px;">
+                            <div id="sel-student-avatar" style="width: 48px; height: 48px; border-radius: 50%; background: #2563eb; color: white; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 18px; flex-shrink: 0;">
+                                ?
+                            </div>
+                            <div>
+                                <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+                                    <h3 id="sel-student-name" style="margin: 0; font-size: 17px; color: #1e293b;">No student selected</h3>
+                                    <span id="sel-student-id-badge" class="assignment-status" style="background: #e2e8f0; color: #334155; font-size: 11px;">ID: --</span>
+                                    <span class="assignment-status" style="background: #dcfce7; color: #166534; font-size: 11px;">Active Context</span>
+                                </div>
+                                <div id="sel-student-meta" style="margin-top: 4px; font-size: 13px; color: #64748b;">
+                                    Select a student below to contextualize Attendance, Assignments, and Marks.
+                                </div>
+                            </div>
+                        </div>
+                        <div style="font-size: 12px; color: #475569; background: white; padding: 7px 14px; border-radius: 6px; border: 1px solid #e2e8f0; font-weight: 500;">
+                            Target for Attendance, Assignments & Marks
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Students Directory Table Card -->
+                <section class="dashboard-card">
+
+                    <div class="card-header" style="flex-wrap: wrap; gap: 14px; align-items: center;">
+                        <div>
+                            <h2>Students Directory</h2>
+                            <p class="stat-subtext" style="margin: 4px 0 0 0;">Browse and search enrolled students from <code>GET /api/students</code></p>
+                        </div>
+
+                        <!-- Search & Filter Bar -->
+                        <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+                            <div style="position: relative; min-width: 280px;">
+                                <input
+                                    type="text"
+                                    id="studentSearchInput"
+                                    placeholder="Search by name, roll, dept, email..."
+                                    style="padding: 9px 12px 9px 34px; font-size: 13px; border: 1px solid #cbd5e1; border-radius: 6px; width: 100%; margin: 0; outline: none;"
+                                />
+                                <span style="position: absolute; left: 11px; top: 50%; transform: translateY(-50%); color: #94a3b8; font-size: 13px;">🔍</span>
+                            </div>
+
+                            <span id="studentCountBadge" class="stat-subtext" style="font-size: 12px; white-space: nowrap; color: #475569; font-weight: 500;">
+                                Loading...
+                            </span>
+
+                            <button
+                                id="studentRefreshBtn"
+                                style="padding: 9px 14px; font-size: 12px; background: white; color: #334155; border: 1px solid #cbd5e1; border-radius: 6px; cursor: pointer; display: flex; align-items: center; gap: 4px; font-weight: 500;"
+                                title="Refresh from backend"
+                            >
+                                ↻ Refresh
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Students Responsive Table -->
+                    <div class="table-wrapper" style="overflow-x: auto; margin-top: 10px;">
+                        <table class="result-table" style="width: 100%; border-collapse: collapse;">
+                            <thead>
+                                <tr>
+                                    <th style="width: 100px; text-align: center;">Select</th>
+                                    <th>Student Name</th>
+                                    <th>Roll Number</th>
+                                    <th>Department</th>
+                                    <th>Year</th>
+                                    <th>Email Address</th>
+                                </tr>
+                            </thead>
+                            <tbody id="studentsTableBody">
+                                <tr>
+                                    <td colspan="6" style="text-align: center; padding: 30px; color: #64748b;">
+                                        Loading students directory from server...
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                </section>
+
+            </div>
+
+
+            <!-- =================================================
+                 TAB 3: ATTENDANCE MANAGEMENT (Step 3)
+                 ================================================= -->
+
+            <div id="tab-attendance" class="tab-content" style="display: none;">
+
+                <!-- Session & Roster Management Header -->
+                <section class="dashboard-card" style="margin-bottom: 20px; border-left: 4px solid #2563eb; background: #f8fafc; padding: 18px 22px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;">
+                        <div>
+                            <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+                                <h3 style="margin: 0; font-size: 18px; color: #1e293b;">Class Attendance Management</h3>
+                                <span id="session-status-badge" class="assignment-status" style="background: #dbeafe; color: #1e40af; font-size: 11px;">
+                                    New Session
+                                </span>
+                            </div>
+                            <p style="margin: 4px 0 0 0; font-size: 13px; color: #64748b;">
+                                Select a subject and date to mark class attendance for all enrolled students.
+                            </p>
+                        </div>
+
+                        <div style="display: flex; gap: 12px; align-items: center; flex-wrap: wrap;">
+                            <!-- Mode Toggle: Take Class Attendance vs Student Breakdown -->
+                            <div style="display: flex; background: white; border: 1px solid #cbd5e1; border-radius: 6px; overflow: hidden; padding: 2px;">
+                                <button
+                                    id="att-mode-roster-btn"
+                                    type="button"
+                                    onclick="setAttendanceMode('roster')"
+                                    style="padding: 7px 14px; font-size: 12px; border: none; border-radius: 4px; cursor: pointer; font-weight: 600; background: #2563eb; color: white; transition: 0.15s;"
+                                >
+                                    📋 Class Roster Attendance
+                                </button>
+                                <button
+                                    id="att-mode-student-btn"
+                                    type="button"
+                                    onclick="setAttendanceMode('student')"
+                                    style="padding: 7px 14px; font-size: 12px; border: none; border-radius: 4px; cursor: pointer; font-weight: 500; background: transparent; color: #475569; transition: 0.15s;"
+                                >
+                                    👤 Student Breakdown
+                                </button>
+                            </div>
+
+                            <button
+                                id="att-master-refresh-btn"
+                                style="padding: 8px 14px; font-size: 12px; background: white; color: #334155; border: 1px solid #cbd5e1; border-radius: 6px; cursor: pointer; font-weight: 500;"
+                                title="Refresh attendance from backend"
+                            >
+                                ↻ Refresh
+                            </button>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Feedback banner for Attendance Tab -->
+                <div id="att-feedback-banner" style="display: none; padding: 12px 18px; margin-bottom: 20px; border-radius: 8px; font-size: 13px;"></div>
+
+                <!-- =============================================
+                     VIEW 1: CLASS ROSTER ATTENDANCE (Default View)
+                     ============================================= -->
+                <div id="att-roster-view">
+
+                    <!-- Session Controls Card -->
+                    <section class="dashboard-card" style="margin-bottom: 20px; padding: 18px 20px;">
+                        <div style="display: grid; grid-template-columns: 1.5fr 1fr auto auto; gap: 14px; align-items: end;">
+                            <div>
+                                <label for="att-session-subject" style="display: block; font-size: 12px; font-weight: 600; color: #374151; margin-bottom: 6px;">
+                                    Subject <span style="color: #dc2626;">*</span>
+                                </label>
+                                <select
+                                    id="att-session-subject"
+                                    style="width: 100%; padding: 9px 12px; font-size: 13px; border: 1px solid #cbd5e1; border-radius: 6px; background: white; outline: none;"
+                                >
+                                    <option value="Java Programming">Java Programming</option>
+                                    <option value="Database Management Systems">Database Management Systems</option>
+                                    <option value="Artificial Intelligence & it's Applications">Artificial Intelligence & it's Applications</option>
+                                    <option value="Cloud Cyber Security">Cloud Cyber Security</option>
+                                    <option value="System Virtualization & Programming">System Virtualization & Programming</option>
+                                    <option value="Design Thinking">Design Thinking</option>
+                                </select>
+                            </div>
+
+                            <div>
+                                <label for="att-session-date" style="display: block; font-size: 12px; font-weight: 600; color: #374151; margin-bottom: 6px;">
+                                    Attendance Date <span style="color: #dc2626;">*</span>
+                                </label>
+                                <input
+                                    type="date"
+                                    id="att-session-date"
+                                    style="width: 100%; padding: 8px 12px; font-size: 13px; border: 1px solid #cbd5e1; border-radius: 6px; outline: none; background: white;"
+                                />
+                            </div>
+
+                            <div>
+                                <button
+                                    type="button"
+                                    id="att-load-session-btn"
+                                    style="padding: 9px 15px; font-size: 13px; font-weight: 600; background: #f1f5f9; color: #334155; border: 1px solid #cbd5e1; border-radius: 6px; cursor: pointer; white-space: nowrap;"
+                                    title="Check if attendance is already recorded for this date and subject"
+                                >
+                                    🔍 Check / Load Session
+                                </button>
+                            </div>
+
+                            <div>
+                                <button
+                                    type="button"
+                                    id="att-save-session-btn"
+                                    style="padding: 9px 20px; font-size: 13px; font-weight: 600; background: #2563eb; color: white; border: none; border-radius: 6px; cursor: pointer; white-space: nowrap; box-shadow: 0 1px 3px rgba(37,99,235,0.25);"
+                                >
+                                    💾 Save Attendance
+                                </button>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Summary Stats Bar for Current Session -->
+                    <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 20px;">
+                        <div style="background: white; border: 1px solid #e2e8f0; border-radius: 8px; padding: 14px 18px;">
+                            <span style="font-size: 11px; color: #64748b; display: block; margin-bottom: 4px;">Enrolled Students</span>
+                            <strong id="roster-stat-total" style="font-size: 20px; color: #1e293b;">0</strong>
+                        </div>
+                        <div style="background: white; border: 1px solid #e2e8f0; border-radius: 8px; padding: 14px 18px;">
+                            <span style="font-size: 11px; color: #64748b; display: block; margin-bottom: 4px;">Marked Present</span>
+                            <strong id="roster-stat-present" style="font-size: 20px; color: #166534;">0</strong>
+                        </div>
+                        <div style="background: white; border: 1px solid #e2e8f0; border-radius: 8px; padding: 14px 18px;">
+                            <span style="font-size: 11px; color: #64748b; display: block; margin-bottom: 4px;">Marked Absent</span>
+                            <strong id="roster-stat-absent" style="font-size: 20px; color: #991b1b;">0</strong>
+                        </div>
+                        <div style="background: white; border: 1px solid #e2e8f0; border-radius: 8px; padding: 14px 18px;">
+                            <span style="font-size: 11px; color: #64748b; display: block; margin-bottom: 4px;">Session Attendance Rate</span>
+                            <strong id="roster-stat-rate" style="font-size: 20px; color: #2563eb;">--%</strong>
+                        </div>
+                    </div>
+
+                    <!-- Class Roster Table Card -->
+                    <section class="dashboard-card" style="margin-bottom: 22px;">
+                        <div class="card-header" style="flex-wrap: wrap; gap: 12px; align-items: center; margin-bottom: 14px;">
+                            <div>
+                                <h2 id="roster-heading">Student Attendance Roster</h2>
+                                <p id="roster-subtext" class="stat-subtext" style="margin: 4px 0 0 0;">
+                                    Mark each student present or absent for the selected class session.
+                                </p>
+                            </div>
+                            <div style="display: flex; gap: 8px; align-items: center;">
+                                <span style="font-size: 12px; color: #64748b; margin-right: 4px;">Quick Actions:</span>
+                                <button
+                                    type="button"
+                                    onclick="markAllRoster('PRESENT')"
+                                    style="padding: 6px 12px; font-size: 12px; font-weight: 600; background: #dcfce7; color: #166534; border: 1px solid #bbf7d0; border-radius: 5px; cursor: pointer;"
+                                    title="Mark all students present"
+                                >
+                                    ✓ Mark All Present
+                                </button>
+                                <button
+                                    type="button"
+                                    onclick="markAllRoster('ABSENT')"
+                                    style="padding: 6px 12px; font-size: 12px; font-weight: 600; background: #fee2e2; color: #991b1b; border: 1px solid #fecaca; border-radius: 5px; cursor: pointer;"
+                                    title="Mark all students absent"
+                                >
+                                    ✕ Mark All Absent
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="table-wrapper" style="overflow-x: auto;">
+                            <table class="result-table" style="width: 100%; border-collapse: collapse;">
+                                <thead>
+                                    <tr>
+                                        <th style="width: 110px;">Roll Number</th>
+                                        <th>Student Name</th>
+                                        <th>Department & Year</th>
+                                        <th style="text-align: center; width: 220px;">Attendance Status</th>
+                                        <th style="text-align: center; width: 180px;">Subject History</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="rosterTableBody">
+                                    <tr>
+                                        <td colspan="5" style="text-align: center; padding: 30px; color: #64748b;">
+                                            Loading class roster from database...
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
+
+                    <!-- Past / Recent Attendance Sessions Table -->
+                    <section class="dashboard-card">
+                        <div class="card-header" style="margin-bottom: 14px;">
+                            <div>
+                                <h2>Recent Attendance Sessions</h2>
+                                <span class="stat-subtext">Recorded class sessions from <code>GET /api/attendance/sessions</code></span>
+                            </div>
+                        </div>
+
+                        <div class="table-wrapper" style="overflow-x: auto;">
+                            <table class="result-table" style="width: 100%; border-collapse: collapse;">
+                                <thead>
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Subject</th>
+                                        <th style="text-align: center;">Enrolled</th>
+                                        <th style="text-align: center;">Present</th>
+                                        <th style="text-align: center;">Absent</th>
+                                        <th style="text-align: center;">Attendance Rate</th>
+                                        <th style="text-align: center; width: 110px;">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="pastSessionsTableBody">
+                                    <tr>
+                                        <td colspan="7" style="text-align: center; padding: 24px; color: #64748b;">
+                                            Loading recorded sessions...
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
+
+                </div>
+
+                <!-- =============================================
+                     VIEW 2: INDIVIDUAL STUDENT BREAKDOWN
+                     ============================================= -->
+                <div id="att-student-view" style="display: none;">
+
+                    <!-- Active Student Context Banner for Attendance -->
+                    <section class="dashboard-card" style="margin-bottom: 22px; border-left: 4px solid #2563eb; background: #f8fafc; padding: 18px 22px;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;">
+                            <div style="display: flex; align-items: center; gap: 16px;">
+                                <div id="att-student-avatar" style="width: 48px; height: 48px; border-radius: 50%; background: #2563eb; color: white; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 18px; flex-shrink: 0;">
+                                    ?
+                                </div>
+                                <div>
+                                    <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+                                        <h3 id="att-student-name" style="margin: 0; font-size: 17px; color: #1e293b;">No student selected</h3>
+                                        <span id="att-student-id-badge" class="assignment-status" style="background: #e2e8f0; color: #334155; font-size: 11px;">ID: --</span>
+                                        <span class="assignment-status" style="background: #dcfce7; color: #166534; font-size: 11px;">Selected Student</span>
+                                    </div>
+                                    <div id="att-student-meta" style="margin-top: 4px; font-size: 13px; color: #64748b;">
+                                        Select a student from the directory to review their subject-wise breakdown.
+                                    </div>
+                                </div>
+                            </div>
+                            <div style="display: flex; gap: 10px; align-items: center;">
+                                <button
+                                    onclick="switchTab('students')"
+                                    style="padding: 8px 14px; font-size: 12px; background: white; color: #2563eb; border: 1px solid #cbd5e1; border-radius: 6px; cursor: pointer; font-weight: 600;"
+                                    title="Choose a different student from Students Directory"
+                                >
+                                    👥 Change Student
+                                </button>
+                                <button
+                                    id="att-refresh-btn"
+                                    style="padding: 8px 14px; font-size: 12px; background: white; color: #334155; border: 1px solid #cbd5e1; border-radius: 6px; cursor: pointer; font-weight: 500;"
+                                    title="Refresh attendance from backend"
+                                >
+                                    ↻ Refresh
+                                </button>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Main Attendance Management Grid -->
+                    <div style="display: grid; grid-template-columns: 1.5fr 1fr; gap: 22px;" class="attendance-mgmt-grid">
+
+                        <!-- Left Column: Student Attendance Records Table -->
+                        <section class="dashboard-card" style="display: flex; flex-direction: column;">
+
+                            <div class="card-header" style="flex-wrap: wrap; gap: 10px; align-items: center; margin-bottom: 14px;">
+                                <div>
+                                    <h2>Subject Attendance Records</h2>
+                                    <p id="att-summary-subtext" class="stat-subtext" style="margin: 4px 0 0 0;">
+                                        Live aggregate attendance from <code>GET /api/attendance/student/{id}</code>
+                                    </p>
+                                </div>
+                                <div id="att-overall-badge" style="display: none;">
+                                    <span class="grade-badge grade-a" id="att-overall-pct">--%</span>
+                                </div>
+                            </div>
+
+                            <!-- Mini stats for current student -->
+                            <div id="att-student-stats" style="display: none; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 18px; padding: 12px 16px; background: #f8fafc; border-radius: 8px; border: 1px solid #e2e8f0;">
+                                <div>
+                                    <span style="font-size: 11px; color: #64748b; display: block;">Total Classes</span>
+                                    <strong id="att-stat-total" style="font-size: 16px; color: #1e293b;">0</strong>
+                                </div>
+                                <div>
+                                    <span style="font-size: 11px; color: #64748b; display: block;">Attended</span>
+                                    <strong id="att-stat-attended" style="font-size: 16px; color: #166534;">0</strong>
+                                </div>
+                                <div>
+                                    <span style="font-size: 11px; color: #64748b; display: block;">Missed</span>
+                                    <strong id="att-stat-missed" style="font-size: 16px; color: #991b1b;">0</strong>
+                                </div>
+                            </div>
+
+                            <!-- Table Wrapper -->
+                            <div class="attendance-table-wrapper" style="overflow-x: auto; flex: 1;">
+                                <table class="attendance-table" style="width: 100%;">
+                                    <thead>
+                                        <tr>
+                                            <th>Subject</th>
+                                            <th style="text-align: center;">Attended</th>
+                                            <th style="text-align: center;">Total</th>
+                                            <th style="text-align: center;">Percentage</th>
+                                            <th style="text-align: center;">Status</th>
+                                            <th style="text-align: center; width: 70px;">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="att-table-body">
+                                        <tr>
+                                            <td colspan="6" style="text-align: center; padding: 30px; color: #64748b;">
+                                                Select a student to load attendance records.
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                        </section>
+
+
+                        <!-- Right Column: Record / Update Attendance Form -->
+                        <section class="dashboard-card" style="align-self: start;">
+
+                            <div class="card-header" style="margin-bottom: 16px;">
+                                <div>
+                                    <h2 id="att-form-title">Record Attendance</h2>
+                                    <span class="stat-subtext" id="att-form-subtitle">Aggregate class counts via <code>POST /api/attendance</code></span>
+                                </div>
+                            </div>
+
+                            <form id="attendanceRecordForm" style="display: flex; flex-direction: column; gap: 14px;">
+
+                                <!-- Hidden Record ID (populated when editing an existing subject record) -->
+                                <input type="hidden" id="att-form-record-id" value="" />
+
+                                <!-- Student Info Readonly Indicator -->
+                                <div>
+                                    <label style="display: block; font-size: 12px; font-weight: 600; color: #374151; margin-bottom: 4px;">Target Student</label>
+                                    <input
+                                        type="text"
+                                        id="att-form-student-display"
+                                        readonly
+                                        style="width: 100%; padding: 8px 12px; font-size: 13px; background: #f1f5f9; border: 1px solid #cbd5e1; border-radius: 6px; color: #334155; cursor: not-allowed;"
+                                        value="No student selected"
+                                    />
+                                </div>
+
+                                <!-- Subject Name Input -->
+                                <div>
+                                    <label for="att-form-subject" style="display: block; font-size: 12px; font-weight: 600; color: #374151; margin-bottom: 4px;">
+                                        Subject Name <span style="color: #dc2626;">*</span>
+                                    </label>
+                                    <input
+                                        type="text"
+                                        id="att-form-subject"
+                                        required
+                                        list="existingSubjectsDatalist"
+                                        placeholder="e.g. Java Programming"
+                                        style="width: 100%; padding: 8px 12px; font-size: 13px; border: 1px solid #cbd5e1; border-radius: 6px; outline: none;"
+                                    />
+                                    <datalist id="existingSubjectsDatalist"></datalist>
+                                    <span style="font-size: 11px; color: #64748b; margin-top: 3px; display: block;">Select an existing subject to update, or type a new subject.</span>
+                                </div>
+
+                                <!-- Classes Grid (Attended & Total) -->
+                                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+                                    <div>
+                                        <label for="att-form-attended" style="display: block; font-size: 12px; font-weight: 600; color: #374151; margin-bottom: 4px;">
+                                            Classes Attended <span style="color: #dc2626;">*</span>
+                                        </label>
+                                        <input
+                                            type="number"
+                                            id="att-form-attended"
+                                            required
+                                            min="0"
+                                            placeholder="e.g. 18"
+                                            style="width: 100%; padding: 8px 12px; font-size: 13px; border: 1px solid #cbd5e1; border-radius: 6px; outline: none;"
+                                        />
+                                    </div>
+                                    <div>
+                                        <label for="att-form-total" style="display: block; font-size: 12px; font-weight: 600; color: #374151; margin-bottom: 4px;">
+                                            Total Classes <span style="color: #dc2626;">*</span>
+                                        </label>
+                                        <input
+                                            type="number"
+                                            id="att-form-total"
+                                            required
+                                            min="1"
+                                            placeholder="e.g. 20"
+                                            style="width: 100%; padding: 8px 12px; font-size: 13px; border: 1px solid #cbd5e1; border-radius: 6px; outline: none;"
+                                        />
+                                    </div>
+                                </div>
+
+                                <!-- Preview Percentage Calculation -->
+                                <div id="att-form-preview" style="display: flex; justify-content: space-between; align-items: center; padding: 8px 12px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px; font-size: 12px; color: #475569;">
+                                    <span>Calculated Attendance:</span>
+                                    <strong id="att-form-preview-val" style="color: #2563eb;">--%</strong>
+                                </div>
+
+                                <!-- Action Buttons -->
+                                <div style="display: flex; gap: 10px; margin-top: 4px;">
+                                    <button
+                                        type="submit"
+                                        id="att-form-submit-btn"
+                                        style="flex: 1; padding: 10px 16px; font-size: 13px; font-weight: 600; background: #2563eb; color: white; border: none; border-radius: 6px; cursor: pointer;"
+                                    >
+                                        💾 Save Attendance
+                                    </button>
+                                    <button
+                                        type="button"
+                                        id="att-form-reset-btn"
+                                        style="padding: 10px 14px; font-size: 13px; background: white; color: #64748b; border: 1px solid #cbd5e1; border-radius: 6px; cursor: pointer;"
+                                        title="Reset form"
+                                    >
+                                        Reset
+                                    </button>
+                                </div>
+
+                            </form>
+
+                        </section>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 TAB 4: ASSIGNMENTS MANAGEMENT (Step 4)
+                 ================================================= -->
+
+            <div id="tab-assignments" class="tab-content" style="display: none;">
+
+                <!-- Active Student Context Banner for Assignments -->
+                <section class="dashboard-card" style="margin-bottom: 22px; border-left: 4px solid #2563eb; background: #f8fafc; padding: 18px 22px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;">
+                        <div style="display: flex; align-items: center; gap: 16px;">
+                            <div id="assign-student-avatar" style="width: 48px; height: 48px; border-radius: 50%; background: #2563eb; color: white; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 18px; flex-shrink: 0;">
+                                ?
+                            </div>
+                            <div>
+                                <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+                                    <h3 id="assign-student-name" style="margin: 0; font-size: 17px; color: #1e293b;">No student selected</h3>
+                                    <span id="assign-student-id-badge" class="assignment-status" style="background: #e2e8f0; color: #334155; font-size: 11px;">ID: --</span>
+                                    <span id="assign-scope-badge" class="assignment-status" style="background: #dbeafe; color: #1e40af; font-size: 11px;">Student Scope</span>
+                                </div>
+                                <div id="assign-student-meta" style="margin-top: 4px; font-size: 13px; color: #64748b;">
+                                    Select a student from the directory to manage and create assignments.
+                                </div>
+                            </div>
+                        </div>
+                        <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+                            <!-- Scope Toggle: Selected Student vs All Class -->
+                            <div style="display: flex; background: white; border: 1px solid #cbd5e1; border-radius: 6px; overflow: hidden; padding: 2px;">
+                                <button
+                                    id="assign-scope-student-btn"
+                                    type="button"
+                                    onclick="setAssignmentsScope('student')"
+                                    style="padding: 7px 12px; font-size: 12px; border: none; border-radius: 4px; cursor: pointer; font-weight: 600; background: #2563eb; color: white; transition: 0.15s;"
+                                    title="View assignments assigned to the selected student"
+                                >
+                                    👤 Selected Student
+                                </button>
+                                <button
+                                    id="assign-scope-all-btn"
+                                    type="button"
+                                    onclick="setAssignmentsScope('all')"
+                                    style="padding: 7px 12px; font-size: 12px; border: none; border-radius: 4px; cursor: pointer; font-weight: 500; background: transparent; color: #475569; transition: 0.15s;"
+                                    title="View all assignments across the system"
+                                >
+                                    📋 All Assignments
+                                </button>
+                            </div>
+
+                            <button
+                                onclick="switchTab('students')"
+                                style="padding: 8px 14px; font-size: 12px; background: white; color: #2563eb; border: 1px solid #cbd5e1; border-radius: 6px; cursor: pointer; font-weight: 600;"
+                                title="Choose a different student from Students Directory"
+                            >
+                                👥 Change Student
+                            </button>
+                            <button
+                                id="assign-refresh-btn"
+                                style="padding: 8px 14px; font-size: 12px; background: white; color: #334155; border: 1px solid #cbd5e1; border-radius: 6px; cursor: pointer; font-weight: 500;"
+                                title="Refresh assignments from backend"
+                            >
+                                ↻ Refresh
+                            </button>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Feedback banner for Assignments Tab -->
+                <div id="assign-feedback-banner" style="display: none; padding: 12px 18px; margin-bottom: 20px; border-radius: 8px; font-size: 13px;"></div>
+
+                <!-- Main Assignment Management Grid -->
+                <div style="display: grid; grid-template-columns: 1.4fr 1fr; gap: 22px;" class="assignment-mgmt-grid">
+
+                    <!-- Left Column: Assignment Records List & Filters -->
+                    <section class="dashboard-card" style="display: flex; flex-direction: column;">
+
+                        <div class="card-header" style="flex-wrap: wrap; gap: 10px; align-items: center; margin-bottom: 14px;">
+                            <div>
+                                <h2 id="assign-list-title">Assignment Records</h2>
+                                <p id="assign-list-subtext" class="stat-subtext" style="margin: 4px 0 0 0;">
+                                    Live backend records from <code>GET /api/assignments</code>
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Mini stats for assignments -->
+                        <div id="assign-mini-stats" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 16px; padding: 12px 14px; background: #f8fafc; border-radius: 8px; border: 1px solid #e2e8f0;">
+                            <div>
+                                <span style="font-size: 11px; color: #64748b; display: block;">Total</span>
+                                <strong id="assign-stat-total" style="font-size: 16px; color: #1e293b;">0</strong>
+                            </div>
+                            <div>
+                                <span style="font-size: 11px; color: #64748b; display: block;">Pending</span>
+                                <strong id="assign-stat-pending" style="font-size: 16px; color: #b45309;">0</strong>
+                            </div>
+                            <div>
+                                <span style="font-size: 11px; color: #64748b; display: block;">Submitted</span>
+                                <strong id="assign-stat-submitted" style="font-size: 16px; color: #2563eb;">0</strong>
+                            </div>
+                            <div>
+                                <span style="font-size: 11px; color: #64748b; display: block;">Completed</span>
+                                <strong id="assign-stat-completed" style="font-size: 16px; color: #166534;">0</strong>
+                            </div>
+                        </div>
+
+                        <!-- Filter Controls -->
+                        <div style="display: flex; gap: 10px; margin-bottom: 16px; flex-wrap: wrap;">
+                            <div style="flex: 1; min-width: 180px; position: relative;">
+                                <input
+                                    type="text"
+                                    id="assignSearchInput"
+                                    placeholder="Filter by title, subject, student..."
+                                    style="width: 100%; padding: 8px 12px 8px 32px; font-size: 12px; border: 1px solid #cbd5e1; border-radius: 6px; outline: none;"
+                                />
+                                <span style="position: absolute; left: 10px; top: 50%; transform: translateY(-50%); color: #94a3b8; font-size: 12px;">🔍</span>
+                            </div>
+                            <div style="width: 140px;">
+                                <select
+                                    id="assignStatusFilter"
+                                    style="width: 100%; padding: 8px 10px; font-size: 12px; border: 1px solid #cbd5e1; border-radius: 6px; outline: none; background: white;"
+                                >
+                                    <option value="all">All Statuses</option>
+                                    <option value="pending">Pending</option>
+                                    <option value="submitted">Submitted</option>
+                                    <option value="completed">Completed</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Assignments Cards Container -->
+                        <div id="assign-items-container" style="flex: 1; overflow-y: auto; max-height: 600px; padding-right: 4px;">
+                            <div style="text-align: center; padding: 40px 20px; color: #64748b;">
+                                Loading assignments from backend...
+                            </div>
+                        </div>
+
+                    </section>
+
+
+                    <!-- Right Column: Create / Update Assignment Form -->
+                    <section class="dashboard-card" style="align-self: start;">
+
+                        <div class="card-header" style="margin-bottom: 16px;">
+                            <div>
+                                <h2 id="assign-form-title">Create Assignment</h2>
+                                <span class="stat-subtext" id="assign-form-subtitle">Assign academic task via <code>POST /api/assignments</code></span>
+                            </div>
+                        </div>
+
+                        <form id="assignmentRecordForm" style="display: flex; flex-direction: column; gap: 14px;">
+
+                            <!-- Hidden Assignment ID for edits -->
+                            <input type="hidden" id="assign-form-id" value="" />
+
+                            <!-- Assigned Student Dropdown / Indicator -->
+                            <div>
+                                <label for="assign-form-student-select" style="display: block; font-size: 12px; font-weight: 600; color: #374151; margin-bottom: 4px;">
+                                    Target Student <span style="color: #dc2626;">*</span>
+                                </label>
+                                <select
+                                    id="assign-form-student-select"
+                                    required
+                                    style="width: 100%; padding: 8px 12px; font-size: 13px; border: 1px solid #cbd5e1; border-radius: 6px; outline: none; background: white;"
+                                >
+                                    <option value="">-- Choose student from directory --</option>
+                                </select>
+                                <span style="font-size: 11px; color: #64748b; margin-top: 3px; display: block;">
+                                    Assignments in EduConnect are assigned per student.
+                                </span>
+                            </div>
+
+                            <!-- Assignment Title Input -->
+                            <div>
+                                <label for="assign-form-title-input" style="display: block; font-size: 12px; font-weight: 600; color: #374151; margin-bottom: 4px;">
+                                    Assignment Title <span style="color: #dc2626;">*</span>
+                                </label>
+                                <input
+                                    type="text"
+                                    id="assign-form-title-input"
+                                    required
+                                    maxlength="150"
+                                    placeholder="e.g. Distributed Database Report"
+                                    style="width: 100%; padding: 8px 12px; font-size: 13px; border: 1px solid #cbd5e1; border-radius: 6px; outline: none;"
+                                />
+                            </div>
+
+                            <!-- Subject Name Input with Datalist -->
+                            <div>
+                                <label for="assign-form-subject" style="display: block; font-size: 12px; font-weight: 600; color: #374151; margin-bottom: 4px;">
+                                    Subject Name <span style="color: #dc2626;">*</span>
+                                </label>
+                                <input
+                                    type="text"
+                                    id="assign-form-subject"
+                                    required
+                                    list="assignSubjectsDatalist"
+                                    placeholder="e.g. Database Management Systems"
+                                    style="width: 100%; padding: 8px 12px; font-size: 13px; border: 1px solid #cbd5e1; border-radius: 6px; outline: none;"
+                                />
+                                <datalist id="assignSubjectsDatalist"></datalist>
+                            </div>
+
+                            <!-- Due Date & Status Grid -->
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+                                <div>
+                                    <label for="assign-form-due-date" style="display: block; font-size: 12px; font-weight: 600; color: #374151; margin-bottom: 4px;">
+                                        Due Date <span style="color: #dc2626;">*</span>
+                                    </label>
+                                    <input
+                                        type="date"
+                                        id="assign-form-due-date"
+                                        required
+                                        style="width: 100%; padding: 8px 10px; font-size: 13px; border: 1px solid #cbd5e1; border-radius: 6px; outline: none;"
+                                    />
+                                </div>
+                                <div>
+                                    <label for="assign-form-status" style="display: block; font-size: 12px; font-weight: 600; color: #374151; margin-bottom: 4px;">
+                                        Status <span style="color: #dc2626;">*</span>
+                                    </label>
+                                    <select
+                                        id="assign-form-status"
+                                        required
+                                        style="width: 100%; padding: 8px 10px; font-size: 13px; border: 1px solid #cbd5e1; border-radius: 6px; outline: none; background: white;"
+                                    >
+                                        <option value="pending" selected>Pending</option>
+                                        <option value="submitted">Submitted</option>
+                                        <option value="completed">Completed</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <!-- Description Textarea -->
+                            <div>
+                                <label for="assign-form-description" style="display: block; font-size: 12px; font-weight: 600; color: #374151; margin-bottom: 4px;">
+                                    Description / Guidelines
+                                </label>
+                                <textarea
+                                    id="assign-form-description"
+                                    rows="3"
+                                    maxlength="1000"
+                                    placeholder="Enter instructions, questions, or submission guidelines..."
+                                    style="width: 100%; padding: 8px 12px; font-size: 13px; border: 1px solid #cbd5e1; border-radius: 6px; outline: none; resize: vertical;"
+                                ></textarea>
+                                <span style="font-size: 11px; color: #64748b; margin-top: 2px; display: block; text-align: right;">
+                                    Max 1000 characters
+                                </span>
+                            </div>
+
+                            <!-- Action Buttons -->
+                            <div style="display: flex; gap: 10px; margin-top: 4px;">
+                                <button
+                                    type="submit"
+                                    id="assign-form-submit-btn"
+                                    style="flex: 1; padding: 10px 16px; font-size: 13px; font-weight: 600; background: #2563eb; color: white; border: none; border-radius: 6px; cursor: pointer;"
+                                >
+                                    💾 Create Assignment
+                                </button>
+                                <button
+                                    type="button"
+                                    id="assign-form-reset-btn"
+                                    onclick="resetAssignmentForm()"
+                                    style="padding: 10px 14px; font-size: 13px; background: white; color: #64748b; border: 1px solid #cbd5e1; border-radius: 6px; cursor: pointer;"
+                                    title="Reset form"
+                                >
+                                    Reset
+                                </button>
+                            </div>
+
+                        </form>
+
+                    </section>
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 TAB 5: MARKS (Placeholder for Step 5)
+                 ================================================= -->
+
+            <div id="tab-marks" class="tab-content" style="display: none;">
+
+                <section class="dashboard-card">
+
+                    <div class="card-header">
+                        <h2>Marks & Results Entry</h2>
+                        <span class="stat-subtext">Scheduled for Step 5</span>
+                    </div>
+
+                    <div style="padding: 30px; text-align: center; color: #475569;">
+                        <div style="font-size: 40px; margin-bottom: 12px;">▤</div>
+                        <h3 style="margin-bottom: 8px; color: #1e293b;">Marks & Gradebook Module</h3>
+                        <p style="max-width: 520px; margin: 0 auto 20px; font-size: 14px; line-height: 1.6; color: #64748b;">
+                            This view will allow teachers to enter and update internal marks, assignment scores, and quiz marks with auto-calculated percentages using <code>POST /api/results</code>.
+                        </p>
+                        <button onclick="switchTab('overview')" style="padding: 10px 18px; font-size: 14px; background: #2563eb; color: white; border-radius: 6px; cursor: pointer;">
+                            ← Back to Overview
+                        </button>
+                    </div>
+
+                </section>
+
+            </div>
+
+
+            <!-- =================================================
+                 TAB 6: MATERIALS (Placeholder for Step 6)
+                 ================================================= -->
+
+            <div id="tab-materials" class="tab-content" style="display: none;">
+
+                <section class="dashboard-card">
+
+                    <div class="card-header">
+                        <h2>Study Materials Publishing</h2>
+                        <span class="stat-subtext">Scheduled for Step 6</span>
+                    </div>
+
+                    <div style="padding: 30px; text-align: center; color: #475569;">
+                        <div style="font-size: 40px; margin-bottom: 12px;">▣</div>
+                        <h3 style="margin-bottom: 8px; color: #1e293b;">Materials Publishing Module</h3>
+                        <p style="max-width: 520px; margin: 0 auto 20px; font-size: 14px; line-height: 1.6; color: #64748b;">
+                            This view will allow teachers to publish notes, reference links, and video resources for students using <code>POST /api/materials</code>.
+                        </p>
+                        <button onclick="switchTab('overview')" style="padding: 10px 18px; font-size: 14px; background: #2563eb; color: white; border-radius: 6px; cursor: pointer;">
+                            ← Back to Overview
+                        </button>
+                    </div>
+
+                </section>
+
+            </div>
+
+        </main>
+
+    </div>
+
+
+    <!-- =====================================================
+         TEACHER DASHBOARD JAVASCRIPT
+         ===================================================== -->
+
+    <script>
+    (function () {
+        const API_BASE = "http://localhost:8080/api";
+
+        let allStudentsList = [];
+        let selectedStudentId = null;
+        let latestAssignments = [];
+        let latestAttendance = [];
+        let currentStudentAttendance = [];
+
+        const setText = (id, text) => {
+            const el = document.getElementById(id);
+            if (el) el.textContent = text;
+        };
+
+        const escapeHtml = (str) => {
+            return (str || "")
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
+        };
+
+        const showError = (message) => {
+            const banner = document.getElementById("teacher-error-banner");
+            const textEl = document.getElementById("teacher-error-message");
+            if (banner && textEl) {
+                textEl.textContent = message;
+                banner.style.display = "block";
+            }
+        };
+
+        const hideError = () => {
+            const banner = document.getElementById("teacher-error-banner");
+            if (banner) banner.style.display = "none";
+        };
+
+        // Tab Navigation
+        window.switchTab = function (tabName) {
+            const tabs = ["overview", "students", "attendance", "assignments", "marks", "materials"];
+            if (!tabs.includes(tabName)) tabName = "overview";
+
+            tabs.forEach(t => {
+                const tabEl = document.getElementById(`tab-${t}`);
+                if (tabEl) {
+                    tabEl.style.display = (t === tabName) ? "block" : "none";
+                }
+            });
+
+            const navLinks = document.querySelectorAll(".sidebar-nav .nav-link[data-tab]");
+            navLinks.forEach(link => {
+                if (link.getAttribute("data-tab") === tabName) {
+                    link.classList.add("active");
+                } else {
+                    link.classList.remove("active");
+                }
+            });
+
+            // Update URL hash without reload
+            if (window.location.hash !== `#${tabName}`) {
+                window.history.replaceState(null, null, `#${tabName}`);
+            }
+
+            // If switching to attendance tab, refresh roster, past sessions, and active student's attendance view
+            if (tabName === "attendance") {
+                const dateIn = document.getElementById("att-session-date");
+                if (dateIn && !dateIn.value && typeof getTodayDateString === "function") {
+                    dateIn.value = getTodayDateString();
+                }
+                if (typeof checkAndLoadRosterSession === "function") {
+                    checkAndLoadRosterSession();
+                }
+                if (typeof loadPastSessions === "function") {
+                    loadPastSessions();
+                }
+                if (selectedStudentId && typeof loadStudentAttendanceView === "function") {
+                    loadStudentAttendanceView(selectedStudentId);
+                }
+            }
+
+            // If switching to assignments tab, refresh assignments view
+            if (tabName === "assignments" && typeof loadStudentAssignmentsView === "function") {
+                loadStudentAssignmentsView(selectedStudentId);
+            }
+        };
+
+        // Attach click listeners to sidebar links
+        document.querySelectorAll(".sidebar-nav .nav-link[data-tab]").forEach(link => {
+            link.addEventListener("click", function (e) {
+                e.preventDefault();
+                const targetTab = this.getAttribute("data-tab");
+                window.switchTab(targetTab);
+            });
+        });
+
+        // Initialize from URL hash if provided
+        const initialHash = (window.location.hash || "").replace("#", "");
+        if (initialHash) {
+            window.switchTab(initialHash);
+        }
+
+        // Safe JSON fetcher
+        async function fetchJson(endpoint) {
+            const res = await fetch(`${API_BASE}${endpoint}`);
+            if (!res.ok) {
+                throw new Error(`API ${endpoint} failed with HTTP ${res.status}`);
+            }
+            return res.json();
+        }
+
+        // Student Selection Handler
+        window.selectStudent = function (studentId) {
+            selectedStudentId = Number(studentId);
+            window.selectedStudentId = selectedStudentId;
+            try {
+                localStorage.setItem("educonnect_selected_student_id", selectedStudentId);
+            } catch (e) {}
+
+            const student = allStudentsList.find(s => Number(s.id) === selectedStudentId);
+            if (student) {
+                const avatarEl = document.getElementById("sel-student-avatar");
+                if (avatarEl) {
+                    avatarEl.textContent = (student.name || "S").charAt(0).toUpperCase();
+                }
+                setText("sel-student-name", student.name || "Unnamed Student");
+                setText("sel-student-id-badge", `ID: #${student.id}`);
+                setText(
+                    "sel-student-meta",
+                    `Roll: ${student.rollNumber || "N/A"} · Department: ${student.department || "General"} · Year ${student.year || "1"} · Email: ${student.email || "No email"}`
+                );
+
+                // Keep Attendance tab student banner in sync
+                const attAvatar = document.getElementById("att-student-avatar");
+                if (attAvatar) {
+                    attAvatar.textContent = (student.name || "S").charAt(0).toUpperCase();
+                }
+                setText("att-student-name", student.name || "Unnamed Student");
+                setText("att-student-id-badge", `ID: #${student.id}`);
+                setText(
+                    "att-student-meta",
+                    `Roll: ${student.rollNumber || "N/A"} · Department: ${student.department || "General"} · Year ${student.year || "1"} · Email: ${student.email || "No email"}`
+                );
+                const attFormDisplay = document.getElementById("att-form-student-display");
+                if (attFormDisplay) {
+                    attFormDisplay.value = `${student.name || "Student"} (ID: #${student.id})`;
+                }
+
+                // Keep Assignments tab student banner & dropdown in sync
+                const assignAvatar = document.getElementById("assign-student-avatar");
+                if (assignAvatar) {
+                    assignAvatar.textContent = (student.name || "S").charAt(0).toUpperCase();
+                }
+                setText("assign-student-name", student.name || "Unnamed Student");
+                setText("assign-student-id-badge", `ID: #${student.id}`);
+                setText(
+                    "assign-student-meta",
+                    `Roll: ${student.rollNumber || "N/A"} · Department: ${student.department || "General"} · Year ${student.year || "1"} · Email: ${student.email || "No email"}`
+                );
+                const assignStudentSelect = document.getElementById("assign-form-student-select");
+                if (assignStudentSelect) {
+                    assignStudentSelect.value = String(student.id);
+                }
+            }
+
+            // Immediately load attendance records for the selected student
+            if (typeof loadStudentAttendanceView === "function") {
+                loadStudentAttendanceView(selectedStudentId);
+            }
+
+            // Immediately load assignments records for the selected student
+            if (typeof loadStudentAssignmentsView === "function") {
+                loadStudentAssignmentsView(selectedStudentId);
+            }
+
+            // Re-render roster table to highlight selected student row if in roster mode
+            if (typeof renderRosterTable === "function") {
+                renderRosterTable();
+            }
+
+            // Highlight selected row in table
+            const rows = document.querySelectorAll("#studentsTableBody tr[data-student-id]");
+            rows.forEach(r => {
+                const rId = Number(r.getAttribute("data-student-id"));
+                const btn = r.querySelector(".student-select-btn");
+                if (rId === selectedStudentId) {
+                    r.style.background = "#eff6ff";
+                    r.style.borderLeft = "4px solid #2563eb";
+                    if (btn) {
+                        btn.textContent = "Selected ✓";
+                        btn.style.background = "#dcfce7";
+                        btn.style.color = "#166534";
+                        btn.style.borderColor = "#bbf7d0";
+                    }
+                } else {
+                    r.style.background = "";
+                    r.style.borderLeft = "";
+                    if (btn) {
+                        btn.textContent = "Select";
+                        btn.style.background = "white";
+                        btn.style.color = "#2563eb";
+                        btn.style.borderColor = "#cbd5e1";
+                    }
+                }
+            });
+        };
+
+        // Render Students Directory Table
+        function renderStudentsTable(studentsToDisplay, searchQuery = "") {
+            const tbody = document.getElementById("studentsTableBody");
+            const badge = document.getElementById("studentCountBadge");
+            if (!tbody) return;
+
+            tbody.innerHTML = "";
+
+            if (!Array.isArray(studentsToDisplay) || studentsToDisplay.length === 0) {
+                if (badge) badge.textContent = "0 students";
+
+                if (searchQuery) {
+                    tbody.innerHTML = `
+                        <tr>
+                            <td colspan="6" style="text-align: center; padding: 36px 20px; color: #64748b;">
+                                <div style="font-size: 28px; margin-bottom: 8px;">🔍</div>
+                                <strong style="color: #1e293b; font-size: 14px;">No students match "${escapeHtml(searchQuery)}"</strong>
+                                <p style="font-size: 13px; margin: 6px 0 14px 0;">Try searching with a different name, roll number, or department.</p>
+                                <button onclick="clearStudentSearch()" style="padding: 7px 14px; font-size: 12px; background: #2563eb; color: white; border: none; border-radius: 6px; cursor: pointer;">
+                                    Clear Search
+                                </button>
+                            </td>
+                        </tr>
+                    `;
+                } else {
+                    tbody.innerHTML = `
+                        <tr>
+                            <td colspan="6" style="text-align: center; padding: 40px 20px; color: #64748b;">
+                                <div style="font-size: 32px; margin-bottom: 8px;">👥</div>
+                                <strong style="color: #1e293b; font-size: 14px;">No student records found in database</strong>
+                                <p style="font-size: 13px; margin-top: 4px;">Registered students from <code>GET /api/students</code> will appear here.</p>
+                            </td>
+                        </tr>
+                    `;
+                }
+                return;
+            }
+
+            if (badge) {
+                badge.textContent = searchQuery
+                    ? `Showing ${studentsToDisplay.length} of ${allStudentsList.length}`
+                    : `${studentsToDisplay.length} student${studentsToDisplay.length === 1 ? "" : "s"}`;
+            }
+
+            studentsToDisplay.forEach(student => {
+                const isSelected = Number(student.id) === Number(selectedStudentId);
+                const initial = (student.name || "S").charAt(0).toUpperCase();
+
+                const tr = document.createElement("tr");
+                tr.setAttribute("data-student-id", student.id);
+                tr.style.cursor = "pointer";
+                tr.style.transition = "background 0.15s ease";
+
+                if (isSelected) {
+                    tr.style.background = "#eff6ff";
+                    tr.style.borderLeft = "4px solid #2563eb";
+                }
+
+                tr.innerHTML = `
+                    <td style="text-align: center; vertical-align: middle;">
+                        <button
+                            class="student-select-btn"
+                            style="padding: 6px 12px; font-size: 11px; font-weight: 600; border-radius: 6px; cursor: pointer; transition: 0.2s; border: 1px solid ${isSelected ? "#bbf7d0" : "#cbd5e1"}; background: ${isSelected ? "#dcfce7" : "white"}; color: ${isSelected ? "#166534" : "#2563eb"};"
+                        >
+                            ${isSelected ? "Selected ✓" : "Select"}
+                        </button>
+                    </td>
+                    <td style="vertical-align: middle;">
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <div style="width: 32px; height: 32px; border-radius: 50%; background: #e0e7ff; color: #3730a3; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 13px; flex-shrink: 0;">
+                                ${initial}
+                            </div>
+                            <div>
+                                <strong style="color: #1e293b; font-size: 13px;">${escapeHtml(student.name || "Unnamed Student")}</strong>
+                                <span style="font-size: 11px; color: #94a3b8; display: block;">ID: #${student.id}</span>
+                            </div>
+                        </div>
+                    </td>
+                    <td style="vertical-align: middle;">
+                        <code style="background: #f1f5f9; padding: 3px 7px; border-radius: 4px; font-size: 12px; color: #0f172a; font-weight: 600;">
+                            ${escapeHtml(student.rollNumber || "N/A")}
+                        </code>
+                    </td>
+                    <td style="vertical-align: middle;">
+                        <span class="assignment-status" style="background: #e0e7ff; color: #3730a3; font-size: 11px;">
+                            ${escapeHtml(student.department || "General")}
+                        </span>
+                    </td>
+                    <td style="vertical-align: middle; color: #475569; font-size: 13px;">
+                        Year ${student.year || "1"}
+                    </td>
+                    <td style="vertical-align: middle;">
+                        <a href="mailto:${escapeHtml(student.email || "")}" style="color: #2563eb; text-decoration: none; font-size: 13px;">
+                            ${escapeHtml(student.email || "No email")}
+                        </a>
+                    </td>
+                `;
+
+                // Row click selects the student
+                tr.addEventListener("click", function () {
+                    window.selectStudent(student.id);
+                });
+
+                tbody.appendChild(tr);
+            });
+        }
+
+        // Search Input Handling
+        window.clearStudentSearch = function () {
+            const searchInput = document.getElementById("studentSearchInput");
+            if (searchInput) {
+                searchInput.value = "";
+            }
+            renderStudentsTable(allStudentsList);
+        };
+
+        const searchInput = document.getElementById("studentSearchInput");
+        if (searchInput) {
+            searchInput.addEventListener("input", function () {
+                const q = this.value.trim().toLowerCase();
+                if (!q) {
+                    renderStudentsTable(allStudentsList);
+                } else {
+                    const filtered = allStudentsList.filter(s => {
+                        const name = (s.name || "").toLowerCase();
+                        const roll = (s.rollNumber || "").toLowerCase();
+                        const dept = (s.department || "").toLowerCase();
+                        const email = (s.email || "").toLowerCase();
+                        const yearStr = `year ${s.year}`;
+                        const idStr = String(s.id);
+                        return (
+                            name.includes(q) ||
+                            roll.includes(q) ||
+                            dept.includes(q) ||
+                            email.includes(q) ||
+                            yearStr.includes(q) ||
+                            idStr === q
+                        );
+                    });
+                    renderStudentsTable(filtered, q);
+                }
+            });
+        }
+
+        // Refresh Button Handling
+        const refreshBtn = document.getElementById("studentRefreshBtn");
+        if (refreshBtn) {
+            refreshBtn.addEventListener("click", async function () {
+                this.disabled = true;
+                this.textContent = "Refreshing...";
+                try {
+                    const freshStudents = await fetchJson("/students");
+                    allStudentsList = Array.isArray(freshStudents) ? freshStudents : [];
+                    const searchVal = searchInput ? searchInput.value.trim().toLowerCase() : "";
+                    if (searchVal) {
+                        searchInput.dispatchEvent(new Event("input"));
+                    } else {
+                        renderStudentsTable(allStudentsList);
+                    }
+                    if (typeof populateAssignmentStudentDropdown === "function") {
+                        populateAssignmentStudentDropdown(allStudentsList);
+                    }
+                    // Also update overview card and re-render recent assignments & attendance with updated student names
+                    setText("t-stat-students", allStudentsList.length);
+                    setText("t-stat-students-sub", `${allStudentsList.length} enrolled student${allStudentsList.length === 1 ? "" : "s"}`);
+                    renderRecentAssignments(latestAssignments);
+                    renderAttendanceOverview(latestAttendance);
+                } catch (e) {
+                    console.error("Refresh students failed:", e);
+                    showError("Could not refresh students from Spring Boot backend at http://localhost:8080/api/students.");
+                } finally {
+                    this.disabled = false;
+                    this.textContent = "↻ Refresh";
+                }
+            });
+        }
+
+        // Render Overview Recent Assignments List
+        function renderRecentAssignments(assignments) {
+            const assignContainer = document.getElementById("t-assignments-container");
+            if (!assignContainer) return;
+
+            assignContainer.innerHTML = "";
+            if (!Array.isArray(assignments) || assignments.length === 0) {
+                assignContainer.innerHTML = `<p style="color: #6b7280; font-size: 13px; padding: 12px 0;">No assignments found in database.</p>`;
+                return;
+            }
+
+            assignments.forEach(item => {
+                const status = (item.status || "pending").toLowerCase();
+                let statusClass = "status-pending";
+                let statusLabel = "Pending";
+
+                if (status === "submitted") {
+                    statusClass = "status-pending";
+                    statusLabel = "Submitted";
+                } else if (status === "completed") {
+                    statusClass = "status-completed";
+                    statusLabel = "Completed";
+                }
+
+                let dueText = item.dueDate ? `Due ${item.dueDate}` : "No due date";
+
+                // Match studentId against allStudentsList
+                let studentDisplayName = "";
+                if (item.studentId != null) {
+                    const student = allStudentsList.find(s => Number(s.id) === Number(item.studentId));
+                    if (student && student.name) {
+                        studentDisplayName = student.name;
+                    } else {
+                        studentDisplayName = `Student #${item.studentId}`;
+                    }
+                } else {
+                    studentDisplayName = "Unassigned";
+                }
+
+                const row = document.createElement("div");
+                row.className = "assignment-item";
+                row.innerHTML = `
+                    <div class="assignment-info">
+                        <span class="assignment-title">${escapeHtml(item.title || "Untitled Assignment")}</span>
+                        <span class="assignment-subject">${escapeHtml(item.subject || "General")} · ${dueText} · Assigned to: <strong>${escapeHtml(studentDisplayName)}</strong></span>
+                    </div>
+                    <span class="assignment-status ${statusClass}">${statusLabel}</span>
+                `;
+                assignContainer.appendChild(row);
+            });
+        }
+
+        // Render Student Attendance Overview
+        function renderAttendanceOverview(attendance) {
+            const attContainer = document.getElementById("t-attendance-container");
+            const attHeading = document.getElementById("t-attendance-heading");
+            const attSubtext = document.getElementById("t-attendance-subtext");
+            const attContext = document.getElementById("t-attendance-context");
+
+            if (!attContainer) return;
+            attContainer.innerHTML = "";
+
+            if (!Array.isArray(attendance) || attendance.length === 0) {
+                if (attHeading) attHeading.textContent = "Student Attendance Overview";
+                if (attSubtext) attSubtext.textContent = "Subject-wise records";
+                if (attContext) {
+                    attContext.style.display = "none";
+                    attContext.innerHTML = "";
+                }
+                attContainer.innerHTML = `<p style="color: #6b7280; font-size: 13px; padding: 12px 0;">No attendance records found in database.</p>`;
+                return;
+            }
+
+            // Identify whether records belong to a single student or multiple students
+            const uniqueStudentIds = [...new Set(attendance.map(a => a.studentId).filter(id => id != null))];
+
+            if (uniqueStudentIds.length === 1) {
+                const sId = uniqueStudentIds[0];
+                const student = allStudentsList.find(s => Number(s.id) === Number(sId));
+                const studentName = student && student.name ? student.name : `Student #${sId}`;
+                const rollText = student && student.rollNumber ? ` · Roll: ${student.rollNumber}` : "";
+                const deptText = student && student.department ? ` · ${student.department}` : "";
+
+                if (attHeading) attHeading.textContent = "Student Attendance Overview";
+                if (attSubtext) attSubtext.textContent = `Subject-wise breakdown for ${studentName}`;
+
+                if (attContext) {
+                    attContext.style.display = "block";
+                    attContext.innerHTML = `
+                        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; padding: 10px 14px; background: #eff6ff; border-radius: 6px; font-size: 12px; color: #1e40af; border: 1px solid #dbeafe; flex-wrap: wrap; gap: 8px;">
+                            <div>
+                                <span>Subject-wise records for: <strong>${escapeHtml(studentName)}</strong></span>
+                                <span style="color: #64748b; margin-left: 4px;">(ID: #${sId}${escapeHtml(rollText)}${escapeHtml(deptText)})</span>
+                            </div>
+                            <span class="assignment-status" style="background: #dbeafe; color: #1e40af; font-size: 11px; padding: 2px 8px; border-radius: 4px; font-weight: 600;">Single Student Records</span>
+                        </div>
+                    `;
+                }
+            } else if (uniqueStudentIds.length > 1) {
+                if (attHeading) attHeading.textContent = "Student Attendance Overview";
+                if (attSubtext) attSubtext.textContent = `Across ${uniqueStudentIds.length} Students`;
+
+                if (attContext) {
+                    attContext.style.display = "block";
+                    attContext.innerHTML = `
+                        <div style="margin-bottom: 12px; padding: 8px 12px; background: #f8fafc; border-radius: 6px; font-size: 12px; color: #475569; border: 1px solid #e2e8f0;">
+                            <span>Displaying subject attendance records across ${uniqueStudentIds.length} enrolled students.</span>
+                        </div>
+                    `;
+                }
+            } else {
+                if (attHeading) attHeading.textContent = "Student Attendance Overview";
+                if (attSubtext) attSubtext.textContent = "Subject-wise records";
+                if (attContext) {
+                    attContext.style.display = "none";
+                    attContext.innerHTML = "";
+                }
+            }
+
+            attendance.forEach(item => {
+                const pct = Number(item.totalClasses) > 0
+                    ? (Number(item.attendedClasses) / Number(item.totalClasses)) * 100
+                    : 0;
+
+                let studentTag = "";
+                if (uniqueStudentIds.length > 1 && item.studentId != null) {
+                    const st = allStudentsList.find(s => Number(s.id) === Number(item.studentId));
+                    const name = st && st.name ? st.name : `Student #${item.studentId}`;
+                    studentTag = ` <small style="font-size: 11px; color: #64748b; font-weight: normal;">— ${escapeHtml(name)}</small>`;
+                }
+
+                const row = document.createElement("div");
+                row.className = "attendance-row";
+                row.innerHTML = `
+                    <div class="attendance-info">
+                        <span class="subject-name">${escapeHtml(item.subject || "Subject")}${studentTag}</span>
+                        <span class="attendance-percentage">${pct.toFixed(1)}% (${item.attendedClasses}/${item.totalClasses})</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: ${Math.min(100, Math.max(0, pct))}%;"></div>
+                    </div>
+                `;
+                attContainer.appendChild(row);
+            });
+        }
+
+        // Load Teacher Dashboard Data
+        async function loadTeacherDashboard() {
+            hideError();
+
+            try {
+                // Fetch real data from the four specified endpoints
+                const [students, attendance, assignments, materials] = await Promise.all([
+                    fetchJson("/students"),
+                    fetchJson("/attendance"),
+                    fetchJson("/assignments"),
+                    fetchJson("/materials")
+                ]);
+
+                // 1. Total Students & Directory Population
+                allStudentsList = Array.isArray(students) ? students : [];
+                const studentCount = allStudentsList.length;
+                setText("t-stat-students", studentCount);
+                setText("t-stat-students-sub", `${studentCount} enrolled student${studentCount === 1 ? "" : "s"}`);
+
+                // Render Students Directory
+                renderStudentsTable(allStudentsList);
+                if (typeof populateAssignmentStudentDropdown === "function") {
+                    populateAssignmentStudentDropdown(allStudentsList);
+                }
+
+                // Auto-select student context: from localStorage if valid, or first in list
+                let targetId = null;
+                try {
+                    const saved = localStorage.getItem("educonnect_selected_student_id");
+                    if (saved && allStudentsList.some(s => Number(s.id) === Number(saved))) {
+                        targetId = Number(saved);
+                    }
+                } catch (e) {}
+
+                if (!targetId && allStudentsList.length > 0) {
+                    targetId = allStudentsList[0].id;
+                }
+
+                if (targetId) {
+                    window.selectStudent(targetId);
+                }
+
+                // 2. Average Attendance Calculation
+                // NOTE ON CALCULATION (Requirement 6):
+                // Calculated from underlying session records: total classes attended divided by total classes scheduled.
+                // Formula: (sum(attendedClasses) / sum(totalClasses)) * 100
+                // We do NOT compute an unweighted average of individual percentages.
+                let totalAttended = 0;
+                let totalClasses = 0;
+
+                if (Array.isArray(attendance) && attendance.length > 0) {
+                    attendance.forEach(item => {
+                        totalAttended += Number(item.attendedClasses || 0);
+                        totalClasses += Number(item.totalClasses || 0);
+                    });
+                }
+
+                const avgPercent = totalClasses > 0
+                    ? (totalAttended / totalClasses) * 100
+                    : 0;
+
+                setText("t-stat-attendance", `${avgPercent.toFixed(1)}%`);
+                setText(
+                    "t-stat-attendance-sub",
+                    attendance.length > 0
+                        ? `${totalAttended} of ${totalClasses} total attendances`
+                        : "No attendance records recorded"
+                );
+
+                // 3. Total Assignments
+                const assignmentCount = Array.isArray(assignments) ? assignments.length : 0;
+                const pendingCount = Array.isArray(assignments)
+                    ? assignments.filter(a => (a.status || "").toLowerCase() === "pending").length
+                    : 0;
+                const submittedCount = Array.isArray(assignments)
+                    ? assignments.filter(a => {
+                        const s = (a.status || "").toLowerCase();
+                        return s === "submitted" || s === "completed";
+                    }).length
+                    : 0;
+
+                setText("t-stat-assignments", assignmentCount);
+                setText(
+                    "t-stat-assignments-sub",
+                    `${pendingCount} pending · ${submittedCount} submitted/completed`
+                );
+
+                // 4. Published Study Materials
+                const materialCount = Array.isArray(materials) ? materials.length : 0;
+                setText("t-stat-materials", materialCount);
+                setText("t-stat-materials-sub", `${materialCount} available resource${materialCount === 1 ? "" : "s"}`);
+
+                // Cache latest lists for subsequent re-renders (e.g. after student directory refresh)
+                latestAssignments = Array.isArray(assignments) ? assignments : [];
+                latestAttendance = Array.isArray(attendance) ? attendance : [];
+
+                // 5. Render Overview Recent Assignments List
+                renderRecentAssignments(latestAssignments);
+
+                // 6. Render Student Attendance Overview
+                renderAttendanceOverview(latestAttendance);
+
+                // 7. Update Attendance Tab Class Roster & Past Sessions
+                const dateIn = document.getElementById("att-session-date");
+                if (dateIn && !dateIn.value && typeof getTodayDateString === "function") {
+                    dateIn.value = getTodayDateString();
+                }
+                if (typeof checkAndLoadRosterSession === "function") {
+                    checkAndLoadRosterSession();
+                }
+                if (typeof loadPastSessions === "function") {
+                    loadPastSessions();
+                }
+
+                console.log("Teacher dashboard overview loaded successfully.");
+            } catch (err) {
+                console.error("Failed to load teacher dashboard data:", err);
+                showError("Could not connect to Spring Boot backend at http://localhost:8080. Please ensure the backend and MySQL server are running.");
+                setText("t-stat-students", "--");
+                setText("t-stat-students-sub", "Failed to load");
+                setText("t-stat-attendance", "--");
+                setText("t-stat-attendance-sub", "Failed to load");
+                setText("t-stat-assignments", "--");
+                setText("t-stat-assignments-sub", "Failed to load");
+                setText("t-stat-materials", "--");
+                setText("t-stat-materials-sub", "Failed to load");
+
+                const assignContainer = document.getElementById("t-assignments-container");
+                if (assignContainer) {
+                    assignContainer.innerHTML = `<p style="color: #dc2626; font-size: 13px; padding: 12px 0;">Failed to load assignments.</p>`;
+                }
+                const attContainer = document.getElementById("t-attendance-container");
+                if (attContainer) {
+                    attContainer.innerHTML = `<p style="color: #dc2626; font-size: 13px; padding: 12px 0;">Failed to load attendance.</p>`;
+                }
+                const attContext = document.getElementById("t-attendance-context");
+                if (attContext) {
+                    attContext.style.display = "none";
+                }
+
+                const tbody = document.getElementById("studentsTableBody");
+                if (tbody) {
+                    tbody.innerHTML = `
+                        <tr>
+                            <td colspan="6" style="text-align: center; padding: 30px; color: #dc2626; background: #fff5f5;">
+                                <strong>Unable to load students directory.</strong>
+                                <p style="font-size: 13px; margin: 4px 0 0 0; color: #7f1d1d;">Could not connect to Spring Boot backend at http://localhost:8080/api/students.</p>
+                            </td>
+                        </tr>
+                    `;
+                }
+                setText("studentCountBadge", "Error loading");
+            }
+        }
+
+        // =====================================================
+        // ATTENDANCE MANAGEMENT (STEP 3 & CLASS ROSTER) LOGIC
+        // =====================================================
+
+        let currentAttendanceMode = "roster"; // "roster" or "student"
+        let currentRosterList = []; // Array of { studentId, name, rollNumber, department, year, email, status: "PRESENT"|"ABSENT" }
+        let currentLoadedSession = null; // null if new session, or AttendanceSession object
+
+        function getTodayDateString() {
+            const today = new Date();
+            const y = today.getFullYear();
+            const m = String(today.getMonth() + 1).padStart(2, "0");
+            const d = String(today.getDate()).padStart(2, "0");
+            return `${y}-${m}-${d}`;
+        }
+
+        // Mode Switcher: Class Roster vs Student Breakdown
+        window.setAttendanceMode = function (mode) {
+            currentAttendanceMode = mode;
+            const rosterBtn = document.getElementById("att-mode-roster-btn");
+            const studentBtn = document.getElementById("att-mode-student-btn");
+            const rosterView = document.getElementById("att-roster-view");
+            const studentView = document.getElementById("att-student-view");
+
+            if (mode === "roster") {
+                if (rosterView) rosterView.style.display = "block";
+                if (studentView) studentView.style.display = "none";
+                if (rosterBtn) {
+                    rosterBtn.style.background = "#2563eb";
+                    rosterBtn.style.color = "white";
+                    rosterBtn.style.fontWeight = "600";
+                }
+                if (studentBtn) {
+                    studentBtn.style.background = "transparent";
+                    studentBtn.style.color = "#475569";
+                    studentBtn.style.fontWeight = "500";
+                }
+            } else {
+                if (rosterView) rosterView.style.display = "none";
+                if (studentView) studentView.style.display = "block";
+                if (rosterBtn) {
+                    rosterBtn.style.background = "transparent";
+                    rosterBtn.style.color = "#475569";
+                    rosterBtn.style.fontWeight = "500";
+                }
+                if (studentBtn) {
+                    studentBtn.style.background = "#2563eb";
+                    studentBtn.style.color = "white";
+                    studentBtn.style.fontWeight = "600";
+                }
+                if (selectedStudentId) {
+                    loadStudentAttendanceView(selectedStudentId);
+                }
+            }
+        };
+
+        // Quick action: Mark All Present / Absent
+        window.markAllRoster = function (status) {
+            if (!Array.isArray(currentRosterList) || currentRosterList.length === 0) return;
+            currentRosterList.forEach(item => {
+                item.status = status;
+            });
+            renderRosterTable();
+            updateRosterStats();
+        };
+
+        // Individual toggle: Mark student Present or Absent
+        window.toggleRosterStudent = function (studentId, status) {
+            const student = currentRosterList.find(s => Number(s.studentId) === Number(studentId));
+            if (!student) return;
+            student.status = status;
+            renderRosterTable();
+            updateRosterStats();
+        };
+
+        // Update the 4 mini stats for the current roster
+        function updateRosterStats() {
+            const total = currentRosterList.length;
+            const present = currentRosterList.filter(s => s.status === "PRESENT").length;
+            const absent = currentRosterList.filter(s => s.status === "ABSENT").length;
+            const rate = total > 0 ? (present / total) * 100 : 0;
+
+            setText("roster-stat-total", total);
+            setText("roster-stat-present", present);
+            setText("roster-stat-absent", absent);
+            setText("roster-stat-rate", total > 0 ? `${rate.toFixed(1)}%` : "--%");
+
+            const rateEl = document.getElementById("roster-stat-rate");
+            if (rateEl) {
+                if (total === 0) {
+                    rateEl.style.color = "#64748b";
+                } else if (rate >= 80) {
+                    rateEl.style.color = "#166534";
+                } else if (rate >= 60) {
+                    rateEl.style.color = "#2563eb";
+                } else {
+                    rateEl.style.color = "#b91c1c";
+                }
+            }
+        }
+
+        // Render Roster Table
+        function renderRosterTable() {
+            const tbody = document.getElementById("rosterTableBody");
+            if (!tbody) return;
+
+            tbody.innerHTML = "";
+
+            if (!Array.isArray(currentRosterList) || currentRosterList.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="5" style="text-align: center; padding: 36px 20px; color: #64748b;">
+                            <div style="font-size: 28px; margin-bottom: 8px;">👥</div>
+                            <strong style="color: #1e293b; font-size: 14px;">No enrolled students found in database</strong>
+                            <p style="font-size: 13px; margin: 4px 0 0 0;">Registered students from <code>GET /api/students</code> will appear here.</p>
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+
+            const subjectInput = document.getElementById("att-session-subject");
+            const curSubject = subjectInput ? subjectInput.value.trim().toLowerCase() : "";
+
+            currentRosterList.forEach(student => {
+                const isSelected = Number(student.studentId) === Number(selectedStudentId);
+                const isPresent = student.status === "PRESENT";
+
+                // Calculate subject attendance percentage from latestAttendance
+                let subjectHistoryText = "No prior records";
+                let historyPct = null;
+                if (Array.isArray(latestAttendance)) {
+                    const agg = latestAttendance.find(
+                        a => Number(a.studentId) === Number(student.studentId) &&
+                             a.subject && a.subject.trim().toLowerCase() === curSubject
+                    );
+                    if (agg && Number(agg.totalClasses) > 0) {
+                        const pct = (Number(agg.attendedClasses) / Number(agg.totalClasses)) * 100;
+                        historyPct = pct;
+                        subjectHistoryText = `<strong>${agg.attendedClasses}/${agg.totalClasses}</strong> (${pct.toFixed(1)}%)`;
+                    }
+                }
+
+                let badgeColor = "#64748b";
+                if (historyPct !== null) {
+                    badgeColor = historyPct >= 80 ? "#166534" : (historyPct >= 65 ? "#2563eb" : "#b91c1c");
+                }
+
+                const tr = document.createElement("tr");
+                tr.style.cursor = "pointer";
+                tr.style.transition = "background 0.15s ease";
+                if (isSelected) {
+                    tr.style.background = "#eff6ff";
+                    tr.style.borderLeft = "4px solid #2563eb";
+                }
+
+                tr.innerHTML = `
+                    <td style="vertical-align: middle;">
+                        <code style="background: #f1f5f9; padding: 4px 8px; border-radius: 4px; font-size: 12px; color: #0f172a; font-weight: 600;">
+                            ${escapeHtml(student.rollNumber || "N/A")}
+                        </code>
+                    </td>
+                    <td style="vertical-align: middle;">
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <div style="width: 32px; height: 32px; border-radius: 50%; background: #e0e7ff; color: #3730a3; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 13px; flex-shrink: 0;">
+                                ${(student.name || "S").charAt(0).toUpperCase()}
+                            </div>
+                            <div>
+                                <strong style="color: #1e293b; font-size: 13px;">${escapeHtml(student.name || "Student")}</strong>
+                                <span style="font-size: 11px; color: #94a3b8; display: block;">ID: #${student.studentId}</span>
+                            </div>
+                        </div>
+                    </td>
+                    <td style="vertical-align: middle;">
+                        <span class="assignment-status" style="background: #e0e7ff; color: #3730a3; font-size: 11px;">
+                            ${escapeHtml(student.department || "General")}
+                        </span>
+                        <span style="font-size: 12px; color: #64748b; margin-left: 4px;">Year ${student.year || "1"}</span>
+                    </td>
+                    <td style="text-align: center; vertical-align: middle;">
+                        <div style="display: inline-flex; border-radius: 6px; overflow: hidden; border: 1px solid #cbd5e1; box-shadow: 0 1px 2px rgba(0,0,0,0.05);">
+                            <button
+                                type="button"
+                                onclick="event.stopPropagation(); toggleRosterStudent(${student.studentId}, 'PRESENT')"
+                                style="padding: 7px 16px; font-size: 12px; font-weight: 600; border: none; cursor: pointer; transition: 0.15s; ${
+                                    isPresent
+                                        ? "background: #166534; color: white;"
+                                        : "background: white; color: #64748b;"
+                                }"
+                                title="Mark Present"
+                            >
+                                ✓ Present
+                            </button>
+                            <button
+                                type="button"
+                                onclick="event.stopPropagation(); toggleRosterStudent(${student.studentId}, 'ABSENT')"
+                                style="padding: 7px 16px; font-size: 12px; font-weight: 600; border: none; border-left: 1px solid #cbd5e1; cursor: pointer; transition: 0.15s; ${
+                                    !isPresent
+                                        ? "background: #dc2626; color: white;"
+                                        : "background: white; color: #64748b;"
+                                }"
+                                title="Mark Absent"
+                            >
+                                ✕ Absent
+                            </button>
+                        </div>
+                    </td>
+                    <td style="text-align: center; vertical-align: middle; font-size: 12px; color: ${badgeColor};">
+                        ${subjectHistoryText}
+                    </td>
+                `;
+
+                // Clicking row selects the student
+                tr.addEventListener("click", function () {
+                    window.selectStudent(student.studentId);
+                });
+
+                tbody.appendChild(tr);
+            });
+        }
+
+        // Check and Load session for the selected subject and date
+        async function checkAndLoadRosterSession() {
+            const subjectInput = document.getElementById("att-session-subject");
+            const dateInput = document.getElementById("att-session-date");
+            const badge = document.getElementById("session-status-badge");
+            const tbody = document.getElementById("rosterTableBody");
+
+            const subject = subjectInput ? subjectInput.value.trim() : "";
+            const date = dateInput ? dateInput.value.trim() : "";
+
+            if (!subject || !date) {
+                return;
+            }
+
+            // Ensure we have the student roster list from database
+            if (!allStudentsList || allStudentsList.length === 0) {
+                try {
+                    const freshStudents = await fetchJson("/students");
+                    allStudentsList = Array.isArray(freshStudents) ? freshStudents : [];
+                } catch (e) {
+                    console.error("Failed to fetch students for roster:", e);
+                }
+            }
+
+            if (tbody) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="5" style="text-align: center; padding: 28px; color: #64748b;">
+                            Checking database for session on <strong>${escapeHtml(date)}</strong> (${escapeHtml(subject)})...
+                        </td>
+                    </tr>
+                `;
+            }
+
+            try {
+                const session = await fetchJson(`/attendance/session?subject=${encodeURIComponent(subject)}&date=${encodeURIComponent(date)}`);
+
+                if (session && session.id) {
+                    currentLoadedSession = session;
+                    if (badge) {
+                        badge.textContent = `Session #${session.id} (Existing - Edit Mode)`;
+                        badge.style.background = "#fef3c7";
+                        badge.style.color = "#92400e";
+                    }
+
+                    // Map existing records to student roster
+                    const recordMap = new Map();
+                    if (Array.isArray(session.records)) {
+                        session.records.forEach(r => {
+                            recordMap.set(Number(r.studentId), r.status);
+                        });
+                    }
+
+                    currentRosterList = allStudentsList.map(s => ({
+                        studentId: Number(s.id),
+                        name: s.name,
+                        rollNumber: s.rollNumber,
+                        department: s.department,
+                        year: s.year,
+                        email: s.email,
+                        status: recordMap.has(Number(s.id)) ? recordMap.get(Number(s.id)) : "PRESENT"
+                    }));
+
+                } else {
+                    currentLoadedSession = null;
+                    if (badge) {
+                        badge.textContent = "New Session";
+                        badge.style.background = "#dbeafe";
+                        badge.style.color = "#1e40af";
+                    }
+
+                    // Default all students to PRESENT for a new session
+                    currentRosterList = allStudentsList.map(s => ({
+                        studentId: Number(s.id),
+                        name: s.name,
+                        rollNumber: s.rollNumber,
+                        department: s.department,
+                        year: s.year,
+                        email: s.email,
+                        status: "PRESENT"
+                    }));
+                }
+
+                renderRosterTable();
+                updateRosterStats();
+
+            } catch (err) {
+                console.error("Failed to check attendance session:", err);
+                showAttFeedback(`Failed to check attendance session: ${err.message}`, "error");
+
+                // Fallback: build roster anyway so teacher can still take attendance
+                currentLoadedSession = null;
+                currentRosterList = allStudentsList.map(s => ({
+                    studentId: Number(s.id),
+                    name: s.name,
+                    rollNumber: s.rollNumber,
+                    department: s.department,
+                    year: s.year,
+                    email: s.email,
+                    status: "PRESENT"
+                }));
+                renderRosterTable();
+                updateRosterStats();
+            }
+        }
+
+        // Save Attendance Session (POST /api/attendance/session)
+        async function saveRosterAttendanceSession() {
+            const subjectInput = document.getElementById("att-session-subject");
+            const dateInput = document.getElementById("att-session-date");
+            const saveBtn = document.getElementById("att-save-session-btn");
+
+            const subject = subjectInput ? subjectInput.value.trim() : "";
+            const date = dateInput ? dateInput.value.trim() : "";
+
+            if (!subject) {
+                showAttFeedback("Please select a subject.", "error");
+                if (subjectInput) subjectInput.focus();
+                return;
+            }
+
+            if (!date) {
+                showAttFeedback("Please select an attendance date.", "error");
+                if (dateInput) dateInput.focus();
+                return;
+            }
+
+            if (!Array.isArray(currentRosterList) || currentRosterList.length === 0) {
+                showAttFeedback("Cannot save attendance: No students enrolled in the roster.", "error");
+                return;
+            }
+
+            const payload = {
+                subject: subject,
+                date: date,
+                records: currentRosterList.map(s => ({
+                    studentId: Number(s.studentId),
+                    status: s.status || "PRESENT"
+                }))
+            };
+
+            const presentCount = currentRosterList.filter(s => s.status === "PRESENT").length;
+            const absentCount = currentRosterList.filter(s => s.status === "ABSENT").length;
+
+            if (saveBtn) {
+                saveBtn.disabled = true;
+                saveBtn.textContent = "Saving Session...";
+            }
+
+            try {
+                const res = await fetch(`${API_BASE}/attendance/session`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(payload)
+                });
+
+                if (!res.ok) {
+                    const errorText = await res.text();
+                    throw new Error(`HTTP ${res.status}: ${errorText || "Server error"}`);
+                }
+
+                const savedSession = await res.json();
+                currentLoadedSession = savedSession;
+
+                const badge = document.getElementById("session-status-badge");
+                if (badge) {
+                    badge.textContent = `Session #${savedSession.id} (Saved ✓)`;
+                    badge.style.background = "#dcfce7";
+                    badge.style.color = "#166534";
+                }
+
+                showAttFeedback(
+                    `✓ Attendance saved successfully for <strong>${escapeHtml(subject)}</strong> on <strong>${date}</strong> (${presentCount} Present, ${absentCount} Absent)!`,
+                    "success"
+                );
+
+                // Refresh past sessions table
+                await loadPastSessions();
+
+                // Refresh aggregate attendance and dashboard overview
+                await loadTeacherDashboard();
+
+                // If student view is active or student selected, refresh their breakdown
+                if (selectedStudentId) {
+                    await loadStudentAttendanceView(selectedStudentId);
+                }
+
+                // Re-render roster to reflect updated subject history percentages
+                renderRosterTable();
+
+            } catch (err) {
+                console.error("Failed to save attendance session:", err);
+                showAttFeedback(`Error saving attendance session: ${err.message}`, "error");
+            } finally {
+                if (saveBtn) {
+                    saveBtn.disabled = false;
+                    saveBtn.textContent = "💾 Save Attendance";
+                }
+            }
+        }
+
+        // Load Past Recorded Sessions Table
+        async function loadPastSessions() {
+            const tbody = document.getElementById("pastSessionsTableBody");
+            if (!tbody) return;
+
+            try {
+                const sessions = await fetchJson("/attendance/sessions");
+
+                if (!Array.isArray(sessions) || sessions.length === 0) {
+                    tbody.innerHTML = `
+                        <tr>
+                            <td colspan="7" style="text-align: center; padding: 28px; color: #64748b;">
+                                No attendance sessions recorded yet. Use the controls above to take class attendance.
+                            </td>
+                        </tr>
+                    `;
+                    return;
+                }
+
+                tbody.innerHTML = "";
+
+                sessions.forEach(sess => {
+                    const rate = sess.attendancePercentage != null
+                        ? Number(sess.attendancePercentage)
+                        : (sess.attendanceRate != null ? Number(sess.attendanceRate) : 0);
+                    let rateBadgeClass = "good";
+                    if (rate >= 85) rateBadgeClass = "excellent";
+                    else if (rate < 75) rateBadgeClass = "warning";
+
+                    const tr = document.createElement("tr");
+                    tr.innerHTML = `
+                        <td style="font-weight: 600; color: #1e293b;">
+                            📅 ${escapeHtml(sess.date || "")}
+                        </td>
+                        <td>
+                            <strong>${escapeHtml(sess.subject || "")}</strong>
+                            <span style="font-size: 11px; color: #94a3b8; display: block;">Session #${sess.id}</span>
+                        </td>
+                        <td style="text-align: center; color: #475569;">
+                            ${sess.totalStudents != null ? sess.totalStudents : (sess.enrolledCount || 0)}
+                        </td>
+                        <td style="text-align: center; font-weight: 600; color: #166534;">
+                            ${sess.presentCount || 0}
+                        </td>
+                        <td style="text-align: center; font-weight: 600; color: #dc2626;">
+                            ${sess.absentCount || 0}
+                        </td>
+                        <td style="text-align: center;">
+                            <span class="attendance-status ${rateBadgeClass}" style="font-size: 11px;">
+                                ${rate.toFixed(1)}%
+                            </span>
+                        </td>
+                        <td style="text-align: center;">
+                            <button
+                                type="button"
+                                onclick="openExistingSession('${escapeHtml(sess.subject)}', '${escapeHtml(sess.date)}')"
+                                style="padding: 5px 12px; font-size: 11px; font-weight: 600; background: white; color: #2563eb; border: 1px solid #cbd5e1; border-radius: 5px; cursor: pointer;"
+                                title="Open and edit this session"
+                            >
+                                Open / Edit
+                            </button>
+                        </td>
+                    `;
+                    tbody.appendChild(tr);
+                });
+
+            } catch (err) {
+                console.error("Failed to load past attendance sessions:", err);
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="7" style="text-align: center; padding: 24px; color: #dc2626; background: #fff5f5;">
+                            Failed to load past sessions from backend.
+                        </td>
+                    </tr>
+                `;
+            }
+        }
+
+        // Open an existing session from the past sessions table
+        window.openExistingSession = function (subject, date) {
+            setAttendanceMode("roster");
+
+            const subjInput = document.getElementById("att-session-subject");
+            const dateInput = document.getElementById("att-session-date");
+
+            if (subjInput) subjInput.value = subject;
+            if (dateInput) dateInput.value = date;
+
+            checkAndLoadRosterSession();
+
+            if (subjInput) {
+                subjInput.scrollIntoView({ behavior: "smooth", block: "center" });
+            }
+        };
+
+        // Attach listeners to Roster Attendance Controls
+        const attSessionSubjectEl = document.getElementById("att-session-subject");
+        if (attSessionSubjectEl) {
+            attSessionSubjectEl.addEventListener("change", function () {
+                checkAndLoadRosterSession();
+            });
+        }
+
+        const attSessionDateEl = document.getElementById("att-session-date");
+        if (attSessionDateEl) {
+            attSessionDateEl.addEventListener("change", function () {
+                checkAndLoadRosterSession();
+            });
+        }
+
+        const attLoadBtn = document.getElementById("att-load-session-btn");
+        if (attLoadBtn) {
+            attLoadBtn.addEventListener("click", function () {
+                checkAndLoadRosterSession();
+            });
+        }
+
+        const attSaveBtn = document.getElementById("att-save-session-btn");
+        if (attSaveBtn) {
+            attSaveBtn.addEventListener("click", function () {
+                saveRosterAttendanceSession();
+            });
+        }
+
+        const attMasterRefreshBtn = document.getElementById("att-master-refresh-btn");
+        if (attMasterRefreshBtn) {
+            attMasterRefreshBtn.addEventListener("click", async function () {
+                this.disabled = true;
+                this.textContent = "Refreshing...";
+                try {
+                    await checkAndLoadRosterSession();
+                    await loadPastSessions();
+                    await loadTeacherDashboard();
+                } catch (e) {
+                    console.error("Refresh attendance failed:", e);
+                } finally {
+                    this.disabled = false;
+                    this.textContent = "↻ Refresh";
+                }
+            });
+        }
+
+        // --- View 2 (Student Breakdown & Individual Record Form) Logic ---
+
+        function updateFormPreview() {
+            const attInput = document.getElementById("att-form-attended");
+            const totInput = document.getElementById("att-form-total");
+            const prevEl = document.getElementById("att-form-preview-val");
+            if (!attInput || !totInput || !prevEl) return;
+            const a = parseFloat(attInput.value);
+            const t = parseFloat(totInput.value);
+            if (!isNaN(a) && !isNaN(t) && t > 0) {
+                if (a > t) {
+                    prevEl.textContent = "Error: Attended > Total";
+                    prevEl.style.color = "#dc2626";
+                } else {
+                    const p = (a / t) * 100;
+                    prevEl.textContent = `${p.toFixed(1)}%`;
+                    prevEl.style.color = p >= 75 ? "#166534" : "#b45309";
+                }
+            } else {
+                prevEl.textContent = "--%";
+                prevEl.style.color = "#2563eb";
+            }
+        }
+
+        function showAttFeedback(message, type = "success") {
+            const banner = document.getElementById("att-feedback-banner");
+            if (!banner) return;
+
+            banner.innerHTML = message;
+            banner.style.display = "block";
+            if (type === "success") {
+                banner.style.background = "#ecfdf5";
+                banner.style.border = "1px solid #a7f3d0";
+                banner.style.color = "#065f46";
+            } else {
+                banner.style.background = "#fef2f2";
+                banner.style.border = "1px solid #fecaca";
+                banner.style.color = "#991b1b";
+            }
+
+            if (type === "success") {
+                setTimeout(() => {
+                    if (banner && banner.innerHTML === message) {
+                        banner.style.display = "none";
+                    }
+                }, 5000);
+            }
+        }
+
+        window.resetAttendanceForm = function () {
+            const recIdInput = document.getElementById("att-form-record-id");
+            const subjInput = document.getElementById("att-form-subject");
+            const attInput = document.getElementById("att-form-attended");
+            const totInput = document.getElementById("att-form-total");
+            const prevEl = document.getElementById("att-form-preview-val");
+            const formTitle = document.getElementById("att-form-title");
+            const formSubtitle = document.getElementById("att-form-subtitle");
+            const submitBtn = document.getElementById("att-form-submit-btn");
+
+            if (recIdInput) recIdInput.value = "";
+            if (subjInput) subjInput.value = "";
+            if (attInput) attInput.value = "";
+            if (totInput) totInput.value = "";
+            if (prevEl) {
+                prevEl.textContent = "--%";
+                prevEl.style.color = "#2563eb";
+            }
+            if (formTitle) formTitle.textContent = "Record Attendance";
+            if (formSubtitle) formSubtitle.innerHTML = "Aggregate class counts via <code>POST /api/attendance</code>";
+            if (submitBtn) submitBtn.textContent = "💾 Save Attendance";
+        };
+
+        window.editAttendanceRecord = function (recordId) {
+            const rec = currentStudentAttendance.find(r => Number(r.id) === Number(recordId));
+            if (!rec) return;
+
+            const recIdInput = document.getElementById("att-form-record-id");
+            const subjInput = document.getElementById("att-form-subject");
+            const attInput = document.getElementById("att-form-attended");
+            const totInput = document.getElementById("att-form-total");
+            const formTitle = document.getElementById("att-form-title");
+            const formSubtitle = document.getElementById("att-form-subtitle");
+            const submitBtn = document.getElementById("att-form-submit-btn");
+
+            if (recIdInput) recIdInput.value = rec.id;
+            if (subjInput) subjInput.value = rec.subject || "";
+            if (attInput) attInput.value = rec.attendedClasses;
+            if (totInput) totInput.value = rec.totalClasses;
+
+            if (formTitle) formTitle.textContent = "Update Attendance";
+            if (formSubtitle) formSubtitle.textContent = `Editing record #${rec.id} for ${rec.subject}`;
+            if (submitBtn) submitBtn.textContent = "✓ Update Record";
+
+            updateFormPreview();
+
+            if (attInput) {
+                attInput.focus();
+                attInput.scrollIntoView({ behavior: "smooth", block: "center" });
+            }
+        };
+
+        async function loadStudentAttendanceView(studentId) {
+            const tbody = document.getElementById("att-table-body");
+            const sBadge = document.getElementById("att-overall-badge");
+            const sStats = document.getElementById("att-student-stats");
+            const subtextEl = document.getElementById("att-summary-subtext");
+            const attFormDisplay = document.getElementById("att-form-student-display");
+
+            if (!studentId) {
+                if (tbody) {
+                    tbody.innerHTML = `
+                        <tr>
+                            <td colspan="6" style="text-align: center; padding: 36px 20px; color: #64748b;">
+                                <div style="font-size: 28px; margin-bottom: 8px;">👥</div>
+                                <strong>No student selected</strong>
+                                <p style="font-size: 13px; margin: 4px 0 12px 0;">Please choose a student from the directory to manage attendance.</p>
+                                <button onclick="switchTab('students')" style="padding: 7px 14px; font-size: 12px; background: #2563eb; color: white; border: none; border-radius: 6px; cursor: pointer;">
+                                    Go to Students Directory
+                                </button>
+                            </td>
+                        </tr>
+                    `;
+                }
+                if (sStats) sStats.style.display = "none";
+                if (sBadge) sBadge.style.display = "none";
+                if (attFormDisplay) attFormDisplay.value = "No student selected";
+                return;
+            }
+
+            const student = allStudentsList.find(s => Number(s.id) === Number(studentId));
+            const studentName = student && student.name ? student.name : `Student #${studentId}`;
+
+            // Update student banner in Tab 3
+            const attAvatar = document.getElementById("att-student-avatar");
+            if (attAvatar) {
+                attAvatar.textContent = studentName.charAt(0).toUpperCase();
+            }
+            setText("att-student-name", studentName);
+            setText("att-student-id-badge", `ID: #${studentId}`);
+            if (student) {
+                setText(
+                    "att-student-meta",
+                    `Roll: ${student.rollNumber || "N/A"} · Department: ${student.department || "General"} · Year ${student.year || "1"} · Email: ${student.email || "No email"}`
+                );
+            }
+            if (attFormDisplay) {
+                attFormDisplay.value = `${studentName} (ID: #${studentId})`;
+            }
+
+            if (subtextEl) {
+                subtextEl.innerHTML = `Subject breakdown for <strong>${escapeHtml(studentName)}</strong> from <code>GET /api/attendance/student/${studentId}</code>`;
+            }
+
+            if (tbody) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="6" style="text-align: center; padding: 30px; color: #64748b;">
+                            Loading attendance records for ${escapeHtml(studentName)}...
+                        </td>
+                    </tr>
+                `;
+            }
+
+            try {
+                const records = await fetchJson(`/attendance/student/${studentId}`);
+                currentStudentAttendance = Array.isArray(records) ? records : [];
+
+                if (currentStudentAttendance.length === 0) {
+                    if (sStats) sStats.style.display = "none";
+                    if (sBadge) sBadge.style.display = "none";
+                    if (tbody) {
+                        tbody.innerHTML = `
+                            <tr>
+                                <td colspan="6" style="text-align: center; padding: 40px 20px; color: #64748b;">
+                                    <div style="font-size: 32px; margin-bottom: 8px;">◷</div>
+                                    <strong style="color: #1e293b; font-size: 14px;">No attendance records found for ${escapeHtml(studentName)}</strong>
+                                    <p style="font-size: 13px; margin-top: 4px;">Use the form on the right to record this student's class attendance.</p>
+                                </td>
+                            </tr>
+                        `;
+                    }
+                    return;
+                }
+
+                // Calculate summary stats
+                let totalAtt = 0;
+                let totalCls = 0;
+                const datalist = document.getElementById("existingSubjectsDatalist");
+                if (datalist) datalist.innerHTML = "";
+
+                currentStudentAttendance.forEach(item => {
+                    totalAtt += Number(item.attendedClasses || 0);
+                    totalCls += Number(item.totalClasses || 0);
+
+                    if (datalist && item.subject) {
+                        const opt = document.createElement("option");
+                        opt.value = item.subject;
+                        datalist.appendChild(opt);
+                    }
+                });
+
+                const overallPct = totalCls > 0 ? (totalAtt / totalCls) * 100 : 0;
+                setText("att-stat-total", totalCls);
+                setText("att-stat-attended", totalAtt);
+                setText("att-stat-missed", Math.max(0, totalCls - totalAtt));
+                if (sStats) sStats.style.display = "grid";
+
+                if (sBadge) {
+                    sBadge.style.display = "block";
+                    const pctEl = document.getElementById("att-overall-pct");
+                    if (pctEl) {
+                        pctEl.textContent = `${overallPct.toFixed(1)}% Overall`;
+                        pctEl.className = "grade-badge " + (overallPct >= 85 ? "grade-a" : "grade-b");
+                        if (overallPct < 75) {
+                            pctEl.style.background = "#fee2e2";
+                            pctEl.style.color = "#991b1b";
+                        } else {
+                            pctEl.style.background = "";
+                            pctEl.style.color = "";
+                        }
+                    }
+                }
+
+                if (tbody) {
+                    tbody.innerHTML = "";
+                    currentStudentAttendance.forEach(item => {
+                        const pct = Number(item.totalClasses) > 0
+                            ? (Number(item.attendedClasses) / Number(item.totalClasses)) * 100
+                            : 0;
+
+                        let statusBadgeHtml = "";
+                        let barColorClass = "attendance-good";
+
+                        if (pct >= 85) {
+                            statusBadgeHtml = `<span class="attendance-status excellent">Excellent</span>`;
+                            barColorClass = "attendance-excellent";
+                        } else if (pct >= 75) {
+                            statusBadgeHtml = `<span class="attendance-status good">Good</span>`;
+                            barColorClass = "attendance-good";
+                        } else {
+                            statusBadgeHtml = `<span class="attendance-status warning">Low</span>`;
+                            barColorClass = "attendance-low";
+                        }
+
+                        const tr = document.createElement("tr");
+                        tr.innerHTML = `
+                            <td>
+                                <strong style="color: #1e293b; font-size: 13px;">${escapeHtml(item.subject || "Untitled Subject")}</strong>
+                                <span style="font-size: 11px; color: #94a3b8; display: block;">Record #${item.id}</span>
+                            </td>
+                            <td style="text-align: center; font-weight: 600; color: #166534;">
+                                ${item.attendedClasses}
+                            </td>
+                            <td style="text-align: center; color: #475569;">
+                                ${item.totalClasses}
+                            </td>
+                            <td style="text-align: center;">
+                                <div style="display: flex; align-items: center; gap: 8px; justify-content: center;">
+                                    <div class="progress-bar" style="width: 60px; height: 6px; margin: 0;">
+                                        <div class="progress-fill ${barColorClass}" style="width: ${Math.min(100, Math.max(0, pct))}%;"></div>
+                                    </div>
+                                    <span style="font-weight: 600; font-size: 12px; min-width: 42px; text-align: right;">${pct.toFixed(1)}%</span>
+                                </div>
+                            </td>
+                            <td style="text-align: center;">
+                                ${statusBadgeHtml}
+                            </td>
+                            <td style="text-align: center;">
+                                <button
+                                    onclick="editAttendanceRecord(${item.id})"
+                                    style="padding: 5px 11px; font-size: 11px; font-weight: 600; background: white; color: #2563eb; border: 1px solid #cbd5e1; border-radius: 5px; cursor: pointer;"
+                                    title="Edit this record"
+                                >
+                                    Edit
+                                </button>
+                            </td>
+                        `;
+                        tbody.appendChild(tr);
+                    });
+                }
+
+            } catch (err) {
+                console.error(`Failed to load attendance for student ${studentId}:`, err);
+                if (sStats) sStats.style.display = "none";
+                if (sBadge) sBadge.style.display = "none";
+                if (tbody) {
+                    tbody.innerHTML = `
+                        <tr>
+                            <td colspan="6" style="text-align: center; padding: 30px; color: #dc2626; background: #fff5f5;">
+                                <strong>Unable to load attendance records.</strong>
+                                <p style="font-size: 13px; margin: 4px 0 0 0; color: #7f1d1d;">Could not connect to Spring Boot backend at http://localhost:8080/api/attendance/student/${studentId}.</p>
+                            </td>
+                        </tr>
+                    `;
+                }
+            }
+        }
+
+        // Attendance Form Submission Handler
+        const attForm = document.getElementById("attendanceRecordForm");
+        if (attForm) {
+            attForm.addEventListener("submit", async function (e) {
+                e.preventDefault();
+
+                if (!selectedStudentId) {
+                    showAttFeedback("Please select a student from the directory first.", "error");
+                    return;
+                }
+
+                const recIdInput = document.getElementById("att-form-record-id");
+                const subjInput = document.getElementById("att-form-subject");
+                const attInput = document.getElementById("att-form-attended");
+                const totInput = document.getElementById("att-form-total");
+                const submitBtn = document.getElementById("att-form-submit-btn");
+
+                const subjectVal = (subjInput ? subjInput.value : "").trim();
+                const attendedVal = parseInt(attInput ? attInput.value : "0", 10);
+                const totalVal = parseInt(totInput ? totInput.value : "0", 10);
+                const recordIdVal = recIdInput && recIdInput.value ? Number(recIdInput.value) : null;
+
+                if (!subjectVal) {
+                    showAttFeedback("Please enter a subject name.", "error");
+                    if (subjInput) subjInput.focus();
+                    return;
+                }
+
+                if (isNaN(attendedVal) || attendedVal < 0) {
+                    showAttFeedback("Classes attended cannot be negative.", "error");
+                    if (attInput) attInput.focus();
+                    return;
+                }
+
+                if (isNaN(totalVal) || totalVal <= 0) {
+                    showAttFeedback("Total classes must be at least 1.", "error");
+                    if (totInput) totInput.focus();
+                    return;
+                }
+
+                if (attendedVal > totalVal) {
+                    showAttFeedback(`Classes attended (${attendedVal}) cannot exceed total classes (${totalVal}).`, "error");
+                    if (attInput) attInput.focus();
+                    return;
+                }
+
+                const payload = {
+                    studentId: Number(selectedStudentId),
+                    subject: subjectVal,
+                    attendedClasses: attendedVal,
+                    totalClasses: totalVal
+                };
+                if (recordIdVal) {
+                    payload.id = recordIdVal;
+                }
+
+                if (submitBtn) {
+                    submitBtn.disabled = true;
+                    submitBtn.textContent = "Saving...";
+                }
+
+                try {
+                    const res = await fetch(`${API_BASE}/attendance`, {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify(payload)
+                    });
+
+                    if (!res.ok) {
+                        throw new Error(`Server returned HTTP ${res.status}`);
+                    }
+
+                    const savedRecord = await res.json();
+                    showAttFeedback(`✓ Successfully saved attendance for "${escapeHtml(subjectVal)}"!`, "success");
+
+                    // Reset form back to create mode
+                    resetAttendanceForm();
+
+                    // Reload attendance view for the current student
+                    await loadStudentAttendanceView(selectedStudentId);
+
+                    // Also refresh overview dashboard stats
+                    await loadTeacherDashboard();
+
+                    // Also re-render roster table so subject history is updated
+                    renderRosterTable();
+
+                } catch (err) {
+                    console.error("Failed to save attendance:", err);
+                    showAttFeedback(`Failed to save attendance: ${err.message}`, "error");
+                } finally {
+                    if (submitBtn) {
+                        submitBtn.disabled = false;
+                        submitBtn.textContent = (recIdInput && recIdInput.value) ? "✓ Update Record" : "💾 Save Attendance";
+                    }
+                }
+            });
+        }
+
+        // Attendance form input listeners for live percentage preview
+        const attIn = document.getElementById("att-form-attended");
+        const totIn = document.getElementById("att-form-total");
+        if (attIn) attIn.addEventListener("input", updateFormPreview);
+        if (totIn) totIn.addEventListener("input", updateFormPreview);
+
+        const attResetBtn = document.getElementById("att-form-reset-btn");
+        if (attResetBtn) {
+            attResetBtn.addEventListener("click", function () {
+                resetAttendanceForm();
+            });
+        }
+
+        const attRefreshBtn = document.getElementById("att-refresh-btn");
+        if (attRefreshBtn) {
+            attRefreshBtn.addEventListener("click", async function () {
+                this.disabled = true;
+                this.textContent = "Refreshing...";
+                try {
+                    if (selectedStudentId) {
+                        await loadStudentAttendanceView(selectedStudentId);
+                    }
+                    await loadTeacherDashboard();
+                } catch (e) {
+                    console.error("Refresh attendance failed:", e);
+                } finally {
+                    this.disabled = false;
+                    this.textContent = "↻ Refresh";
+                }
+            });
+        }
+
+        // =====================================================
+        // ASSIGNMENTS MANAGEMENT (STEP 4) LOGIC
+        // =====================================================
+
+        let currentAssignmentsScope = "student"; // "student" or "all"
+        let currentStudentAssignments = [];
+        let assignmentFilterStatus = "all";
+        let assignmentSearchQuery = "";
+
+        function showAssignFeedback(message, type = "success") {
+            const banner = document.getElementById("assign-feedback-banner");
+            if (!banner) return;
+
+            banner.innerHTML = message;
+            banner.style.display = "block";
+            if (type === "success") {
+                banner.style.background = "#ecfdf5";
+                banner.style.border = "1px solid #a7f3d0";
+                banner.style.color = "#065f46";
+            } else {
+                banner.style.background = "#fef2f2";
+                banner.style.border = "1px solid #fecaca";
+                banner.style.color = "#991b1b";
+            }
+
+            if (type === "success") {
+                setTimeout(() => {
+                    if (banner && banner.innerHTML === message) {
+                        banner.style.display = "none";
+                    }
+                }, 5000);
+            }
+        }
+
+        window.setAssignmentsScope = function (scope) {
+            currentAssignmentsScope = scope;
+            const studentBtn = document.getElementById("assign-scope-student-btn");
+            const allBtn = document.getElementById("assign-scope-all-btn");
+            const scopeBadge = document.getElementById("assign-scope-badge");
+
+            if (scope === "student") {
+                if (studentBtn) {
+                    studentBtn.style.background = "#2563eb";
+                    studentBtn.style.color = "white";
+                    studentBtn.style.fontWeight = "600";
+                }
+                if (allBtn) {
+                    allBtn.style.background = "transparent";
+                    allBtn.style.color = "#475569";
+                    allBtn.style.fontWeight = "500";
+                }
+                if (scopeBadge) {
+                    scopeBadge.textContent = "Selected Student";
+                    scopeBadge.style.background = "#dbeafe";
+                    scopeBadge.style.color = "#1e40af";
+                }
+            } else {
+                if (studentBtn) {
+                    studentBtn.style.background = "transparent";
+                    studentBtn.style.color = "#475569";
+                    studentBtn.style.fontWeight = "500";
+                }
+                if (allBtn) {
+                    allBtn.style.background = "#2563eb";
+                    allBtn.style.color = "white";
+                    allBtn.style.fontWeight = "600";
+                }
+                if (scopeBadge) {
+                    scopeBadge.textContent = "All Students";
+                    scopeBadge.style.background = "#fef3c7";
+                    scopeBadge.style.color = "#92400e";
+                }
+            }
+
+            loadStudentAssignmentsView(selectedStudentId);
+        };
+
+        function populateAssignmentStudentDropdown(students) {
+            const select = document.getElementById("assign-form-student-select");
+            if (!select) return;
+
+            const currentVal = select.value;
+            select.innerHTML = `<option value="">-- Choose student from directory --</option>`;
+
+            if (Array.isArray(students)) {
+                students.forEach(s => {
+                    const opt = document.createElement("option");
+                    opt.value = String(s.id);
+                    opt.textContent = `${s.name || "Student"} (ID: #${s.id}, Roll: ${s.rollNumber || "N/A"})`;
+                    select.appendChild(opt);
+                });
+            }
+
+            if (currentVal && Array.isArray(students) && students.some(s => String(s.id) === String(currentVal))) {
+                select.value = currentVal;
+            } else if (selectedStudentId) {
+                select.value = String(selectedStudentId);
+            }
+        }
+
+        window.resetAssignmentForm = function () {
+            const idInput = document.getElementById("assign-form-id");
+            const studentSelect = document.getElementById("assign-form-student-select");
+            const titleInput = document.getElementById("assign-form-title-input");
+            const subjectInput = document.getElementById("assign-form-subject");
+            const dueDateInput = document.getElementById("assign-form-due-date");
+            const statusSelect = document.getElementById("assign-form-status");
+            const descInput = document.getElementById("assign-form-description");
+            const formTitle = document.getElementById("assign-form-title");
+            const formSubtitle = document.getElementById("assign-form-subtitle");
+            const submitBtn = document.getElementById("assign-form-submit-btn");
+
+            if (idInput) idInput.value = "";
+            if (studentSelect) {
+                studentSelect.value = selectedStudentId ? String(selectedStudentId) : "";
+            }
+            if (titleInput) titleInput.value = "";
+            if (subjectInput) subjectInput.value = "";
+            if (dueDateInput) dueDateInput.value = "";
+            if (statusSelect) statusSelect.value = "pending";
+            if (descInput) descInput.value = "";
+
+            if (formTitle) formTitle.textContent = "Create Assignment";
+            if (formSubtitle) formSubtitle.innerHTML = "Assign academic task via <code>POST /api/assignments</code>";
+            if (submitBtn) submitBtn.textContent = "💾 Create Assignment";
+        };
+
+        window.editAssignmentRecord = function (assignmentId) {
+            const item = currentStudentAssignments.find(a => Number(a.id) === Number(assignmentId));
+            if (!item) return;
+
+            const idInput = document.getElementById("assign-form-id");
+            const studentSelect = document.getElementById("assign-form-student-select");
+            const titleInput = document.getElementById("assign-form-title-input");
+            const subjectInput = document.getElementById("assign-form-subject");
+            const dueDateInput = document.getElementById("assign-form-due-date");
+            const statusSelect = document.getElementById("assign-form-status");
+            const descInput = document.getElementById("assign-form-description");
+            const formTitle = document.getElementById("assign-form-title");
+            const formSubtitle = document.getElementById("assign-form-subtitle");
+            const submitBtn = document.getElementById("assign-form-submit-btn");
+
+            if (idInput) idInput.value = item.id;
+            if (studentSelect && item.studentId != null) {
+                studentSelect.value = String(item.studentId);
+            }
+            if (titleInput) titleInput.value = item.title || "";
+            if (subjectInput) subjectInput.value = item.subject || "";
+            if (dueDateInput) dueDateInput.value = item.dueDate || "";
+            if (statusSelect) statusSelect.value = (item.status || "pending").toLowerCase();
+            if (descInput) descInput.value = item.description || "";
+
+            if (formTitle) formTitle.textContent = "Update Assignment";
+            if (formSubtitle) formSubtitle.textContent = `Editing assignment #${item.id}: "${item.title || "Untitled"}"`;
+            if (submitBtn) submitBtn.textContent = "✓ Update Assignment";
+
+            if (titleInput) {
+                titleInput.focus();
+                titleInput.scrollIntoView({ behavior: "smooth", block: "center" });
+            }
+        };
+
+        window.quickUpdateAssignmentStatus = async function (assignmentId, newStatus) {
+            const item = currentStudentAssignments.find(a => Number(a.id) === Number(assignmentId));
+            if (!item) return;
+
+            const payload = {
+                id: item.id,
+                title: item.title,
+                subject: item.subject,
+                description: item.description,
+                dueDate: item.dueDate,
+                status: newStatus,
+                studentId: item.studentId
+            };
+
+            try {
+                const res = await fetch(`${API_BASE}/assignments`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(payload)
+                });
+
+                if (!res.ok) throw new Error(`Server returned HTTP ${res.status}`);
+
+                showAssignFeedback(`✓ Marked "${escapeHtml(item.title)}" as ${newStatus}!`, "success");
+                await loadStudentAssignmentsView(selectedStudentId);
+                await loadTeacherDashboard();
+
+            } catch (err) {
+                console.error("Quick status update failed:", err);
+                showAssignFeedback(`Failed to update status: ${err.message}`, "error");
+            }
+        };
+
+        function renderAssignmentsList(list) {
+            const container = document.getElementById("assign-items-container");
+            if (!container) return;
+
+            const q = assignmentSearchQuery.trim().toLowerCase();
+            const filter = assignmentFilterStatus.toLowerCase();
+
+            let filtered = Array.isArray(list) ? list : [];
+
+            // Apply Status Filter
+            if (filter !== "all") {
+                filtered = filtered.filter(a => (a.status || "").toLowerCase() === filter);
+            }
+
+            // Apply Search Query
+            if (q) {
+                filtered = filtered.filter(a => {
+                    const title = (a.title || "").toLowerCase();
+                    const subj = (a.subject || "").toLowerCase();
+                    const desc = (a.description || "").toLowerCase();
+                    const st = allStudentsList.find(s => Number(s.id) === Number(a.studentId));
+                    const studentName = st && st.name ? st.name.toLowerCase() : "";
+                    const roll = st && st.rollNumber ? st.rollNumber.toLowerCase() : "";
+                    return (
+                        title.includes(q) ||
+                        subj.includes(q) ||
+                        desc.includes(q) ||
+                        studentName.includes(q) ||
+                        roll.includes(q)
+                    );
+                });
+            }
+
+            container.innerHTML = "";
+
+            if (filtered.length === 0) {
+                if (q || filter !== "all") {
+                    container.innerHTML = `
+                        <div style="text-align: center; padding: 36px 16px; color: #64748b;">
+                            <div style="font-size: 28px; margin-bottom: 8px;">🔍</div>
+                            <strong>No assignments match your filters</strong>
+                            <p style="font-size: 13px; margin: 4px 0 0 0;">Try adjusting your status or search keyword.</p>
+                        </div>
+                    `;
+                } else if (currentAssignmentsScope === "student") {
+                    const st = allStudentsList.find(s => Number(s.id) === Number(selectedStudentId));
+                    const studentName = st && st.name ? st.name : `Student #${selectedStudentId}`;
+                    container.innerHTML = `
+                        <div style="text-align: center; padding: 40px 16px; color: #64748b;">
+                            <div style="font-size: 32px; margin-bottom: 8px;">✓</div>
+                            <strong style="color: #1e293b; font-size: 14px;">No assignments found for ${escapeHtml(studentName)}</strong>
+                            <p style="font-size: 13px; margin-top: 4px;">Use the form on the right to assign a new task to this student.</p>
+                        </div>
+                    `;
+                } else {
+                    container.innerHTML = `
+                        <div style="text-align: center; padding: 40px 16px; color: #64748b;">
+                            <div style="font-size: 32px; margin-bottom: 8px;">📚</div>
+                            <strong style="color: #1e293b; font-size: 14px;">No assignments found in database</strong>
+                            <p style="font-size: 13px; margin-top: 4px;">Created assignments via <code>POST /api/assignments</code> will appear here.</p>
+                        </div>
+                    `;
+                }
+                return;
+            }
+
+            const todayStr = new Date().toISOString().split("T")[0];
+
+            filtered.forEach(item => {
+                const status = (item.status || "pending").toLowerCase();
+                let statusBadgeHtml = "";
+
+                if (status === "completed") {
+                    statusBadgeHtml = `<span class="assignment-status status-completed">Completed</span>`;
+                } else if (status === "submitted") {
+                    statusBadgeHtml = `<span class="assignment-status" style="background: #e0e7ff; color: #3730a3;">Submitted</span>`;
+                } else {
+                    statusBadgeHtml = `<span class="assignment-status status-pending">Pending</span>`;
+                }
+
+                // Match student displayName
+                let studentDisplayName = "";
+                if (item.studentId != null) {
+                    const st = allStudentsList.find(s => Number(s.id) === Number(item.studentId));
+                    studentDisplayName = st && st.name ? st.name : `Student #${item.studentId}`;
+                } else {
+                    studentDisplayName = "Unassigned";
+                }
+
+                const isOverdue = item.dueDate && item.dueDate < todayStr && status === "pending";
+
+                let quickActionHtml = "";
+                if (status === "submitted") {
+                    quickActionHtml = `
+                        <button
+                            type="button"
+                            onclick="quickUpdateAssignmentStatus(${item.id}, 'completed')"
+                            style="padding: 5px 11px; font-size: 11px; font-weight: 600; background: #dcfce7; color: #166534; border: 1px solid #bbf7d0; border-radius: 5px; cursor: pointer;"
+                            title="Mark this submitted assignment as Completed"
+                        >
+                            ✓ Mark Completed
+                        </button>
+                    `;
+                }
+
+                const card = document.createElement("div");
+                card.style.cssText = "border: 1px solid #e2e8f0; border-radius: 8px; padding: 14px 16px; margin-bottom: 12px; background: white; transition: box-shadow 0.2s;";
+                card.onmouseenter = () => { card.style.boxShadow = "0 2px 8px rgba(0,0,0,0.06)"; };
+                card.onmouseleave = () => { card.style.boxShadow = "none"; };
+
+                card.innerHTML = `
+                    <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; margin-bottom: 6px;">
+                        <div>
+                            <h4 style="margin: 0 0 4px 0; font-size: 14px; color: #1e293b; font-weight: 600;">
+                                ${escapeHtml(item.title || "Untitled Assignment")}
+                            </h4>
+                            <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap; font-size: 12px;">
+                                <span class="assignment-status" style="background: #e0e7ff; color: #3730a3; font-size: 11px; padding: 2px 8px;">
+                                    ${escapeHtml(item.subject || "General")}
+                                </span>
+                                <span style="color: #94a3b8;">·</span>
+                                <span style="color: #475569;">
+                                    Assigned to: <strong>${escapeHtml(studentDisplayName)}</strong> (ID: #${item.studentId})
+                                </span>
+                            </div>
+                        </div>
+                        <div style="flex-shrink: 0;">
+                            ${statusBadgeHtml}
+                        </div>
+                    </div>
+
+                    ${item.description ? `
+                        <p style="margin: 6px 0 10px 0; font-size: 12px; color: #64748b; line-height: 1.5; white-space: pre-wrap;">
+                            ${escapeHtml(item.description)}
+                        </p>
+                    ` : ""}
+
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 10px; padding-top: 8px; border-top: 1px solid #f1f5f9; font-size: 12px; flex-wrap: wrap; gap: 8px;">
+                        <div style="color: #64748b; display: flex; align-items: center; gap: 6px;">
+                            <span>📅 Due:</span>
+                            <strong style="color: ${isOverdue ? "#dc2626" : "#334155"};">
+                                ${item.dueDate || "No due date"}
+                                ${isOverdue ? `<span style="color: #dc2626; font-size: 10px; background: #fee2e2; padding: 1px 5px; border-radius: 3px; margin-left: 4px;">Overdue</span>` : ""}
+                            </strong>
+                        </div>
+                        <div style="display: flex; gap: 6px; align-items: center;">
+                            ${quickActionHtml}
+                            <button
+                                type="button"
+                                onclick="editAssignmentRecord(${item.id})"
+                                style="padding: 5px 11px; font-size: 11px; font-weight: 600; background: white; color: #2563eb; border: 1px solid #cbd5e1; border-radius: 5px; cursor: pointer;"
+                                title="Edit this assignment"
+                            >
+                                Edit
+                            </button>
+                        </div>
+                    </div>
+                `;
+
+                container.appendChild(card);
+            });
+        }
+
+        async function loadStudentAssignmentsView(studentId) {
+            const container = document.getElementById("assign-items-container");
+            const listTitle = document.getElementById("assign-list-title");
+            const listSubtext = document.getElementById("assign-list-subtext");
+            const selectDropdown = document.getElementById("assign-form-student-select");
+
+            if (currentAssignmentsScope === "student" && !studentId) {
+                if (container) {
+                    container.innerHTML = `
+                        <div style="text-align: center; padding: 36px 20px; color: #64748b;">
+                            <div style="font-size: 28px; margin-bottom: 8px;">👥</div>
+                            <strong>No student selected</strong>
+                            <p style="font-size: 13px; margin: 4px 0 12px 0;">Please choose a student from the directory to manage their assignments, or switch to All Assignments view.</p>
+                            <button onclick="switchTab('students')" style="padding: 7px 14px; font-size: 12px; background: #2563eb; color: white; border: none; border-radius: 6px; cursor: pointer;">
+                                Go to Students Directory
+                            </button>
+                        </div>
+                    `;
+                }
+                setText("assign-stat-total", 0);
+                setText("assign-stat-pending", 0);
+                setText("assign-stat-submitted", 0);
+                setText("assign-stat-completed", 0);
+                return;
+            }
+
+            const student = allStudentsList.find(s => Number(s.id) === Number(studentId));
+            const studentName = student && student.name ? student.name : `Student #${studentId}`;
+
+            // Sync student banner in Tab 4
+            if (student) {
+                const assignAvatar = document.getElementById("assign-student-avatar");
+                if (assignAvatar) {
+                    assignAvatar.textContent = studentName.charAt(0).toUpperCase();
+                }
+                setText("assign-student-name", studentName);
+                setText("assign-student-id-badge", `ID: #${student.id}`);
+                setText(
+                    "assign-student-meta",
+                    `Roll: ${student.rollNumber || "N/A"} · Department: ${student.department || "General"} · Year ${student.year || "1"} · Email: ${student.email || "No email"}`
+                );
+                const idInput = document.getElementById("assign-form-id");
+                if (selectDropdown && (!idInput || !idInput.value)) {
+                    selectDropdown.value = String(student.id);
+                }
+            }
+
+            if (currentAssignmentsScope === "student") {
+                if (listTitle) listTitle.textContent = `Assignments: ${studentName}`;
+                if (listSubtext) listSubtext.innerHTML = `Live assignments for <strong>${escapeHtml(studentName)}</strong> from <code>GET /api/assignments/student/${studentId}</code>`;
+            } else {
+                if (listTitle) listTitle.textContent = "All Class Assignments";
+                if (listSubtext) listSubtext.innerHTML = `All assignments across the system from <code>GET /api/assignments</code>`;
+            }
+
+            if (container) {
+                container.innerHTML = `
+                    <div style="text-align: center; padding: 30px; color: #64748b;">
+                        Loading assignment records...
+                    </div>
+                `;
+            }
+
+            try {
+                const endpoint = currentAssignmentsScope === "student"
+                    ? `/assignments/student/${studentId}`
+                    : `/assignments`;
+
+                const data = await fetchJson(endpoint);
+                currentStudentAssignments = Array.isArray(data) ? data : [];
+
+                // Calculate Mini Stats
+                let totalCount = currentStudentAssignments.length;
+                let pendingCount = 0;
+                let submittedCount = 0;
+                let completedCount = 0;
+
+                const datalist = document.getElementById("assignSubjectsDatalist");
+                const uniqueSubjects = new Set();
+
+                currentStudentAssignments.forEach(item => {
+                    const st = (item.status || "pending").toLowerCase();
+                    if (st === "pending") pendingCount++;
+                    else if (st === "submitted") submittedCount++;
+                    else if (st === "completed") completedCount++;
+
+                    if (item.subject) uniqueSubjects.add(item.subject);
+                });
+
+                setText("assign-stat-total", totalCount);
+                setText("assign-stat-pending", pendingCount);
+                setText("assign-stat-submitted", submittedCount);
+                setText("assign-stat-completed", completedCount);
+
+                // Populate subjects datalist
+                if (datalist && uniqueSubjects.size > 0) {
+                    datalist.innerHTML = "";
+                    uniqueSubjects.forEach(s => {
+                        const opt = document.createElement("option");
+                        opt.value = s;
+                        datalist.appendChild(opt);
+                    });
+                }
+
+                renderAssignmentsList(currentStudentAssignments);
+
+            } catch (err) {
+                console.error("Failed to load assignments view:", err);
+                if (container) {
+                    container.innerHTML = `
+                        <div style="text-align: center; padding: 30px; color: #dc2626; background: #fff5f5; border-radius: 8px;">
+                            <strong>Unable to load assignments.</strong>
+                            <p style="font-size: 13px; margin: 4px 0 0 0; color: #7f1d1d;">Could not connect to Spring Boot backend at http://localhost:8080/api/assignments.</p>
+                        </div>
+                    `;
+                }
+            }
+        }
+
+        // Assignment Form Submission Handler
+        const assignForm = document.getElementById("assignmentRecordForm");
+        if (assignForm) {
+            assignForm.addEventListener("submit", async function (e) {
+                e.preventDefault();
+
+                const idInput = document.getElementById("assign-form-id");
+                const studentSelect = document.getElementById("assign-form-student-select");
+                const titleInput = document.getElementById("assign-form-title-input");
+                const subjectInput = document.getElementById("assign-form-subject");
+                const dueDateInput = document.getElementById("assign-form-due-date");
+                const statusSelect = document.getElementById("assign-form-status");
+                const descInput = document.getElementById("assign-form-description");
+                const submitBtn = document.getElementById("assign-form-submit-btn");
+
+                const targetStudentId = studentSelect ? studentSelect.value : "";
+                const titleVal = (titleInput ? titleInput.value : "").trim();
+                const subjectVal = (subjectInput ? subjectInput.value : "").trim();
+                const dueDateVal = dueDateInput ? dueDateInput.value : "";
+                const statusVal = statusSelect ? statusSelect.value : "pending";
+                const descVal = (descInput ? descInput.value : "").trim();
+                const recordIdVal = idInput && idInput.value ? Number(idInput.value) : null;
+
+                if (!targetStudentId) {
+                    showAssignFeedback("Please select a target student from the directory.", "error");
+                    if (studentSelect) studentSelect.focus();
+                    return;
+                }
+
+                if (!titleVal) {
+                    showAssignFeedback("Please enter an assignment title.", "error");
+                    if (titleInput) titleInput.focus();
+                    return;
+                }
+
+                if (!subjectVal) {
+                    showAssignFeedback("Please enter a subject name.", "error");
+                    if (subjectInput) subjectInput.focus();
+                    return;
+                }
+
+                if (!dueDateVal) {
+                    showAssignFeedback("Please choose a due date.", "error");
+                    if (dueDateInput) dueDateInput.focus();
+                    return;
+                }
+
+                if (descVal.length > 1000) {
+                    showAssignFeedback("Description cannot exceed 1000 characters.", "error");
+                    if (descInput) descInput.focus();
+                    return;
+                }
+
+                const payload = {
+                    studentId: Number(targetStudentId),
+                    title: titleVal,
+                    subject: subjectVal,
+                    description: descVal,
+                    dueDate: dueDateVal,
+                    status: statusVal
+                };
+                if (recordIdVal) {
+                    payload.id = recordIdVal;
+                }
+
+                if (submitBtn) {
+                    submitBtn.disabled = true;
+                    submitBtn.textContent = "Saving...";
+                }
+
+                try {
+                    const res = await fetch(`${API_BASE}/assignments`, {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify(payload)
+                    });
+
+                    if (!res.ok) {
+                        throw new Error(`Server returned HTTP ${res.status}`);
+                    }
+
+                    const savedAssignment = await res.json();
+                    const actionLabel = recordIdVal ? "updated" : "created";
+                    showAssignFeedback(`✓ Successfully ${actionLabel} assignment "${escapeHtml(titleVal)}"!`, "success");
+
+                    resetAssignmentForm();
+
+                    // Refresh assignments list
+                    await loadStudentAssignmentsView(selectedStudentId);
+
+                    // Refresh overview stats
+                    await loadTeacherDashboard();
+
+                } catch (err) {
+                    console.error("Failed to save assignment:", err);
+                    showAssignFeedback(`Failed to save assignment: ${err.message}`, "error");
+                } finally {
+                    if (submitBtn) {
+                        submitBtn.disabled = false;
+                        submitBtn.textContent = (idInput && idInput.value) ? "✓ Update Assignment" : "💾 Create Assignment";
+                    }
+                }
+            });
+        }
+
+        // Assignment Filters and Search Listeners
+        const assignSearchIn = document.getElementById("assignSearchInput");
+        if (assignSearchIn) {
+            assignSearchIn.addEventListener("input", function () {
+                assignmentSearchQuery = this.value;
+                renderAssignmentsList(currentStudentAssignments);
+            });
+        }
+
+        const assignStatusSel = document.getElementById("assignStatusFilter");
+        if (assignStatusSel) {
+            assignStatusSel.addEventListener("change", function () {
+                assignmentFilterStatus = this.value;
+                renderAssignmentsList(currentStudentAssignments);
+            });
+        }
+
+        const assignRefreshBtn = document.getElementById("assign-refresh-btn");
+        if (assignRefreshBtn) {
+            assignRefreshBtn.addEventListener("click", async function () {
+                this.disabled = true;
+                this.textContent = "Refreshing...";
+                try {
+                    await loadStudentAssignmentsView(selectedStudentId);
+                    await loadTeacherDashboard();
+                } catch (e) {
+                    console.error("Refresh assignments failed:", e);
+                } finally {
+                    this.disabled = false;
+                    this.textContent = "↻ Refresh";
+                }
+            });
+        }
+
+        // Initial Load
+        loadTeacherDashboard();
+    })();
+    </script>
+
+</body>
+
+</html>

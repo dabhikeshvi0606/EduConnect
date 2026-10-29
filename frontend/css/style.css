@@ -1090,6 +1090,45 @@ button:hover {
     background: #1d4ed8;
 }
 
+.submit-assignment-button:disabled {
+    background: #94a3b8;
+    cursor: not-allowed;
+}
+
+.modal-feedback {
+    margin-top: 14px;
+    padding: 10px 14px;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 1.4;
+    text-align: left;
+}
+
+.modal-feedback.error {
+    background: #fef2f2;
+    color: #dc2626;
+    border: 1px solid #fecaca;
+}
+
+.modal-feedback.success {
+    background: #f0fdf4;
+    color: #16a34a;
+    border: 1px solid #bbf7d0;
+}
+
+.modal-feedback.loading {
+    background: #eff6ff;
+    color: #2563eb;
+    border: 1px solid #bfdbfe;
+}
+
+.assignment-status.submitted,
+.status-submitted {
+    background: #e0f2fe;
+    color: #0369a1;
+}
+
 /* =========================================================
    STUDY MATERIALS PAGE
    ========================================================= */
